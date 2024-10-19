@@ -1,0 +1,92 @@
+<app-menualiado></app-menualiado>
+
+<div class="row justify-content-md-center" id="content">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <ng-container id="content">
+            <h2 class="text-center text-light">Mis videos</h2>
+            <table class="table table-sm table-bordered text-ligh">
+                <thead class="table-primary">
+                    <tr class="text-center">
+                        <th><button type="button" class="btn btn-danger btn-sm" (click)="nuevoVideo()">Nuevo Video</button></th>
+                        <th>Titulo</th>
+                        <th>Descripción</th>
+                        <th>Fecha modificción</th>
+                        <th>Estado</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr class="text-center" *ngFor="let vd of videos index as i;">
+                        <td>
+                            <button type="button" class="btn btn-success btn-sm" [routerLink]="['/adminAlid/editvideo/' + vd.vid_id]"> <i class="far fa-edit"></i> Editar
+                        Video</button>
+
+
+
+                            <button (click)="sucessvideo = true" type="button" class="btn btn-success btn-sm m-2" data-toggle="modal" [attr.data-target]="'#video_'+vd.vid_id">
+                        <i class="fas fa-video"></i> Ver
+                    </button>
+
+
+                            <button type="button" class="btn btn-danger btn-sm m-2" data-toggle="modal" [attr.data-target]="'#conf_delte'+vd.vid_id">
+                        <i class="fas fa-video"></i> Eliminar
+                    </button>
+
+                            <!-- Modal confirmacion eliminacion-->
+                            <div class="modal" id="conf_delte{{vd.vid_id}}" tabindex="-1" role="dialog">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Confirmación de eliminación</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            {{mensaje}}
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button *ngIf="eliminado" (click)="deletevideo(vd.vid_id)" type="button" class="btn btn-danger" data-dismiss="modal" data-backdrop="false">Confirmar</button>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+
+                            <div *ngIf="sucessvideo" class="modal fade bd-example-modal-lg" id="video_{{vd.vid_id}}" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title text-white text-center" id="staticBackdropLabel"><img class="avatar" src="../../../assets//img/logo.png" alt=""> {{ vd.vid_titulo }}</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                    </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="embed-responsive embed-responsive-16by9">
+
+                                                <iframe allowfullscreen="true" [src]="getURL(vd.vid_ruta)" automute="true" width="640" height="480"></iframe>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button (click)="sucessvideo = false" type="button" class="btn btn-danger" data-dismiss="modal"><i class="far fa-times-circle text-white"></i> Cerrar</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+
+                        <td>{{ vd.vid_titulo }}</td>
+                        <td>{{ vd.vid_descripcion }}</td>
+                        <td>{{ vd.vid_fecha_creacion }}</td>
+                        <td *ngIf="vd.vid_estado == 1 " class="text-success"> Activo </td>
+                        <td *ngIf="vd.vid_estado == 0 " class="text-danger">Inactivo </td>
+                    </tr>
+                </tbody>
+            </table>
+        </ng-container>
+    </div>
+</div>

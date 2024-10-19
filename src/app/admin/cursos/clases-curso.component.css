@@ -1,0 +1,11 @@
+table td,
+th,
+thead {
+  border-color: #a8a8a8;
+  border-width: 1px;
+}
+
+table thead th {
+  border-color: #a8a8a8;
+  border-width: 1px;
+}

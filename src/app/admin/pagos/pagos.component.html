@@ -1,0 +1,58 @@
+<app-menu></app-menu>
+
+<div class="row justify-content-md-center" id="content">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="new">
+            <ng-container id="content">
+                <h1 class="text-danger text-center m-5"> Generación de informes </h1>
+                <form [formGroup]="frmClasCreator" class="m-5 border p-5" (ngSubmit)="Generar_informe()">
+
+                    <div class="form-group row">
+                        <label for="exampleInputEmail1" class="form-label col-sm-2">Socios</label>
+                        <div class="col-sm-10">
+                        <select class="form-control" formControlName="socio"  [(ngModel)]="idsocio"  (change)="obtenerEmpresa()">
+                              <option  value="">Seleccione..</option>
+                              <option *ngFor="let socio of socios"  value="{{socio.soc_id}}">{{socio.soc_nombre}}</option>
+                        </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <label for="exampleInputEmail1" class="form-label col-sm-2">Empresas</label>
+                      <div class="col-sm-10">
+                      <select class="form-control" formControlName="empresa">
+                            <option  value="">Seleccione..</option>
+                            <option *ngFor="let empresa of empresas"  value="{{empresa.id_emps}}">{{empresa.imps_nombre}}</option>
+                      </select>
+                      </div>
+                  </div>
+
+
+                    <div class="form-group row">
+                        <label for="exampleInputEmail1" class="form-label col-sm-2">Fecha
+                            Inicio</label>
+                        <div class="col-sm-10">
+                            <input type="text" id="fechaInicio"  formControlName="fechaini"
+                                class="form-control" readonly="readonly" />
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <label for="exampleInputEmail1" class="form-label col-sm-2">Fecha
+                          Fin</label>
+                      <div class="col-sm-10">
+                          <input type="text" id="fechaFin"  formControlName="fechafn"
+                              class="form-control" readonly="readonly" />
+                      </div>
+                  </div>
+
+                    <div class="alert alert-warning" *ngIf="sucess" role="alert">
+                        <p class="text-dark text-center"> {{ mensaje }} </p>
+                    </div>
+
+                    <button type="submit" *ngIf="frmClasCreator.valid" class="btn btn-danger btn-block">Guardar</button>
+                </form>
+            </ng-container>
+        </div>
+    </div>
+</div>

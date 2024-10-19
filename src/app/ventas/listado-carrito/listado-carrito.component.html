@@ -1,0 +1,85 @@
+<app-header></app-header>
+
+<div class="row justify-content-md-center " id="content">
+    <div class="container">
+
+        <div class="row justify-content-md-center no_car" *ngIf="setlocal">
+            <div class="card">
+                <div class="card-header bg-danger">
+                    <h4 class="text-center text-white">Mensaje de usuario</h4>
+                </div>
+                <div class="card-body bg-dark text-white">
+                    <h3 class="card-title"><i class="fas fa-cart-plus text-warning" (click)="masProductos()"></i> Carrito de compras vacio, agregue mas productos</h3>
+
+                </div>
+            </div>
+        </div>
+
+        <div *ngFor='let key of objectKeys(productos); let indice=index'>
+            <div class="row">
+                <div class="col">
+                    <div class="card  bg-dark m-3">
+                        <div class="card-header">
+                            <h3 class="text-danger text-center"><i class="fas fa-info-circle"></i> Detalle de la compra {{ indice+1 }}</h3>
+                        </div>
+
+                        <div class="card-body">
+                            <table class="table table-dark">
+                                <thead>
+                                    <tr>
+                                        <th scope="col" class="text-warning">Nombre vendedor</th>
+                                        <th scope="col">Nombre Producto</th>
+                                        <th scope="col">Cantidad</th>
+                                        <th scope="col">Precio</th>
+                                        <th scope="col">Valor total</th>
+                                        <th scope="col"></th>
+
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor='let obj of productos[key]'>
+                                        <td class="text-warning">{{ obj.name_vendedor }}</td>
+                                        <td>{{ obj.name_pro }}</td>
+                                        <td>{{ obj.cantidad }}</td>
+                                        <td>{{ obj.precio }}</td>
+                                        <td>{{ obj.valor_total }}</td>
+                                        <td><button type="button" class="btn btn-warning btn-sm"><i class="fas fa-trash-alt" (click)="eliminarProducto(key,obj.id_localstorage)"></i> </button></td>
+
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+        <div *ngFor='let key of objectKeys(datosenvio) ;let indice=index'>
+
+            <div *ngFor='let obj of datosenvio[key]'>
+                <h1 class="text-danger">{{obj.valor}}</h1>
+                <form method="post" ngNoForm action="https://sandbox.checkout.payulatam.com/ppp-web-gateway-payu/">
+                    <input name="merchantId" type="hidden" value="{{ obj.merchantId }}">
+                    <input name="accountId" type="hidden" value="512321">
+                    <input name="description" type="hidden" value="{{ obj.descripcion }}">
+                    <input name="referenceCode" type="hidden" value="{{ obj.referencia }}">
+                    <input name="amount" type="hidden" value="{{ obj.valor_total }}">
+                    <input name="tax" type="hidden" value="0">
+                    <input name="taxReturnBase" type="hidden" value="0">
+                    <input name="currency" type="hidden" value="USD">
+                    <input name="signature" type="hidden" value="{{ obj.firma }}">
+                    <input name="test" type="hidden" value="1">
+                    <input name="buyerEmail" type="hidden" value="lealdesarrollo@gmail.com">
+                    <input name="responseUrl" type="hidden" value="http://www.test.com/response">
+                    <input name="confirmationUrl" type="hidden" value="http://www.test.com/confirmation">
+
+                    <button name="Submit" type="submit" class="btn btn-warning btn-lg btn-block"><i class="fas fa-store"></i> Finalizar compra {{indice+1}} por un valor total: ${{ obj.valor_total }} </button>
+                </form>
+            </div>
+            <hr/>
+
+        </div>
+    </div>

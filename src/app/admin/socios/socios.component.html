@@ -1,0 +1,36 @@
+<app-menu></app-menu>
+<div class="container-fluid">
+    <div class="row justify-content-md-center" id="content">
+        <div class="col">
+            <h1 class="text-center text-light">Listado de Socios</h1>
+            <table class="table table-sm table-bordered text-light">
+                <thead>
+                  <tr class="table-primary">
+                    <th><button type="button" class="btn btn-sm btn-warning my-2" [routerLink]="['/admin/create_socios/']">Nuevo
+                            socio</button></th>
+                    <th>Logo</th>
+                    <th>Pais</th>
+                    <th>Nombre</th>
+                    <th>Color primario</th>
+                    <th>Color secundario</th>
+                    <th>Codigo</th>
+                </tr>
+                </thead>
+                <tbody class="text-center">
+                  <tr *ngFor="let socio of listado">
+                    <td>
+                        <button type="button" [routerLink]="['/admin/edit_socios/' + socio.soc_id]" class="btn btn-sm btn-danger">
+                            <i class="fas fa-edit"></i> Editar
+                        </button>
+
+                    </td>
+                    <td><img src="{{ pathIm + socio.soc_ft1 }}" class="avatar" /></td>
+                    <td><img src="{{ banderaPais(socio.soc_pais) }}" class="avatar"></td>
+                    <td>{{ socio.soc_nombre }}</td>
+                    <td [ngStyle]="{'background-color': socio.soc_color_primario}">{{ socio.soc_color_primario }}</td>
+                    <td [ngStyle]="{'background-color': socio.soc_color_secundario}">{{ socio.soc_color_secundario }}</td>
+                    <td>https://www.cityfitnessworld.com/#/websociosCTF/{{ socio.soc_codigo }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>

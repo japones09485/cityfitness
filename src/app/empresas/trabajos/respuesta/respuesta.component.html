@@ -1,0 +1,41 @@
+<app-menuempresa></app-menuempresa>
+
+<div class="row justify-content-md-center" id="content">
+  <div class="col-md-12 col-sm-12 col-xs-12">
+    <ng-container id="content">
+      <h2 class="text-center text-light">Respuesta de alumnos</h2>
+
+      <table class="table table-sm table-bordered text-ligh">
+        <thead class="table-dark">
+          <tr class="text-center">
+            <th>Id trabajo</th>
+            <th>Nombre trabajo</th>
+            <th>Alumno</th>
+            <th>Comentario</th>
+            <th>Fecha Subida</th>
+            <th>Acciòn</th>
+
+          </tr>
+        </thead>
+        <tbody>
+
+          <tr class="text-center text-white" *ngFor="let res of respuestas">
+
+            <td>{{ res.id_trabajo }}</td>
+            <td>{{ res.nombre_trabajo }}</td>
+            <td>{{ res.alumno }}</td>
+            <td>{{ res.comentario }}</td>
+            <td>{{ res.fecha }}</td>
+            <td>
+              <a href="{{this.pathImg+res.ruta}}" target="_blank" class="btn btn-danger m-1" *ngIf="res.ruta"><i class="fas fa-file text-white m-1" ></i> Ver documento</a>
+              <a href="{{res.link}}" target="_blank" class="btn btn-success m-1" *ngIf="res.link"><i class="fas fa-file text-white m-1" ></i>Ver link de respuesta</a>
+
+            </td>
+          </tr>
+
+
+        </tbody>
+      </table>
+    </ng-container>
+  </div>
+</div>

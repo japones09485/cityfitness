@@ -1,0 +1,8 @@
+@media only screen and (min-width: 700px) {
+    .content {
+        background: url("../../../../assets/img/fondo_video.jpg") !important;
+        background-image: no-repeat;
+        background-image: fixed;
+        background-image: center;
+    }
+}

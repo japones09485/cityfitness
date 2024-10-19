@@ -1,0 +1,57 @@
+<!--Header Component-->
+<app-header *ngIf="!this.empSocio"></app-header>
+<div class="container-fluid bg-dark  d-inline-block h-100 " style="padding-top:30px;">
+    <div class="row justify-content-md-center" id="content" [style.background-image]="'url(' + this.fondocity + ')'">
+
+        <div class="col-md-6" id="contenedor">
+          <a *ngIf="this.empSocio" href="" class="btn btn-outline-danger btn-lg btn-block text-white" [routerLink]="['/aliados/FanPag/' + this.idAliado]"><i class="fas fa-long-arrow-alt-left"></i> VOLVER</a>
+            <h1 class="text-danger text-center neon">Registrarse</h1>
+            <form [formGroup]="frmRegister" (ngSubmit)="register()" class="m-3">
+
+                <div class="form-group row">
+                    <label for="" class="form-label text-danger col-4">Nombres</label>
+                    <div class="col-8">
+                        <input type="text" class="form-control" formControlName="nombres">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="" class="form-label text-danger col-4">Apellidos</label>
+                    <div class="col-8">
+                        <input type="text" class="form-control" formControlName="apellidos">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="" class="form-label text-danger col-4">Correo electrónico</label>
+                    <div class="col-8">
+                        <input type="email" class="form-control" formControlName="email">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="exampleInputEmail1" class="text-danger col-4 col-form-label">Pais</label>
+                    <div class="col-6">
+                        <select class="form-control " formControlName="pais" (change)="cambioPais()">
+                    <option *ngFor="let item of paisesList" [ngValue]="item.iso">{{ item.nombre }}
+                    </option>
+                    </select>
+                    </div>
+                    <div class="col-2">
+                        <img *ngIf="imgCountry" [src]="imgCountry" class="avatar" />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="" class="form-label text-danger col-4">Contraseña</label>
+                    <div class="col-8">
+                        <input type="password" class="form-control" formControlName="contrasena">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="" class="form-label text-danger col-4">Confirmar Contraseña</label>
+                    <div class="col-8">
+                        <input type="password" class="form-control" formControlName="confirmPass">
+                    </div>
+                </div>
+                <button type="submit" *ngIf="frmRegister.valid" class="btn btn-danger btn-block">Guardar</button>
+            </form>
+        </div>
+    </div>
+</div>

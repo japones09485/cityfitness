@@ -1,0 +1,120 @@
+<!--Header Component-->
+<app-header></app-header>
+
+<div class="container-fluid bg-dark  d-inline-block" style="padding-top:120px;">
+
+    <div class="form-row align-items-center">
+
+        <div class="col-6">
+            <input type="text" name="namesearch" class="form-control form-control-lg text-center" [(ngModel)]="filts.nameSearch" placeholder="buscar instructor">
+        </div>
+      
+
+        <div class="col-auto">
+            <button type="button" (click)="buscarInstructor()" class="btn btn-info btn-lg">Buscar</button>
+        </div>
+    </div>
+
+    <div class="container-fluid bg-dark" style="padding-top:60px;">
+        <div *ngFor="let ins of instructores" class="jumbotron jumbotron-fluid p-1 bg-transparent">
+            <hr>
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <img src="{{ pathImg + ins.ins_foto1 }}" *ngIf="ins.ins_foto1" class="d-block w-100 y-50" />
+                    </div>
+                    <div class="col-sm-8">
+                        <h1 class="display-4 text-info">{{ ins.ins_nombre+' '+ins.ins_apellido }}</h1>
+                        <h3 class="display-5 text-secondary"><img src="{{ banderaPais(ins.ins_fk_pais) }}" class="avatar">{{nombrePais}}</h3>
+                        <h3 class="display-5 text-danger" *ngIf="ins.fk_puntaje_carrera>0">Puntaje:  {{ins.fk_puntaje_carrera}} </h3>
+                          
+                        <div class="card-dark text-light">
+                            <div class="card-body">
+
+                                <blockquote class="blockquote mb-12">
+                                    <footer class="footer">
+                                        <div class="btn-group btn-group-justified" role="group" aria-label="...">
+                                            <div class="btn-group mx-2" role="group">
+                                                <a href="{{ins.ins_instagram}}" target="_blank">
+                                                    <i class="fab fa-instagram fa-lg"></i>
+                                                </a>
+                                            </div>
+                                            <div class="btn-group mx-2" role="group">
+                                                <a href="{{ins.ins_facebook}}" target="_blank">
+                                                    <i class="fab fa-facebook fa-lg"></i>
+                                                </a>
+                                            </div>
+                                            <div class="btn-group mx-2" role="group">
+                                                <a href="https://wa.me/{{ ins.ins_telefono }}?text=Comunicate%20con%20nosotros" class="text-success" target="_blank">
+                                                    <i class="fab fa-whatsapp fa-lg"></i>
+                                                </a>
+                                            </div>
+
+                                         
+
+
+                                            <div *ngIf="user" class="btn-group mx-2" role="group">
+                                                <span *ngIf="!ins.verlike" (click)="like(ins)" style="cursor: pointer;" class="text-info">
+                                                    <i class="far fa-thumbs-up fa-lg"></i>
+                                                    {{ins.ins_likes}}
+                                                </span>
+                                                <span *ngIf="ins.verlike" (click)="disLike(ins)" style="cursor: pointer;" class="text-info">
+                                                    <i class="far fa-thumbs-up fa-lg"></i>
+                                                    {{ins.ins_likes}}
+                                                </span>
+
+                                                
+                                            </div>
+
+                                        </div>
+                                    </footer>
+                                    <br>
+
+                                    <button type="button" class="btn btn-info btn-lg" (click)="verhojadevida(ins)">Mas información</button>
+                                    <button class="btn btn-info btn-lg" style="margin-left: 5px;" (click)="loadGimnasios(ins.gimnasios)" data-toggle="modal" data-target="#GimModal">Gimnasios</button>
+                                </blockquote>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <app-hojavida [instructor]="instructorhojadevida" (finalizar)="hojadevida = $event" *ngIf="hojadevida"></app-hojavida>
+        <app-paginacion *ngIf="instructores.length > 0" [nPaginas]="paginas" (irPagina)="sigPag($event)"></app-paginacion>
+    </div>
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="GimModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-info text-white">
+                    <h5 class="modal-title" id="exampleModalLabel">Gimnasios</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-sm table-hover">
+                        <thead>
+                            <tr>
+                                <th>Foto</th>
+                                <th>Nombre</th>
+                                <th>Ubicación</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let gm of GimView">
+                                <td> <img src="{{ pathImg + gm.gim_foto1 }}" class="avatar" /></td>
+                                <td>{{gm.gim_nombre}}</td>
+                                <td> <a [href]="gm.gim_ruta" target="_blank" class="text-info">Click aqui</a> </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>

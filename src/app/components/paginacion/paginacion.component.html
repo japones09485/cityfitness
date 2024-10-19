@@ -1,0 +1,7 @@
+<nav aria-label="Page navigation example" class="paginacion">
+    <ul class="pagination">
+        <li class="page-item bg-dark" *ngFor="let item of numberPags; let idx = index;">
+            <span class="page-link" (click)="irPagina.emit(idx + 1)">{{ idx + 1 }}</span>
+        </li>
+    </ul>
+</nav>

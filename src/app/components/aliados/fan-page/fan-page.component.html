@@ -1,0 +1,225 @@
+<app-header></app-header>
+
+<div class="container" style="padding-top:140px;" id="presentacion">
+    <div class="row">
+
+        <div class="col-lg-5" id="descp">
+
+            <span class="text-white m-5   animate__animated animate__backInLeft"> <h1 class="text-danger namePage m-3"> {{aliado.usu_nombres}} {{aliado.usu_apellidos}}</h1> {{aliado.usu_descrip_profesional}} <br> <br>
+
+
+                <div>
+                    <button  *ngIf="aliado.usu_videoB" type="button" class="btn btn-outline-warning btn-block mb-2"  (click)="videoB(aliado.usu_id)" >Video de bienvenida</button>
+
+                </div>
+
+                <div *ngIf="activationplan">
+                    <button  type="button" class="btn btn-outline-danger btn-block"  [routerLink]="['/aliados/videos/' + aliado.usu_id]">Ingresa a mis videos</button>
+                    <p class="text-center text-warning">Activo hasta {{fechafin}}</p>
+                </div>
+
+        <div *ngIf="!activationplan" class="m-5">
+            <h4 class="text-warning"> Quieres ver todo el contenido? Adquiere alguno de nuestros planes. <br>
+              <div class="card border-danger content"></div>
+
+                <div class="btn-group btn-group-justified m-4" role="group" aria-label="...">
+                    <div class="btn-group mx-2" role="group">
+                        <a href="{{aliado.usu_instagram}}" target="_blank" class="text-danger">
+                            <i class="fab fa-instagram fa-lg"></i>
+                        </a>
+                    </div>
+                    <div class="btn-group mx-2" role="group">
+                        <a href="{{aliado.usu_facebook}}" target="_blank" class="text-danger">
+                            <i class="fab fa-facebook fa-lg"></i>
+                        </a>
+                    </div>
+                    <div class="btn-group mx-2" role="group">
+                        <a href="https://wa.me/{{ aliado.usu_telefono }}?text=Comunicate%20con%20nosotros" class="text-danger" target="_blank">
+                            <i class="fab fa-whatsapp fa-lg"></i>
+                        </a>
+                    </div>
+
+                </div>
+            </h4>
+        </div>
+        </span>
+
+        </div>
+        <div class="col-lg-7">
+            <img [src]="pathIm+aliado.usu_logo" alt="" class="m-5">
+        </div>
+    </div>
+</div>
+
+
+<section class="price-section spad set-bg m-5" id="planesAliado">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="section-title">
+                    <h2 class="text-white" *ngIf="!activationplan">PLANES & COSTOS.</h2>
+                    <h2 class="text-white" *ngIf="activationplan">DISFRUTA DE NUESTROS PLANES.</h2>
+                    <p>{{ aliado.plan_bienvenida }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="single-price-plan">
+                    <h4>Mes</h4>
+                    <div class="price-plan">
+                        <h2>{{ aliado.plan_mes }}
+                            <span>$</span>
+                        </h2>
+                    </div>
+                    <ul>
+                        <li>{{aliado.pla_mes_benef1}}</li>
+                        <li>{{aliado.pla_mes_benef2}}</li>
+                        <li>{{aliado.pla_mes_benef3}}</li>
+                    </ul>
+                    <a href="{{aliado.link_pago_mes}}" target="_blank" *ngIf="!activationplan" class="primary-btn price-btn">SUBSCRIBETE</a>
+                    <div class="tic-text">
+                        <i class="fa fa-star text-secondary"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="single-price-plan">
+                    <h4>Trimestre</h4>
+                    <div class="price-plan">
+                        <h2>{{ aliado.plan_semestre }}
+                            <span>$</span>
+                        </h2>
+                    </div>
+                    <ul>
+                        <li>{{aliado.pla_sem_benef1}}</li>
+                        <li>{{aliado.pla_sem_benef2}}</li>
+                        <li>{{aliado.pla_sem_benef3}}</li>
+                    </ul>
+                    <a *ngIf="!activationplan" target="_blank" href="{{aliado.link_pago_trimestre}}" class="primary-btn price-btn">SUBSCRIBETE</a>
+                    <div class="tic-text">
+                        <i class="fa fa-star text-white"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="single-price-plan">
+                    <h4>Semestre</h4>
+                    <div class="price-plan">
+                        <h2>{{ aliado.plan_year }}
+                            <span>$</span>
+                        </h2>
+                    </div>
+                    <ul>
+                        <li>{{aliado.pla_anu_benef1}}</li>
+                        <li>{{aliado.pla_anu_benef2}}</li>
+                        <li>{{aliado.pla_anu_benef3}}</li>
+                    </ul>
+                    <a *ngIf="!activationplan" target="_blank" href="{{aliado.link_pago_semestre}}" class="primary-btn price-btn">SUBSCRIBETE</a>
+                    <div class="tic-text">
+                        <i class="fa fa-star text-warning"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<section class="classtime-section class-time-table spad" *ngIf="trabajos.length>0 && activationplan">
+  <div class="container-fluid">
+      <div class="row">
+          <div class="col-lg-12 text-center">
+              <div class="section-title">
+                  <h2>Documentación de apoyo</h2>
+              </div>
+          </div>
+      </div>
+
+      <div class="classtime-table">
+        <table>
+            <tbody>
+                <tr *ngFor="let tra of trabajos">
+                    <td class="hover-bg ts-item" data-tsmeta="crossfit" *ngFor="let t of tra">
+                        <span>{{ t.nombre }}</span>
+                        <h6>{{t.descripcion}}</h6>
+
+
+                        <span>
+                          <a type="button" href="{{this.pathIm+t.ruta_arch}}" target="_blank"  class="btn btn-outline-danger m-1 live"><i class="fas fa-file text-white m-1" ></i> Ver Documento </a>
+                          <a *ngIf="t.tipo_doc == 2" type="button"  class="btn btn-outline-danger m-1 live" (click)="cargarDocumento(t.id)"><i class="fas fa-upload text-success m-1" ></i> Adjuntar Documento </a>
+                        </span>
+
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <p class="text-warning text-center" *ngIf="mensaje">{{mensaje}}</p>
+    </div>
+
+  </div>
+</section>
+
+
+
+<section class="classtime-section class-time-table spad" *ngIf="clases.length>0 && activationplan">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <div class="section-title">
+                    <h2>Programación de clases</h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="classtime-table">
+            <table>
+                <tbody>
+                    <tr *ngFor="let blockclas of clases">
+                        <td class="hover-bg ts-item" data-tsmeta="crossfit" *ngFor="let cla of blockclas">
+                            <span>{{ cla.claA_fecha_proga }}</span>
+                            <h6>{{ cla.clasA_nombre }}</h6>
+                            <span>{{ cla.claA_hora_proga }}</span>
+                            <span *ngIf="cla.calA_estado == 1"><button (click)="IngresarClase(cla)" type="button" class="btn btn-outline-danger live"><i class="fas fa-video"></i> Ahora en vivo</button></span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <p class="text-warning text-center" *ngIf="mensaje">{{mensaje}}</p>
+        </div>
+
+
+    </div>
+</section>
+
+
+<section class="classtime-section class-time-table spad" *ngIf="examenes.length>0 && activationplan" >
+  <div class="container">
+      <div class="row">
+          <div class="col-lg-12 text-center">
+              <div class="section-title">
+                  <h2 class="text-danger">Presentación de examenes</h2>
+              </div>
+          </div>
+      </div>
+
+      <div class="classtime-table">
+          <table>
+              <tbody>
+                  <tr >
+                      <td class="hover-bg ts-item" data-tsmeta="crossfit" *ngFor="let ex of examenes">
+                          <span>{{ ex.nombre }}</span>
+                          <h6>{{ex.descripcion}}</h6>
+
+
+                          <span><button type="button" (click)="Presentarex(ex.id_examen,ex.usuario_creacion)" class="btn btn-outline-danger live"><i class="fas fa-edit"></i> Presentar </button></span>
+                      </td>
+                  </tr>
+              </tbody>
+          </table>
+          <p class="text-warning text-center" *ngIf="mensaje">{{mensaje}}</p>
+      </div>
+
+
+  </div>
+</section>

@@ -1,0 +1,190 @@
+<app-menu *ngIf="perfilF!=6 && !this.mailY"></app-menu>
+<nav *ngIf="perfilF==6" class="navbar navbar-expand-lg navbar-light bg-light">
+  <i class="fas fa-user fa-2x text-danger"></i> <h4>{{nomsocio}}</h4>
+  <a class="nav-link"[routerLink]="['/websociosempresas/']"><h3 class="text-danger">Inicio</h3></a>
+</nav>
+
+
+<div class="container-fluid bg-dark" id="content">
+    <div class="row"  >
+        <div class="col-lg-9 form-inline" *ngIf="!this.mailY">
+            <input type="text" name="namesearch" class="form-control form-control-lg text-center m-3"
+                [(ngModel)]="filts.nameSearch" placeholder="&#xF00e;  Nombre" style="font-family: FontAwesome;">
+            <input type="text" name="apellisearch" class="form-control form-control-lg text-center m-3"
+                [(ngModel)]="filts.apellisearch" placeholder="&#xF00e; Apellido" style="font-family: FontAwesome;">
+            <button type="submit" (click)="buscarUsuario()" class="btn btn-info btn-lg m-3">Buscar</button>
+        </div>
+
+        <div class="col-lg-12" *ngIf="this.mailY">
+          <h1 class="text-center text-danger m-4">Aliados</h1>
+      </div>
+
+    </div>
+
+    <div class="alert alert-info text-center" role="alert" *ngIf="failResult">
+        <i class="fas fa-info-circle"></i> No existen resultados
+    </div>
+
+    <div class="col-sm col-md col-lg">
+        <button type="button" (click)="nuevoUsuario(this.perfilF,1,1)" class="btn btn-danger mb-2" *ngIf="!cursoins && !empws && this.validCrear">Crear Usuario</button>
+        <button type="button" (click)="nuevoUsuario(this.perfilF,this.cursoins,this.cursoins)" class="btn btn-danger mb-2" *ngIf="cursoins && !empws">Crear Horario</button>
+        <button type="button" (click)="nuevoUsuario(this.perfilF,1,this.empws)" class="btn btn-danger mb-2" *ngIf="!cursoins && empws">Crear Instructor Empresa</button>
+        <table class="table table-sm table-bordered text-light">
+            <thead>
+              <tr>
+
+                    <th></th>
+                    <th>Foto</th>
+                    <th>Nombre</th>
+                    <th>Correo</th>
+                    <th>Pais</th>
+                    <th>Perfil</th>
+                    <th>Contraseña</th>
+                    <th *ngIf="this.perfilF==5">estado</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let usu of usuarios">
+                <td class="text-center">
+                    <button *ngIf="usu.usu_perfil != 2" type="button" class="btn btn-warning btn-sm"
+                        (click)="editUsuario(usu.usu_id,this.perfilF)">
+                        <i class="fas fa-pencil-alt"></i> Editar
+                    </button>
+
+                    <!-- Button trigger modal -->
+                    <button (click)="activarfechas(usu.usu_id)" *ngIf="usu.usu_perfil == 4" type="button"
+                        class="btn btn-warning btn-sm m-2" data-toggle="modal"
+                        [attr.data-target]="'#alumnosInscri'+usu.usu_id">
+                        <i class="fas fa-user-graduate text-white"></i> Alumnos
+                    </button>
+
+                    <button (click)="adminempresa(usu.usu_id)" *ngIf="usu.usu_perfil == 5" type="button"
+                        class="btn btn-info btn-sm m-2" data-toggle="modal"
+                        [attr.data-target]="'#alumnosInscri'+usu.usu_id">
+                        <i class="fas fa-cog text-white"></i> Configuración
+                    </button>
+
+                    <button (click)="eliminarUsuario(usu.usu_id, this.cursoins,this.perfilF)" *ngIf="usu.usu_perfil == 5" type="button"
+                    class="btn btn-danger btn-sm m-2">
+                    <i class="fas fa-cog text-white"></i> Eliminar
+                </button>
+
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="alumnosInscri{{usu.usu_id}}" tabindex="-1" role="dialog"
+                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-lg" role="document">
+                            <div class="modal-content bg-dark">
+                                <div class="modal-header text-white text-center bg-primary">
+                                    <h5 class="modal-title" id="exampleModalLabel">{{usu.usu_nombres}}
+                                        {{usu.usu_apellidos}}</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form [formGroup]="frmClasCreator" (ngSubmit)="traerAlumnos(usu.usu_id)">
+                                        <div class="form-group row">
+                                            <label for="exampleInputEmail1" class="form-label col-sm-2">Fecha
+                                                Inicio</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" id="fechaInicio{{usu.usu_id}}"
+                                                    class="form-control" readonly="readonly" />
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label for="exampleInputEmail1" class="form-label col-sm-2">Fecha
+                                                Fin</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" id="fechaFin{{usu.usu_id}}" class="form-control"
+                                                    readonly="readonly" />
+                                            </div>
+                                        </div>
+
+                                        <div *ngIf="validAlum">
+                                            <h3 class="text-warning m-2">{{mensaje}}</h3>
+                                        </div>
+
+                                        <div *ngIf="listAlumnos">
+                                            <table class="table table-dark">
+                                                <thead>
+                                                    <tr class="bg-warning">
+                                                        <th scope="col">Nombre</th>
+                                                        <th scope="col">Fecha Inicio</th>
+                                                        <th scope="col">Fecha Fin</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr *ngFor="let alum of alumnosInscritos">
+                                                        <td>{{alum.nombres}} {{alum.apellidos}}</td>
+                                                        <td>{{ alum.fch_ini }}</td>
+                                                        <td>{{ alum.fch_fin }}</td>
+                                                    </tr>
+
+                                                </tbody>
+                                            </table>
+
+
+                                            <h3 class="text-danger m-2">Total: {{ cantAlumnos }}</h3>
+                                        </div>
+
+                                        <button type="submit" *ngIf="frmClasCreator.valid"
+                                            class="btn btn-danger btn-block"><i class="fab fa-searchengin"></i>
+                                            Buscar</button>
+
+                                    </form>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+                </td>
+                <td class="text-center">
+                    <img *ngIf="usu.usu_logo" src="{{ pathImg + usu.usu_logo }}" class="avatar" />
+                    <img *ngIf="!usu.usu_logo" src="../../../assets//img/ImgnoDisponible.png" class="avatar" />
+                </td>
+                <td class="text-center">{{ usu.usu_nombres + ' ' + usu.usu_apellidos }}</td>
+                <td class="text-center">{{ usu.usu_email }}</td>
+
+                <td> <img src="{{ banderaPais(usu.usu_pais) }}" class="avatar">{{nombrePais}}</td>
+
+                <td *ngIf="usu.usu_perfil == 1" class="text-center text-danger"><i
+                        class="fas fa-users-cog"></i>Administrativo</td>
+                <td *ngIf="usu.usu_perfil == 3" class="text-center text-info"> <i class="fas fa-cart-plus "></i>
+                    Ventas
+                </td>
+                <td *ngIf="usu.usu_perfil == 2" class="text-center text-sucess"> <i class="fas fa-user"></i>
+                    Visitante
+                </td>
+                <td *ngIf="usu.usu_perfil == 4" class="text-center text-warning"> <i class="fas fa-user"></i> Aliado
+                <td *ngIf="usu.usu_perfil == 5" class="text-center text-warning"> <i class="fas fa-dumbbell"></i> Empresa
+                </td>
+                <td *ngIf="usu.usu_perfil == 6" class="text-center text-info"> <i class="fas fa-users-cog"></i>
+                    Usuario Socio
+                </td>
+                <td class="text-warning">{{ usu.usu_textoclaro }}</td>
+                <td class="text-warning" *ngIf="this.perfilF==5">
+                  <button (click)="validUsu(usu.usu_id,0,usu.fk_curso)" *ngIf="usu.usu_estado_verificacion == 1" type="button"
+                      class="btn btn-danger btn-sm m-2" >
+                      <i class="fas fa-user-graduate text-white"></i> Inactivar 
+                  </button>
+
+                  <button (click)="validUsu(usu.usu_id,1,usu.fk_curso)" *ngIf="usu.usu_estado_verificacion == 0" type="button"
+                      class="btn btn-success btn-sm m-2" >
+                      <i class="fas fa-user-graduate text-white"></i> Activar
+                  </button>
+                </td>
+
+              </tr>
+            </tbody>
+          </table>
+
+          <app-paginacion *ngIf="usuarios.length > 0 && cantPaginas>1" [nPaginas]="cantPaginas" (irPagina)="sigPag($event)"></app-paginacion>
+    </div>
+</div>
+

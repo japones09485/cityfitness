@@ -1,0 +1,25 @@
+#header {
+  background: url('../../../../assets/img/cabecero_empresas.jpg') center center / cover no-repeat ;
+}
+
+.logosoc{
+  height: 70px;
+  width: 70px;
+  border-radius: 50%;
+  margin: 40px;
+}
+
+
+
+
+
+
+.txtflp {
+
+  animation: backInDown; /* referring directly to the animation's @keyframe declaration */
+  animation-duration: 2s; /* don't forget to set a duration! */
+}
+
+
+
+

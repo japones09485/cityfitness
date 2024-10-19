@@ -1,0 +1,155 @@
+<div class="container-fluid">
+    <div class="row justify-content-md-center" id="content">
+        <div class="col-md-8 col-sm-8 col-xs-12">
+            <div class="card mt-2">
+                <h2 class="card-header text-light text-center">Editar Gimnasio</h2>
+                <div class="card-body">
+                    <form [formGroup]="frmGimnasioEdit" (ngSubmit)="guardarEditGimnasio()" class="mt-3">
+                        <div class="form-group row">
+                            <label for="" class="form-label col-4">Nombre</label>
+                            <div class="col-8">
+                                <input type="text" class="form-control" formControlName="nombre">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="" class="form-label col-4">Nit</label>
+                            <div class="col-8">
+                                <input type="number" class="form-control" formControlName="nit">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="" class="form-label col-4">Correo electrónico</label>
+                            <div class="col-8">
+                                <input type="email" class="form-control" formControlName="email">
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="" class="form-label col-4">Facebook</label>
+                            <div class="col-8">
+                                <input type="text" class="form-control" formControlName="facebook">
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="" class="form-label col-4">Instagram</label>
+                            <div class="col-8">
+                                <input type="text" class="form-control" formControlName="instagram">
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="exampleInputEmail1" class="form-label col-2r">Pais</label>
+                            <div class="col-8">
+                                <select class="form-control " formControlName="pais" (change)="cambioPais()">
+                                <option *ngFor="let item of paisesList" [ngValue]="item.iso">{{ item.nombre }}
+                            </option>
+                        </select>
+                            </div>
+                            <div class="col-2">
+                                <img *ngIf="imgCountry" [src]="imgCountry" class="avatar" />
+                            </div>
+                        </div>
+
+
+                        <div class="form-group row">
+                            <label for="" class="form-label col-4">Ciudad</label>
+                            <div class="col-8">
+                                <input type="text" class="form-control" formControlName="ciudad">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="" class="form-label col-4">Teléfono</label>
+                            <div class="col-8">
+                                <input type="text" class="form-control" formControlName="telefono">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="" class="form-label col-4">Descripción</label>
+                            <div class="col-8">
+                                <textarea formControlName="descripcion" class="form-control" rows="3"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="" class="form-label col-4">Mapa</label>
+                            <div class="col-8">
+                                <input type="text" class="form-control" formControlName="mapa">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="" class="form-label col-4">Ruta</label>
+                            <div class="col-8">
+                                <input type="text" class="form-control" formControlName="ruta">
+                            </div>
+                        </div>
+
+                        <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+                            <div class="carousel-inner">
+                                <div *ngIf="gimnasio.gim_foto1" class="carousel-item active">
+                                    <img src="{{ pathIm + gimnasio.gim_foto1 }}" class="d-block w-100 y-50" alt="..." />
+                                </div>
+                                <div *ngIf="gimnasio.gim_foto2" class="carousel-item">
+                                    <img src="{{ pathIm + gimnasio.gim_foto2 }}" class="d-block w-100" alt="..." />
+                                </div>
+                                <div *ngIf="gimnasio.gim_foto3" class="carousel-item">
+                                    <img src="{{ pathIm + gimnasio.gim_foto3 }}" class="d-block w-100" alt="..." />
+                                </div>
+
+                            </div>
+                            <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="sr-only">Anterior</span>
+                            </a>
+                            <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="sr-only">Siguiente</span>
+                            </a>
+                        </div>
+
+
+
+
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="imagenuno">Imagen (opcional)</span>
+                            </div>
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input" (change)="agregarArchivo($event,1)" />
+                                <label class="custom-file-label" for="inputGroupFile01">Agregue una imagen</label>
+                            </div>
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="imagendos">Imagen (opcional)</span>
+                            </div>
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input" (change)="agregarArchivo($event,2)" />
+                                <label class="custom-file-label" for="inputGroupFile01">Agregue una imagen</label>
+                            </div>
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="imagendos">Imagen (opcional)</span>
+                            </div>
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input" (change)="agregarArchivo($event,3)" />
+                                <label class="custom-file-label" for="inputGroupFile01">Agregue una imagen</label>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="exampleInputEmail1" class="form-label col-sm-4">Estado</label>
+                            <div class="col-sm-8">
+                                <select type="email" class="form-control" formControlName="estado">
+                                  <option value="1" selected="selected">Activo</option>
+                                  <option value="0">Inactivo</option>
+                              </select>
+                            </div>
+                        </div>
+                        <button type="submit" *ngIf="frmGimnasioEdit.valid" class="btn btn-danger btn-lg btn-block">Guardar</button>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

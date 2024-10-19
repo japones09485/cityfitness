@@ -1,0 +1,158 @@
+<app-menu></app-menu>
+<div class="container-fluid">
+    <div class="row justify-content-md-center" id="content">
+        <div *ngIf="!creando" class="col">
+            <h1 class="text-center text-light">Listado de clientes</h1>
+            <table class="table table-sm table-bordered text-ligh text-center">
+                <thead>
+                    <tr class="table-primary">
+                        <th><button type="button" class="btn btn-sm btn-warning my-2" (click)="creando = true">Nuevo
+                                cliente</button></th>
+                        <th>Logo</th>
+                        <th>Nombre</th>
+                        <th>Identificación</th>
+                        <th>Teléfono</th>
+                        <th>Correo electrónico</th>
+                        <th>Pais</th>
+                        <th>Ciudad</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let cliente of listado" [ngClass]="{'table-danger': cliente.emp_estado == '0'}">
+                        <td>
+                            <button type="button" [routerLink]="['/admin/clientes/editar/' + cliente.emp_id]" class="btn btn-sm btn-danger">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button type="button" [routerLink]="['/admin/cursos/' + cliente.emp_id]" class="btn btn-sm btn-warning ml-1">
+                                <i class="far fa-address-card"></i>
+                            </button>
+
+                            <button type="button" (click)="eliminarCliente(cliente.emp_id)" class="btn btn-sm btn-danger ml-1">
+                              <i class="fa-solid fa-circle-trash">Eliminar</i>
+                          </button>
+                        </td>
+                        <td><img src="{{ pathIm + cliente.emp_foto1 }}" class="avatar" /></td>
+                        <td class="text-white">{{ cliente.emp_nombre }}</td>
+                        <td  class="text-white">{{ cliente.emp_nit }}</td>
+                        <td  class="text-white">{{ cliente.emp_telefono }}</td>
+                        <td class="text-white">{{ cliente.emp_email }}</td>
+                        <td><!--<img src="{{ banderaInstructor(cliente.emp_pais) }}" class="avatar"> --></td>
+                        <td  class="text-white"> {{ cliente.emp_ciudad }} </td>
+                    </tr>
+                    <tr>
+                        <td colspan="100%">
+                            <nav aria-label="Page navigation example">
+                                <ul class="pagination">
+                                    <li *ngFor="let item of pags(); let i = index;" (click)="obtenerPagina(i + 1)" class="page-item">
+                                        <span class="page-link">{{ i + 1 }}</span>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-8 col-sm-8 col-xs-12" *ngIf="creando">
+            <div class="card mt-2">
+                <h2 class="card-header text-center"><a (click)="creando = false"><i
+                            class="fas fa-arrow-alt-circle-left float-left text-light"></i></a>Crear cliente</h2>
+                <div class="card-body">
+                    <form [formGroup]="frmCliCreator" (ngSubmit)="crearCliente()">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Nit</label>
+                            <input type="text" class="form-control" formControlName="emp_nit" />
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Nombre</label>
+                            <input type="text" class="form-control" formControlName="emp_nombre" />
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Telefono</label>
+                            <input type="text" class="form-control" formControlName="emp_telefono" /></div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Correo electrónico</label>
+                            <input type="text" class="form-control" formControlName="emp_email" /></div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Facebook</label>
+                            <textarea class="form-control" formControlName="emp_facebook"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Instagram</label>
+                            <textarea class="form-control" formControlName="emp_instagram"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Descripción</label>
+                            <textarea class="form-control" formControlName="emp_descripcion"></textarea>
+                        </div>
+                        <div class="form-group row ">
+                            <label for="exampleInputEmail1 " class="col-12 col-form-label">País</label>
+                            <div class="col-10">
+                                <select class="form-control " formControlName="emp_pais" (change)="cambioPais()">
+                                    <option *ngFor="let item of paisesList" [ngValue]="item.iso">{{ item.nombre }}
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="col-2">
+                                <img *ngIf="imgCountry" [src]="imgCountry" class="avatar" /></div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Ciudad</label>
+                            <input class="form-control" formControlName="emp_ciudad">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Visión</label>
+                            <textarea class="form-control" formControlName="emp_vision"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Misión</label>
+                            <textarea class="form-control" formControlName="emp_mision"></textarea>
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="imagenprincipal">Imagen Principal</span>
+                            </div>
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input" (change)="agregarArchivo($event,1)" name="emp_foto1" aria-describedby="inputGroupFileAddon01" />
+                                <label class="custom-file-label" for="inputGroupFile01">Agregue una imagen</label>
+                            </div>
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="imagendos">Imagen (opcional)</span>
+                            </div>
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input" (change)="agregarArchivo($event,2)" name="emp_foto2" aria-describedby="inputGroupFileAddon01" />
+                                <label class="custom-file-label" for="inputGroupFile01">Agregue una imagen</label>
+                            </div>
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="imagentres">Imagen (opcional)</span>
+                            </div>
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input" (change)="agregarArchivo($event,3)" name="emp_foto3" aria-describedby="inputGroupFileAddon01" />
+                                <label class="custom-file-label" for="inputGroupFile01">Agregue una imagen</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Estado</label>
+                            <select type="email" class="form-control" formControlName="emp_estado">
+                                <option value="1" selected="selected">Activo</option>
+                                <option value="0">Inactivo</option>
+                            </select>
+                        </div>
+
+                        <div class="fa-3x text-center" *ngIf="flagSave">
+                            <i class="fas fa-spinner fa-pulse"></i>
+                        </div>
+
+                        <button type="submit" *ngIf="frmCliCreator.valid && !flagSave" class="btn btn-danger btn-block">Guardar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

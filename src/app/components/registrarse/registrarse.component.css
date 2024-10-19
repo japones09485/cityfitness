@@ -1,0 +1,15 @@
+@media only screen and (min-width: 700px) {
+    #contenedor {
+        margin: 10%;
+        padding: 8px;
+        border-color: #c44040;
+        border-width: 2px;
+        border-style: solid;
+    }
+    #content {
+
+        width: 100%;
+        height: 100%;
+        position: absolute;
+    }
+}

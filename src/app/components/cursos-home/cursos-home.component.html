@@ -1,0 +1,22 @@
+<!--Header Component-->
+<app-header></app-header>
+<div class="container-fluid bg-dark d-inline-block" style="padding-top: 130px" id="content">
+  <div class="row">
+    <ng-container *ngFor="let item of listadoCurso; index as i;">
+      <div class="col-md-3 mb-4"> <!-- Utilizamos col-md-3 para ocupar 1/4 del ancho en pantallas medianas y grandes -->
+        <div class="card">
+          <h5 class="text-danger m-3">{{ item.cur_nombre }}</h5>
+          <img [src]="pathImg + item.cur_foto1" class="card-img-top car_cur">
+          <div class="card-body">
+            <h5 class="card-title text_title text-white">{{ item.cur_nombre | slice:0:40 }} ...</h5>
+          </div>
+          <div class="card-footer">
+            <a (click)="verMas(item.cur_id)" class="text_title"><h2 class="text-right text-danger">Ver mas</h2></a>
+          </div>
+        </div>
+      </div>
+      <!-- Agregamos un div adicional para que se muestren cuatro tarjetas por fila -->
+      <div *ngIf="(i + 1) % 4 === 0" class="w-100"></div> <!-- w-100 para hacer un salto de línea en Bootstrap -->
+    </ng-container>
+  </div>
+</div>

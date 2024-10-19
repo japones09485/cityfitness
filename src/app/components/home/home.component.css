@@ -1,0 +1,137 @@
+h2 {
+    font-family: "Mystery Quest", cursive;
+    font-size: 150%;
+}
+
+.whatsapp-icon {
+    margin-top: 13px;
+}
+
+#centrador {
+    position: relative;
+    width: 400px;
+    height: 400px;
+    background-color: red;
+}
+
+#imagen {
+    position: absolute;
+    width: 100px;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+}
+
+.instructores {
+    display: inline-block;
+    font-size: 20px;
+    font-family: "Oswald", sans-serif;
+    font-weight: 600;
+    color: #e4381C !important;
+    text-transform: uppercase;
+    text-align: center;
+    width: 350px;
+    height: 46px;
+    border-left: 2px solid #e16521;
+    border-right: 2px solid #e4381C;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    background-position: 0 0, 0 100%;
+    background-repeat: no-repeat;
+    background-size: 100% 2px;
+    background-image: -webkit-gradient(linear, left top, right top, color-stop(100%, #e4381C), to(#e16521)), -webkit-gradient(linear, left top, right top, from(#e4381C), color-stop(0%, #e16521));
+    background-image: -o-linear-gradient(left, #e4381C 100%, #e16521 100%), -o-linear-gradient(left, #e4381C 0%, #e16521 0%);
+    background-image: linear-gradient(to right, #e4381C 100%, #e16521 100%), linear-gradient(to right, #e4381C 0%, #e16521 0%);
+    -webkit-transition-duration: 1000ms;
+    -o-transition-duration: 1000ms;
+    transition-duration: 1000ms;
+    line-height: 45px;
+    position: relative;
+    z-index: 1;
+    border-radius: 4px;
+}
+
+.button-container{
+  display:inline-block;
+  position:relative;
+  }
+  .slImg1{
+    position: relative;
+    background-image: url("../../../assets/img/heroSlider/img.jpg");
+    height: 800px;
+    width: 100%;
+  }
+
+  .slImg2{
+    position: relative;
+    background-image: url("../../../assets/img/heroSlider/city.png");
+    height: 1000px;
+    width: 100%;
+  }
+
+  .slImg3{
+    position: relative;
+    background-image: url("../../../assets/img/heroSlider/im.jpg");
+    height: 1000px;
+    width: 100%;
+  }
+
+  .slImg4{
+    position: relative;
+    background-image: url("../../../assets/img/heroSlider/img3.jpg");
+    height: 1000px;
+    width: 100%;
+  }
+
+  .bttn{
+    position: absolute;
+    top: 50%;
+    left: 27%;
+    margin: -25px 0 0 -25px;
+
+  }
+
+
+
+  .wlcome{
+    color: white;
+    font-size: 60px;
+    font-family:'Times New Roman', Times, serif;
+
+  }
+
+  .titleSede{
+    margin-top: 100px !important;
+  }
+
+  .bttn1 {
+     position: absolute;
+      top: 60%;
+      left: 34%;
+      margin: -25px 0 0 -25px;
+  }
+
+
+  .img_baner{
+    height:  1000px;
+    width: auto;
+
+  }
+
+  .img-slide {
+
+    max-height: 600px; /* Para mantener la proporción original de la imagen */
+    width: 1000px; /* Para mantener la proporción original de la imagen */
+}
+
+#crflt{
+  background-color: #e4381C;
+}
+
+
+
+
+
+

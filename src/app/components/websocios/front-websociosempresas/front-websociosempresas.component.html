@@ -1,0 +1,29 @@
+<nav class="bg-dark navbar-dark">
+  </nav>
+   <section id="header" class="jumbotron text-center">
+     <h1 class="t-stroke-shadow animate__animated  txtflp"> <img src="{{this.pathIm+logoSocio}}" class="logosoc" alt=""> {{this.nombreSocio}} </h1>
+
+     <p class="lead"> Nuestras empresas aliadas.</p>
+     <a href="" class="btn btn-danger"  [routerLink]="['/websociosCTF/' + this.codigo]">Volver</a>
+
+</section>
+
+<section id="gallery">
+  <div class="container">
+    <div class="row">
+    <div class="col-lg-4 mb-4" *ngFor="let emp of empresas">
+    <div class="card animate__animated  txtflp">
+      <div class="card-header">
+        <h2>{{emp.imps_nombre}}</h2>
+      </div>
+      <img src="{{this.pathIm+emp.imps_foto2}}" alt="" class="card-img-top">
+      <div class="card-body">
+        <p class="card-text text-dark">{{emp.imps_descripcion}}</p>
+       <a href="" class="btn btn-outline-success btn-sm" [routerLink]="['/websociosfontinstructores/' + emp.id_emps]">Mis instructores</a>
+      </div>
+     </div>
+    </div>
+
+  </div>
+</div>
+</section>

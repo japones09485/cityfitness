@@ -1,0 +1,51 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <i class="fas fa-user fa-2x text-danger"></i> <h4>{{nomsocio}}</h4>
+  <a (click)="getOut()" class="text_danger m-3"><h3 class="text-danger">Salir</h3></a>
+</nav>
+
+<div class="container-fluid">
+  <div class="row justify-content-md-center" id="content">
+      <div  class="col">
+          <h1 class="text-center text-light">Listado de empresas</h1>
+          <table class="table table-sm table-bordered text-ligh text-center">
+              <thead>
+                  <tr class="table-dark">
+                      <th><button type="button" class="btn btn-sm btn-danger my-2" [routerLink]="['/websociosempresascr']">Nueva
+                              Empresa</button></th>
+                      <th>Logo</th>
+                      <th>Nombre</th>
+                      <th>Descripcion</th>
+                      <th>Facebook</th>
+                      <th>Instagram</th>
+                      <th>Pagina</th>
+
+                  </tr>
+              </thead>
+              <tbody class = "text-white">
+                  <tr *ngFor="let emp of empresas">
+                      <td>
+                          <button type="button" [routerLink]="['/websociosempresased/' + emp.id_emps]" class="btn btn-sm btn-danger m-1">
+                              <i class="fas fa-edit"> Editar Empresa</i>
+                          </button>
+
+                        <button type="button" [routerLink]="['/admin/users/6/' + emp.id_emps]" class="btn btn-sm btn-info m-1">
+                            <i class="fas fa-edit"> Instructores</i>
+                        </button>
+
+                      </td>
+                      <td *ngIf="emp.imps_foto1"> <img src="{{ pathIm + emp.imps_foto1 }}" class="avatar"/></td>
+                      <td *ngIf="!emp.imps_foto1"> <img src="{{ pathIm + 'imagenes/no_disponible.png' }}" class="avatar"/></td>
+                      <td>{{emp.imps_nombre}}</td>
+                      <td>{{emp.imps_descripcion}}</td>
+                      <td>{{emp.imps_facebook}}/td>
+                      <td>{{emp.imps_instagram}}</td>
+                      <td>{{emp.imps_pagina}}</td>
+                      <td><!--<img src="{{ banderaInstructor(cliente.emp_pais) }}" class="avatar"> --></td>
+
+                  </tr>
+
+              </tbody>
+          </table>
+      </div>
+
+

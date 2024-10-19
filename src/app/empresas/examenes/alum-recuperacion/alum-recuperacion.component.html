@@ -1,0 +1,72 @@
+<app-menuempresa></app-menuempresa>
+<div class="row justify-content-md-center" id="content">
+  <div class="col-md-12 col-sm-12 col-xs-12">
+      <ng-container>
+          <h2 class="text-center text-light">Alumnos Inscritos Examen Recuperación </h2>
+          <table class="table table-sm table-bordered table-striped text-ligh m-3">
+              <thead class="table-primary">
+                  <tr class="text-center">
+                      <th>
+                          <button type="button" class="btn bntn-lg btn-danger m-1 fas fa-edit" data-toggle="modal" data-target="#inscribir">Inscribir alumno</button>
+                          <div class="modal fade" id="inscribir" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                              <div class="modal-dialog" role="document">
+                                  <div class="modal-content">
+                                      <div class="modal-header">
+                                          <h5 class="modal-title" id="exampleModalLabel">Incripción de alumno</h5>
+                                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                              <span aria-hidden="true">&times;</span>
+                                          </button>
+                                      </div>
+                                      <div class="modal-body">
+                                          <form [formGroup]="frmAlumCreator" class="m-2" (ngSubmit)="Inscripcion()">
+                                              <div class="form-group row">
+                                                  <p>Ingrese el correo electrónico del alumno a registrar. El correo electrónico del alumno debe corresponder al registrado en www.cityfitnessworld.com
+                                                  </p>
+                                              </div>
+
+                                              <div class="form-group row">
+                                                  <input type="text" class="form-control" formControlName="correo" />
+                                              </div>
+
+
+                                              <div class="form-group row">
+                                                  <button type="submit" *ngIf="frmAlumCreator.valid" class="btn btn-danger btn-block">Inscribir</button>
+                                              </div>
+
+                                              <div class="alert" *ngIf="sucess" role="alert">
+                                                  <h3 class="text-center text-danger"> {{ mensaje }} </h3>
+                                              </div>
+                                          </form>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                      </th>
+                      <th>Nombre examen</th>
+                      <th>Nombre alumno</th>
+                      <th>Email</th>
+                      <th>Nombre aliado</th>
+                      <th>Fecha inscripción</th>
+                  </tr>
+              </thead>
+              <tbody>
+                <tr class="text-center border" *ngFor="let alum of alumnos">
+                  <td> <button (click)="eliminarAlum(alum.id)" type="button" class="btn btn-sm btn-warning" data-toggle="modal" data-target="#ampliarsub" [attr.data-target]="'#ampliarsub'+alum.id">
+                   Eliminar alumno
+                </button></td>
+                  <td class="text-white">{{alum.nombre_examen}}</td>
+                  <td class="text-white" >{{alum.alumno}}</td>
+                  <td class="text-white">{{alum.email}}</td>
+                  <td class="text-white">{{alum.aliado}}</td>
+                  <td >{{alum.fecha | date: 'yyyy/MM/dd'}}</td>
+                </tr>
+              </tbody>
+          </table>
+      </ng-container>
+  </div>
+</div>
+
+
+
+
+

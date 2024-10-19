@@ -1,0 +1,45 @@
+<app-menuempresa></app-menuempresa>
+<div class="row justify-content-md-center" id="content">
+    <div class="col-md-8">
+        <div class="new">
+            <ng-container id="content">
+                <h1 class="text-danger text-center m-5"> Programación de clases </h1>
+                <form [formGroup]="frmClasCreator" class="m-5 border p-5" (ngSubmit)="progClase()">
+                    <div class="form-group row">
+                        <label for="exampleInputEmail1" class="form-label col-sm-2 text-light">Nombre</label>
+                        <div class="col-sm-10">
+                          <input type="text" class="form-control" formControlName="nombre" />
+                      </div>
+
+                        </div>
+
+                    <div class="form-group row">
+                        <label for="exampleInputEmail1" class="form-label col-sm-2 text-light">Descripción</label>
+                        <div class="col-sm-10">
+                            <textarea type="text" class="form-control" formControlName="descrip"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="exampleInputEmail1" class="form-label col-sm-2 text-light">Fecha</label>
+                        <div class="col-sm-10">
+                            <input type="text" id="fechaClase" class="form-control" formControlName="fechapro" readonly="readonly" />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="exampleInputEmail1" class="form-label col-sm-2 text-light">Hora</label>
+                        <div class="col-sm-10">
+                            <input type="text" id="horaClase" readonly="readonly" class="form-control" formControlName="horapro" />
+                        </div>
+                    </div>
+
+                    <div class="alert alert-warning" *ngIf="sucess" role="alert">
+                        <p class="text-dark text-center"> {{ mensaje }} </p>
+                    </div>
+
+                    <button type="submit" *ngIf="frmClasCreator.valid" class="btn btn-danger btn-block">Guardar</button>
+                </form>
+            </ng-container>
+        </div>
+    </div>
+</div>

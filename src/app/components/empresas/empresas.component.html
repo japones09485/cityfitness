@@ -1,0 +1,78 @@
+<app-header></app-header>
+<div class="container bg-dark" style="padding-top:130px;">
+    <div *ngFor="let emp of listEmpresas" class="jumbotron jumbotron-fluid bg-transparent">
+
+        <div class="row">
+            <div class="col-sm-4">
+                <div id="carousel_{{emp.emp_id}}" class="carousel slide" data-ride="carousel">
+                    <div class="carousel-inner">
+                        <div *ngIf="emp.emp_foto1" class="carousel-item active">
+                            <img src="{{ pathImg + emp.emp_foto1 }}" class="d-block w-100 y-50" alt="..." />
+                        </div>
+                        <div *ngIf="emp.emp_foto2" class="carousel-item">
+                            <img src="{{ pathImg + emp.emp_foto2 }}" class="d-block w-100" alt="..." />
+                        </div>
+                        <div *ngIf="emp.emp_foto3" class="carousel-item">
+                            <img src="{{ pathImg + emp.emp_foto3 }}" class="d-block w-100" alt="..." />
+                        </div>
+                    </div>
+                    <a class="carousel-control-prev" href="#carousel_{{emp.emp_id}}" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Anterior</span>
+                    </a>
+                    <a class="carousel-control-next" href="#carousel_{{emp.emp_id}}" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Siguiente</span>
+                    </a>
+                </div>
+            </div>
+            <div class="col-sm-8">
+                <h1 class="display-4 text-info">{{ emp.emp_nombre }}</h1>
+                <h3 class="display-5 text-secondary"><img src="{{ banderaPais(emp.emp_pais) }}" class="avatar">{{nombrePais}}</h3>
+
+                <div class="btn-group mx-2" role="group">
+                    <a href="{{emp.emp_instagram}}" target="_blank">
+                        <i class="fab fa-instagram fa-2x"></i>
+                    </a>
+                </div>
+                <div class="btn-group mx-2" role="group">
+                    <a href="{{emp.emp_facebook}}" target="_blank">
+                        <i class="fab fa-facebook fa-2x"></i>
+                    </a>
+                </div>
+                <div class="btn-group mx-2" role="group">
+                    <a href="https://wa.me/{{ emp.emp_telefono }}?text=Comunicate%20con%20nosotros" class="text-success" target="_blank">
+                        <i class="fab fa-whatsapp fa-2x"></i>
+                    </a>
+                </div>
+
+                <button type="button" class="btn btn-info btn-sm ml-2" data-toggle="modal" [attr.data-target]="'#descrip_empresa'+emp.emp_id">
+                        Información
+                     </button>
+                <div class="modal fade" id="descrip_empresa{{ emp.emp_id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header bg-warning">
+                                <h5 class="modal-title text-center" id="exampleModalLabel">
+                                    {{ emp.emp_nombre }}
+                                </h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                         <span aria-hidden="true">&times;</span>
+                                     </button>
+                            </div>
+                            <div class="modal-body">
+                                <p class="text-dark">{{ emp.emp_descripcion }}</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Cerrar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--Inicio Boton de whatssap-->
+        <a href="https://wa.me/573006667694?text=Comunicate%20con%20nosotros" class="whatsapp" target="_blank"> <i class="fab fa-whatsapp fa-lg" aria-hidden="true"></i></a>
+        <!--END boton de whatssap-->
+    </div>

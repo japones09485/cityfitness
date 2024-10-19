@@ -1,0 +1,84 @@
+<app-menuempresa></app-menuempresa>
+<div class="row justify-content-md-center" id="content">
+    <div class="col-md-8">
+        <div class="new">
+            <ng-container id="content">
+                <h1 class="text-danger text-center m-5">Examen </h1>
+
+                <form [formGroup]="frmClasCreator" class="m-5 border p-5" (ngSubmit)="crearExamen()">
+                    <div class="form-group row">
+                        <label for="exampleInputEmail1" class="form-label col-sm-2 text-light">Nombre</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" formControlName="nombre" />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="exampleInputEmail1" class="form-label col-sm-2 text-light">Descripción</label>
+                        <div class="col-sm-10">
+                            <textarea type="text" class="form-control" formControlName="descrip"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="exampleInputEmail1" class="form-label col-sm-2 text-light">Fecha Inicio</label>
+                        <div class="col-sm-10">
+                            <input type="text" id="fechaini" class="form-control" formControlName="fechaini" readonly="readonly" />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="exampleInputEmail1" class="form-label col-sm-2 text-light">Fecha Fin</label>
+                      <div class="col-sm-10">
+                          <input type="text" id="fechafin" class="form-control" formControlName="fechafin" readonly="readonly" />
+                      </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <label for="exampleInputEmail1" class="form-label col-sm-2 text-light"># de preguntas</label>
+                    <div class="col-sm-10">
+                        <input type="number" class="form-control" formControlName="numpreg"/>
+                    </div>
+
+                </div>
+
+
+
+                <div class="form-group row" >
+                  <label for="exampleInputEmail1" class="form-label col-sm-2 text-light"># de preguntas para aprobar</label>
+                  <div class="col-sm-10">
+                      <input type="number" class="form-control" formControlName="numpregaprob"/>
+                  </div>
+
+              </div>
+
+
+              <div class="form-group row">
+                <label for="exampleInputEmail1" class="form-label col-sm-2 text-light">Duración del examen(Min)</label>
+                <div class="col-sm-10">
+                    <input type="number" class="form-control" formControlName="duracion"/>
+                </div>
+
+            </div>
+
+            <div class="form-group row" >
+              <label for="exampleInputEmail1" class="form-label col-sm-2 text-light">Tipo de examen</label>
+              <div class="col-sm-10">
+              <select class="form-control" formControlName="tipo_examen">
+                  <option value="1">Examen regular</option>
+                  <option value="2">Examen de recuperaciòn</option>
+
+              </select>
+            </div>
+          </div>
+
+
+
+                    <div class="alert alert-warning" *ngIf="sucess" role="alert">
+                        <p class="text-dark text-center"> {{ mensaje }} </p>
+                    </div>
+
+                    <button type="submit" *ngIf="frmClasCreator.valid" class="btn btn-danger btn-block">Guardar</button>
+                </form>
+            </ng-container>
+        </div>
+    </div>
+</div>

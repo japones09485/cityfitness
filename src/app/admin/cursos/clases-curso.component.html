@@ -1,0 +1,134 @@
+<div class="row justify-content-md-center">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <ng-container *ngIf="!creando && !editando">
+            <h2 class="text-center text-light">Clases de curso {{ curso.cur_nombre }}</h2>
+            <table class="table table-sm table-bordered text-ligh">
+                <thead class="table-primary">
+                    <tr class="text-center">
+                        <th> <button type="button" class="btn bntn-sm btn-danger my-2" (click)="nuevaClase()">Nueva
+                                clase</button></th>
+                        <th>Curso</th>
+                        <th>Entrenador</th>
+                        <th>Fecha</th>
+                        <th>Tipo</th>
+                        <th>Valor</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let clase of clases">
+                        <td>
+                            <button type="button" data-toggle="modal" data-target="#confDeleteClass" (click)="claseEliminar = clase.clas_id" class="btn btn-sm btn-danger">
+                                <i class="fas fa-close"></i>
+                            </button>
+                            <button type="button" (click)="editarClase(clase)" class="btn btn-sm btn-success">
+                                <i class="far fa-edit"></i>
+                            </button>
+                        </td>
+                        <td>{{ clase.clas_nombre }}</td>
+                        <td><img src="{{ pathIm + clase.ins_foto1 }}" class="avatar mr-1" />{{ clase.ins_nombre + ' ' + clase.ins_apellido }}</td>
+                        <td>{{ clase.clas_fecha_inicio }}</td>
+                        <td>{{ clase.clas_tipo === '1' ? 'Grupal':'Personalizado' }}</td>
+                        <td><i class="fas fa-hand-holding-usd fa-lg text-success"></i> {{ clase.clas_valor }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </ng-container>
+        <div class="card mt-2" [ngStyle]="{'display': creando? 'block':'none'}">
+            <h2 class="card-header text-center"><a (click)="creando = false"><i
+                        class="fas fa-arrow-alt-circle-left float-left text-danger"></i></a> Nueva Clase</h2>
+            <div class="card-body">
+                <form [formGroup]="frmClasCreator" (ngSubmit)="crearClase()">
+                    <div class="form-group row">
+                        <label for="exampleInputEmail1" class="form-label col-sm-2">Nombre</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" formControlName="clas_nombre" />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="exampleInputEmail1" class="form-label col-sm-2">Descripción</label>
+                        <div class="col-sm-10">
+                            <textarea type="text" class="form-control" formControlName="clas_descripcion"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="exampleInputEmail1" class="form-label col-sm-2">Fecha</label>
+                        <div class="col-sm-10">
+                            <input type="text" id="fechaClase" class="form-control" formControlName="clas_fecha_inicio" readonly="readonly" />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="exampleInputEmail1" class="form-label col-sm-2">Hora</label>
+                        <div class="col-sm-10">
+                            <input type="text" id="horaClase" readonly="readonly" class="form-control" formControlName="clas_hora" />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="exampleInputEmail1" class="form-label col-sm-2">Tipo</label>
+                        <div class="col-sm-10">
+                            <select type="email" (change)="cambiarTipo()" class="form-control" formControlName="clas_tipo">
+                                <option value="0" selected="selected">Personalizado</option>
+                                <option value="1">Grupal</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row" *ngIf="tipo == '1'">
+                        <label for="exampleInputEmail1" class="form-label col-sm-2">Instructor</label>
+                        <div class="col-sm-8">
+                            <select class="form-control" formControlName="clas_fk_instructor" (change)="cambioInstructor()">
+                                <option *ngFor="let inst of instructores" [ngValue]="inst.ins_id">
+                                    {{ inst.ins_nombre +' '+ inst.ins_apellido }}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="col-sm-2">
+                            <img *ngIf="imgInstructor" [src]="imgInstructor" class="avatar" />
+                        </div>
+                    </div>
+                    <div class="form-group row" *ngIf="tipo == '1'">
+                        <label for="exampleInputEmail1" class="form-label col-sm-2">Link zoom</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" formControlName="clas_enlace" />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="exampleInputEmail1" class="form-label col-sm-2">Valor</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" formControlName="clas_valor" />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="exampleInputEmail1" class="form-label col-sm-2">Estado</label>
+                        <div class="col-sm-10">
+                            <select type="email" class="form-control" formControlName="clas_estado">
+                                <option value="1" selected="selected">Activo</option>
+                                <option value="0">Inactivo</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="fa-3x text-center" *ngIf="flagSave">
+                        <i class="fas fa-spinner fa-pulse"></i>
+                    </div>
+                    <button type="submit" *ngIf="frmClasCreator.valid && !flagSave" class="btn btn-danger btn-block">Guardar</button>
+                </form>
+            </div>
+        </div>
+        <app-editar-clase *ngIf="editando" [clase]="claseEditando" [instructs]="instructores" (outClase)="claseEditada($event)" (emt)="editando = $event"></app-editar-clase>
+    </div>
+</div>
+
+<div class="modal fade" id="confDeleteClass" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-danger">
+                <h5 class="modal-title text-light" id="exampleModalLabel">ELIMINAR ESTA CLASE?</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="eliminarClase()">Confirmar</button>
+            </div>
+        </div>
+    </div>
+</div>

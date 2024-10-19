@@ -1,0 +1,29 @@
+<!--Header Component-->
+<app-header></app-header>
+
+<div class="container-fluid bg-dark  d-inline-block" style="padding-top:130px">
+    <div class="card bg-transparent border-white mb-3 animate__bounceIn" *ngFor="let item of listadoCurso">
+        <div class="row no-gutters">
+            <div class="col-md-4">
+                <img [src]="pathImg + item.usu_logo" class="card-img">
+            </div>
+            <div class="col-md-8 text-white">
+                <div class="card-body">
+                    <div class="col-12">
+                        <h5 class="card-title m-0 d-inline">{{item.usu_nombres}}  {{item.usu_apellidos}}</h5>
+                    </div>
+                    <h6 class="card-subtitle mt-2 mb-2 text-muted"> <img [src]="pathImg + item.usu_logo" class="avatar"
+                            alt=""> {{item.usu_nombres}}   {{item.usu_apellidos}}</h6>
+                    <p class="card-text text-white">{{item.usu_descrip_profesional}}</p>
+
+                    <button type="button" class="btn btn-info btn-sm float-center" [routerLink]="['/aliados/FanPag/' + item.usu_id]"><i
+                        class="fas fa-pager"></i> Pagina Principal</button>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="viendoclases && cursover.cur_id === item.cur_id"
+            class="col-md-12 animate__bounceInLeft animate__fadeOut">
+            <app-clases-home *ngIf="cursover && viendoclases" [curso]="cursover"></app-clases-home>
+        </div>
+    </div>
+</div>

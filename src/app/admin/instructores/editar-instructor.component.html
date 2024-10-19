@@ -1,0 +1,230 @@
+<app-menu *ngIf="this.externo!>1"></app-menu>
+<div class="container-fluid">
+    <div class="row justify-content-md-center" id="content">
+        <div class="col-md-8 col-sm-8 col-xs-12">
+            <div class="card mt-2">
+                <h2 class="card-header text-light text-center">Editar Instructor</h2>
+                <div class="card-body">
+                    <div class="fa-3x text-center" *ngIf="!instructor.ins_id">
+                        <i class="fas fa-spinner fa-pulse"></i>
+                        
+                    </div>
+                    <form [formGroup]="frmIns" *ngIf="instructor.ins_id" (ngSubmit)="guardarInstructor()">
+                        <div class="form-group row">
+                            <label for="staticEmail" class="col-sm-2 col-form-label">Identificación</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control " formControlName="ins_identificacion" />
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="staticEmail" class="col-sm-2 col-form-label">Nombres</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control " formControlName="ins_nombre" />
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="staticEmail" class="col-sm-2 col-form-label">Apellidos</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control " formControlName="ins_apellido" />
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="staticEmail" class="col-sm-2 col-form-label">Telefono</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" formControlName="ins_telefono" />
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="exampleInputEmail1" class="form-label col-2">Pais</label>
+                            <div class="col-8">
+                                <select class="form-control " formControlName="ins_fk_pais" (change)="cambioPais()">
+                                <option *ngFor="let item of paisesList" [ngValue]="item.iso">{{ item.nombre }}
+                            </option>
+                        </select>
+                            </div>
+                            <div class="col-2">
+                                <img *ngIf="imgCountry" [src]="imgCountry" class="avatar" />
+                            </div>
+                        </div>
+
+
+                        <div class="form-group row">
+                            <label for="staticEmail" class="col-sm-2 col-form-label">Ciudad</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" formControlName="ins_fk_ciudad" />
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="exampleInputEmail1" class="col-sm-2 col-form-label">Empresa</label>
+                            <div class="col-10">
+                                <select class="form-control " formControlName="ins_fk_empresa">
+                                    <option *ngFor="let emp of empresas" [ngValue]="emp.emp_id">{{ emp.emp_nombre }}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row" *ngIf="this.externo != 1">
+                            <label for="exampleInputEmail1" class="col-sm-2 col-form-label">Gimnasio</label>
+                            <div class="col-10">
+                                <select class="form-control " (change)="changeGym($event)">
+                                <option value="" selected>Seleccione gimnasios....</option>
+                                <option *ngFor="let gym of gimnasios" [value]="gym.gim_id">{{ gym.gim_nombre }}
+                                </option>
+                            </select>
+                            </div>
+
+                            <span *ngFor="let gym of listGim" class="badge badge-success mx-1 mt-1">
+                                <button type="button" (click)="quitGym(gym)" class="btn btn-link btn-sm p-0 "><i
+                                        class="fas fa-trash-alt"></i></button>
+                                {{gym.gim_nombre}}
+                            </span>
+                        </div>
+                        <div class="form-group row">
+                            <label for="exampleInputEmail1" class="col-sm-2 col-form-label ">Descripción
+                                profesional</label>
+                            <div class="col-10">
+                                <input type="text" class="form-control " formControlName="ins_descrp_profesional" />
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="exampleInputEmail1" class="col-sm-2 col-form-label">Perfil</label>
+                            <div class="col-10">
+                                <select class="form-control " formControlName="ins_fk_perfil" >
+                                    <option value="0" selected="selected">Capacitado</option>
+                                    <option value="1">CAPACITADOR</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row" [formGroup]="selectEmpresa" *ngIf="this.externo != 1">
+                          <label for="exampleInputEmail1" class="form-label col-sm-2">Cursos</label>
+                          <div class="col-sm-5">
+                              <select class="form-control " formControlName="empSelect" (change)="cargarCursos()">
+                                  <option value="" selected>Ver cursos de empresa....</option>
+                                  <option *ngFor="let emp of empresas" [ngValue]="emp.emp_id">
+                                      {{emp.emp_nombre}}</option>
+                              </select>
+                          </div>
+                          <div class="col-sm-5">
+                              <select class="form-control " formControlName="curEmpSelect" (change)="agregarCursados()">
+                                  <option value="" selected>Agregar curso a experiencia....</option>
+                                  <option *ngFor="let item of copySelect" [ngValue]="item.cur_id">
+                                      {{item.cur_nombre}}</option>
+                              </select>
+                          </div>
+                          <span *ngFor="let crsd of cursados" class="badge badge-danger mx-1 mt-1">
+                              <button type="button" (click)="quitarCursado(crsd)" class="btn btn-link btn-sm p-0 "><i
+                                      class="fas fa-trash-alt"></i></button>
+                              {{crsd.cur_nombre}}
+                          </span>
+                      </div>
+                        <div class="form-group row">
+                            <label for="exampleInputEmail1" class="col-sm-2 col-form-label">Correo</label>
+                            <div class="col-10">
+                                <input type="text" class="form-control" formControlName="ins_correo" />
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="exampleInputEmail1" class="col-sm-2 col-form-label">Facebook</label>
+                            <div class="col-10">
+                                <input type="text" class="form-control" formControlName="ins_facebook" />
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="exampleInputEmail1" class="col-sm-2 col-form-label">Instagram</label>
+                            <div class="col-10">
+                                <input type="text" class="form-control" formControlName="ins_instagram" />
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="exampleInputEmail1" class="col-sm-2 col-form-label">Estado</label>
+                            <div class="col-10">
+                                <select type="email" class="form-control " formControlName="ins_estado">
+                                    <option value="1" selected="selected">Activo</option>
+                                    <option value="0">Inactivo</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div id="carouselExampleControls" class="carousel slide" data-ride="carousel" *ngIf="this.externo != 1">
+                            <div class="carousel-inner">
+                                <div *ngIf="instructor.ins_foto1" class="carousel-item active">
+                                    <img src="{{ pathIm + instructor.ins_foto1 }}" class="d-block w-100 y-50" alt="..." />
+                                </div>
+                                <div *ngIf="instructor.ins_foto2" class="carousel-item">
+                                    <img src="{{ pathIm + instructor.ins_foto2 }}" class="d-block w-100" alt="..." />
+                                </div>
+                                <div *ngIf="instructor.ins_foto3" class="carousel-item">
+                                    <img src="{{ pathIm + instructor.ins_foto3 }}" class="d-block w-100" alt="..." />
+                                </div>
+                                <div *ngIf="instructor.ins_foto4" class="carousel-item">
+                                    <img src="{{ pathIm + instructor.ins_foto4 }}" class="d-block w-100" alt="..." />
+                                </div>
+                                <div *ngIf="instructor.ins_foto5" class="carousel-item">
+                                    <img src="{{ pathIm + instructor.ins_foto5 }}" class="d-block w-100" alt="..." />
+                                </div>
+                            </div>
+                            <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="sr-only">Anterior</span>
+                            </a>
+                            <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="sr-only">Siguiente</span>
+                            </a>
+                        </div>
+                        <div class="input-group mb-3" *ngIf="this.externo != 1">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="imagenuno">Imagen (opcional)</span>
+                            </div>
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input " (change)="agregarArchivo($event,1)" />
+                                <label class="custom-file-label" for="inputGroupFile01">Agregue una imagen</label>
+                            </div>
+                        </div>
+                        <div class="input-group mb-3" *ngIf="this.externo != 1">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="imagendos">Imagen (opcional)</span>
+                            </div>
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input " (change)="agregarArchivo($event,2)" />
+                                <label class="custom-file-label" for="inputGroupFile01">Agregue una imagen</label>
+                            </div>
+                        </div>
+                        <div class="input-group mb-3" *ngIf="this.externo != 1">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="imagentres">Imagen (opcional)</span>
+                            </div>
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input " (change)="agregarArchivo($event,3)" />
+                                <label class="custom-file-label" for="inputGroupFile01">Agregue una imagen</label>
+                            </div>
+                        </div>
+                        <div class="input-group mb-3" *ngIf="this.externo != 1">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="imagencuatro">Imagen (opcional)</span>
+                            </div>
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input " (change)="agregarArchivo($event,4)" />
+                                <label class="custom-file-label" for="inputGroupFile01">Agregue una imagen</label>
+                            </div>
+                        </div>
+                        <div class="input-group mb-3" *ngIf="this.externo != 1">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="imagencinco">Imagen (opcional)</span>
+                            </div>
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input " (change)="agregarArchivo($event,5)" />
+                                <label class="custom-file-label" for="inputGroupFile01">Agregue una imagen</label>
+                            </div>
+                        </div>
+                        <div class="fa-3x text-center" *ngIf="flagSave">
+                            <i class="fas fa-spinner fa-pulse"></i>
+                        </div>
+                        <button type="submit" *ngIf="frmIns.valid && !flagSave" class="btn btn-danger btn-block">Guardar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

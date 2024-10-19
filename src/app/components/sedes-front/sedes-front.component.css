@@ -1,0 +1,28 @@
+table td,
+th,
+thead {
+    border-color: #a8a8a8;
+    border-width: 1px;
+}
+
+table thead th {
+    border-color: #a8a8a8;
+    border-width: 1px;
+}
+
+.cardsr{
+  margin-top: 100px;
+}
+
+    #content {
+        background: url("../../.././assets/img/fondo-transp.png") !important;
+        width: 100%;
+        display: block;
+    }
+
+
+.cardCur{
+  border: 1px solid #d9544f;
+}
+
+

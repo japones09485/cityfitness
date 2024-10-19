@@ -1,0 +1,134 @@
+<app-menualiado></app-menualiado>
+
+
+<div class="row justify-content-md-center" id="content">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <ng-container>
+            <h2 class="text-center text-light">Alumnos Inscritos </h2>
+            <table class="table table-sm table-bordered table-striped text-ligh m-3">
+                <thead class="table-primary">
+                    <tr class="text-center">
+                        <th>
+                            <button type="button" class="btn bntn-lg btn-danger m-1 fas fa-edit" data-toggle="modal" data-target="#inscribir">Inscribir alumno</button>
+                            <div class="modal fade" id="inscribir" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Incripción de alumno</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form [formGroup]="frmAlumCreator" class="m-2" (ngSubmit)="Inscripcion()">
+                                                <div class="form-group row">
+                                                    <p>Ingrese el correo electrónico del alumno a registrar. El correo electrónico del alumno debe corresponder al registrado en www.cityfitnessworld.com
+                                                    </p>
+                                                </div>
+
+                                                <div class="form-group row">
+                                                    <input type="text" class="form-control" formControlName="correo" />
+                                                </div>
+
+                                                <div class="form-group row">
+                                                    <label for="exampleInputEmail1" class="form-label col-sm-4">Cantidad
+                                                        de meses</label>
+                                                    <div class="col-sm-8">
+                                                        <select class="form-control" id="meses" formControlName="meses">
+                                                            <option value="1">1</option>
+                                                            <option value="2">2</option>
+                                                            <option value="3">3</option>
+                                                            <option value="4">4</option>
+                                                            <option value="5">5</option>
+                                                            <option value="6">6</option>
+                                                            <option value="7">7</option>
+                                                            <option value="8">8</option>
+                                                            <option value="9">9</option>
+                                                            <option value="10">10</option>
+                                                            <option value="11">11</option>
+                                                            <option value="12">12</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <button type="submit" *ngIf="frmAlumCreator.valid" class="btn btn-danger btn-block">Inscribir</button>
+                                                </div>
+
+                                                <div class="alert" *ngIf="sucess" role="alert">
+                                                    <h3 class="text-center text-danger"> {{ mensaje }} </h3>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </th>
+
+                        <th>Nombre</th>
+                        <th>Email</th>
+                        <th>Pais</th>
+                        <th>Fecha Inscripción</th>
+                        <th>Fecha Fin</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="text-center border" *ngFor="let alum of alumnos">
+                        <td>
+                            <!-- Button trigger modal -->
+                            <button type="button" class="btn btn-sm btn-warning" data-toggle="modal" data-target="#ampliarsub" [attr.data-target]="'#ampliarsub'+alum.id">
+                                Ampliar subscripción
+                            </button>
+
+                        </td>
+                        <td>{{alum.nombres}} {{alum.apellidos}}</td>
+                        <td>{{ alum.email }}</td>
+                        <td> <img src="{{ banderaPais(alum.pais) }}" class="avatar">{{alum.pais}}</td>
+
+                        <td>{{ alum.fecha_inicio }}</td>
+                        <td>{{ alum.fecha_fin }}</td>
+
+                        <div class="modal fade" id="ampliarsub{{alum.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title text-danger" id="exampleModalLabel">Ampliar subscripción de {{ alum.nombres}} {{ alum.apellidos }}</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="form-group row">
+                                            <label for="exampleInputEmail1" class="form-label col-sm-4 text-center">Cantidad
+                                                de meses</label>
+                                            <div class="col-sm-8">
+                                                <select class="form-control" id="meses" [(ngModel)]='meses'>
+                                                    <option value="1">1</option>
+                                                    <option value="2">2</option>
+                                                    <option value="3">3</option>
+                                                    <option value="4">4</option>
+                                                    <option value="5">5</option>
+                                                    <option value="6">6</option>
+                                                    <option value="7">7</option>
+                                                    <option value="8">8</option>
+                                                    <option value="9">9</option>
+                                                    <option value="10">10</option>
+                                                    <option value="11">11</option>
+                                                    <option value="12">12</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-danger btn-lg btn-block" data-dismiss="modal" (click)="ampliarSubsripcion(alum.id, meses, alum.fecha_fin)">Guardar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </tr>
+
+
+                </tbody>
+            </table>
+        </ng-container>
+    </div>
+</div>

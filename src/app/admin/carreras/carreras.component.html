@@ -1,0 +1,83 @@
+<app-menu></app-menu>
+
+<div class="container-fluid">
+    <div class="row justify-content-center" id="content">
+        <div class="col-12 mt-2" *ngIf="!creando">
+            <button type="button" class="btn btn-danger mb-2" data-toggle="modal" data-target="#frmGimnasio" (click)="NuevaCarrera()">
+            Agregar Carrera
+            </button>
+  
+        <table class="table table-sm table-hover table-bordered text-light">
+          <thead>
+            <tr class="table-primary text-center">
+              <th></th>
+              <th>Id</th>
+              <th>Nombre</th>
+              <th>Fecha Creación</th>
+              <th>Puntaje</th>
+              <th>Estado</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Mostrar mensaje si no hay carreras -->
+            <tr *ngIf="!carreras.length" class="text-center">
+              <td colspan="6">No hay carreras disponibles.</td>
+            </tr>
+  
+            <!-- Renderizar las carreras usando *ngFor -->
+            <tr *ngFor="let car of carreras" class="text-center">
+              <td>
+                <button type="button" data-toggle="modal" data-target="#confDeleteClass" (click)="claseEliminar(car.id)" class="btn btn-sm btn-danger">
+                    <i data-toggle="tooltip" title="Eliminar Carreras" class="fas fa-close"></i>
+                </button>
+                <button type="button" (click)="InfoCarrera(car.id)" class="btn btn-sm btn-success">
+                    <i data-toggle="tooltip" title="Editar Carreras" class="far fa-edit"></i>
+                </button>
+
+
+
+              </td>
+              <td>{{ car.id }}</td>
+              <td>{{ car.nombre }}</td>
+              <td>{{ car.fecha_creacion }}</td>
+              <td>{{ car.puntaje }}</td>
+              <td>{{ car.estado === '1' ? 'Activo' : 'Inactivo' }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="col-md-8 col-sm-8 col-xs-12" *ngIf="creando">
+        <div class="card mt-2">
+            <h2 class="card-header text-center"><a (click)="Volver()"><i
+                        class="fas fa-arrow-alt-circle-left float-left text-light"></i></a>Crear carrera</h2>
+            <div class="card-body">
+                <form [formGroup]="frmCliCreator" (ngSubmit)="crearCarrera(this.Idcarrera)">
+                  
+                    <div class="form-group">
+                        <label for="exampleInputEmail1" class="text-light">Nombre</label>
+                        <input type="text" class="form-control" formControlName="nombre" />
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1" class="text-light">Puntaje</label>
+                        <input type="number" class="form-control" formControlName="puntaje" />
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1" class="text-light">Estado</label>
+                        <select type="email" class="form-control" formControlName="estado">
+                            <option value="1" selected="selected">Activo</option>
+                            <option value="0">Inactivo</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" *ngIf="frmCliCreator.valid && !edit" class="btn btn-danger btn-block">Guardar</button>
+                    <button type="submit" *ngIf="frmCliCreator.valid && edit" class="btn btn-danger btn-block">Editar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    
+  </div>
+  

@@ -1,0 +1,135 @@
+<app-menuempresa></app-menuempresa>
+<div class="row justify-content-md-center" id="content">
+  <div class="col-md-12 col-sm-12 col-xs-12">
+    <div class="new">
+      <ng-container id="content">
+        <h1 class="text-danger text-center m-5"> Examen </h1>
+
+
+        <div>
+          <!-- Button trigger modal -->
+<button type="button" class="btn btn-warning btn-sm m-3" data-toggle="modal" data-target="#addpreg">
+Nueva pregunta
+</button>
+
+<!-- Modal -->
+<div class="modal fade bd-example-modal-lg" id="addpreg" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal-dialog modal-lg" role="document">
+  <div class="modal-content bg-dark">
+    <div class="modal-header">
+      <h5 class="modal-title text-danger" id="exampleModalLabel">Nueva pregunta</h5>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+
+    <div class="alert alert-warning" role="alert"*ngIf="!validalm">
+      {{this.mensaje}}
+    </div>
+
+    <div class="modal-body">
+      <form (ngSubmit)="addPregunta(g)" #g="ngForm" id="add_prg">
+
+
+        <div>
+          <div class="form-group row">
+
+            <div class="col-sm-7">
+              <textarea name="pregunta" placeholder="Pregunta" class="form-control" cols="30"
+                rows="3" required ngModel></textarea>
+            </div>
+
+            <div class="col-sm-3">
+              <select name="respuesta" class="form-control m-3" required ngModel>
+                <option [value]="1">Opción multiple</option>
+                <option [value]="2">Verdadero o falso</option>
+                <option [value]="3">Abierta</option>
+              </select>
+            </div>
+
+          </div>
+        </div>
+        <button type="submit" class="btn btn-danger btn-sm" *ngIf="!this.crrmd">Guardar</button>
+        <button type="button" class="btn btn-warning btn-sm" *ngIf="this.crrmd" (click)="crrmod()" data-dismiss="modal">Cerrar</button>
+
+      </form>
+    </div>
+
+  </div>
+</div>
+</div>
+        </div>
+
+
+        <form (ngSubmit)="GuardarPreguntas(f)" #f="ngForm" id="form-preg">
+
+
+          <div *ngIf="!preguntas">
+            <div class="form-group row" *ngFor="let preg of arrnumpreg">
+
+              <div class="col-sm-6">
+                <textarea name="pregunta_{{preg}}" placeholder="Pregunta #{{preg}}" class="form-control" cols="30"
+                  rows="3" required ngModel></textarea>
+              </div>
+
+              <div class="col-sm-3">
+                <select name="respuesta_{{preg}}" class="form-control m-3" required ngModel>
+                  <option [value]="1">Opción multiple</option>
+                  <option [value]="2">Verdadero o falso</option>
+                  <option [value]="3">Abierta</option>
+                </select>
+              </div>
+
+            </div>
+          </div>
+          <div *ngIf="preguntas">
+            <div class="form-group row" *ngFor="let preg of preguntas">
+
+              <div class="col-sm-6">
+                <textarea name="pregunta_{{preg.numero_pregunta}}" placeholder="Pregunta #{{preg.numero_pregunta}}"
+                  class="form-control" cols="30" rows="3" [(ngModel)]="preg.enunciado"></textarea>
+              </div>
+
+              <div class="col-sm-3">
+                <select name="respuesta_{{preg.numero_pregunta}}" class="form-control m-3" ngModel
+                  [(ngModel)]="preg.tipo_pregunta" disabled="true">
+                  <option [value]="1">Opción multiple</option>
+                  <option [value]="2">Verdadero o falso</option>
+                  <option [value]="3">Abierta</option>
+                </select>
+              </div>
+
+
+
+              <div class="col-sm-3">
+                <!-- Button trigger modal -->
+<button type="button" class="btn btn-danger btn-sm m-3"  (click)="eliminar_preg(preg.id_pregunta,preg.fk_examen)" >
+ Eliminar pregunta
+</button>
+
+
+              </div>
+
+            </div>
+
+            <div class="col-sm-12" *ngIf="validul">
+              <div class="alert alert-warning" role="alert">
+              {{this.mensaje}}
+              </div>
+
+            </div>
+          </div>
+
+
+
+
+          <div class="alert alert-warning" *ngIf="sucess" role="alert">
+            <p class="text-dark text-center"> {{ mensaje }} </p>
+          </div>
+
+          <button type="submit" class="btn btn-danger btn-block">Guardar</button>
+        </form>
+      </ng-container>
+    </div>
+  </div>
+</div>

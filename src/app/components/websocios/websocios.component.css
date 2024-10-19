@@ -1,0 +1,39 @@
+.menu-socio{
+  height: 6%;
+}
+.buttoninfo {
+  border-radius: 50%;
+}
+
+.txtflp {
+  display: inline-block;
+  margin: 0 0.5rem;
+
+  animation: bounce; /* referring directly to the animation's @keyframe declaration */
+  animation-duration: 8s; /* don't forget to set a duration! */
+}
+
+.btnflp {
+  display: inline-block;
+  margin: 0 0.5rem;
+
+  animation: pulse; /* referring directly to the animation's @keyframe declaration */
+  animation-duration: 3s; /* don't forget to set a duration! */
+}
+
+.img-soc{
+  width: 600px;
+  height: 850px;
+}
+
+.callout {
+  padding: 15rem 0;
+  background: url("../../../assets/img/font-contact.png") !important;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.logo-image{
+  border-radius: 80px !important;
+}

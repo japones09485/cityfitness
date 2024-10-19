@@ -1,0 +1,23 @@
+table td,
+.coloresesc{
+  background-color: #ee5f5b;
+}
+th,
+thead {
+    border-color: #a8a8a8;
+    border-width: 1px;
+}
+
+table thead th {
+    border-color: #a8a8a8;
+    border-width: 1px;
+}
+
+@media only screen and (min-width: 700px) {
+    #content {
+        background: url("../../../../../assets/img/fondo_empresas_ws.jpg") !important;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+    }
+}

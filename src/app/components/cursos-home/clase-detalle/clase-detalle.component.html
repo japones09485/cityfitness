@@ -1,0 +1,36 @@
+<app-header></app-header>
+
+<div class="container-fluid bg-dark  d-inline-block" style="padding-top:130px" id="content">
+  <div class="card bg-transparent border-white mb-3 animate__bounceIn">
+    <div class="row no-gutters">
+        <div class="col-md-4">
+            <img [src]="pathImg + this.curso.cur_foto1" class="card-img">
+        </div>
+        <div class="col-md-8 text-white">
+            <div class="card-body">
+                <div class="col-12">
+                    <h5 class="card-title m-0 d-inline text-warning">{{this.curso.cur_nombre}}</h5>
+                </div>
+                <h6 class="card-subtitle mt-2 mb-2 text-muted"> {{this.curso.emp_nombre}}</h6>
+                <p class="card-text text-white">{{this.curso.cur_descripcion}}</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card-columns">
+  <div class="card bg-dark cardCur" *ngFor="let usu of clases">
+
+    <div class="card-body">
+      <h5 class="card-title text_title text-white">{{ usu.usu_nombres}} {{ usu.usu_apellidos }}</h5>
+    </div>
+    <div class="card-footer ">
+      <button type="button" routerLink="/aliados/FanPag/{{usu.usu_id}}"
+              class="btn btn-success btn-block">Entrar a
+              clase</button>
+    </div>
+  </div>
+</div>
+
+
+

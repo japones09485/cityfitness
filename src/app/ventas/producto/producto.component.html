@@ -1,0 +1,98 @@
+<app-header></app-header>
+
+<div class="container" id="contenedor">
+    <div class="row" id="proInfo">
+        <div class="col-lg-2 mt-5" id="cursos">
+            <a *ngIf="producto.pro_foto1 && img1" (click)="changeImg(producto.pro_foto1)"> <img src="{{ pathImg + producto.pro_foto1 }}" alt="" class="img-thumbnail mini-prod m-2"></a>
+            <a *ngIf="producto.pro_foto2 && img2" (click)="changeImg(producto.pro_foto2)"> <img src="{{ pathImg + producto.pro_foto2 }}" alt="" class="img-thumbnail mini-prod m-2"></a>
+            <a *ngIf="producto.pro_foto3 && img3" (click)="changeImg(producto.pro_foto3)"> <img src="{{ pathImg + producto.pro_foto3 }}" alt="" class="img-thumbnail mini-prod m-2"></a>
+        </div>
+        <div class="col-lg-7">
+            <h2 class="text-center neon text-danger"> <a href="" class="text-danger" routerLink="/tienda"><i
+                        class="fas fa-arrow-circle-left m"></i></a> {{ producto.pro_nombre | uppercase }} </h2>
+                         <img src="{{ pathImg + imagePr }}" alt="" class="img-fluid img-thumbnail img_fot">
+        </div>
+
+        <div class="col-lg-3 mt-5 mb-3">
+            <div class="card" id="tarjet">
+                <div class="card-header bg-dark">
+                    <h2 class="card-title text-white mb-0">{{ producto.usu_nombres +' '+producto.usu_apellidos }}</h2>
+                    <h5 class="text-danger mt-0">Distribuidor</h5>
+                    <h3 class="display-5 text-secondary"><img src="{{ banderaPais(producto.usu_pais) }}" class="avatar">{{nombrePais}}</h3>
+                </div>
+                <div class="card-body bg-dark">
+                    <div>
+                        <h5 class="text-danger"> Contacto </h5>
+                        <a href="https://wa.me/{{ producto.usu_telefono }}?text=Comunicate%20con%20nosotros" class="text-success" target="_blank">
+                            <i class="fab fa-whatsapp fa-lg"></i> {{ producto.usu_telefono }}
+                        </a>
+                    </div>
+                    <br>
+                    <div>
+                        <h5 class="text-danger">Descripcion del producto</h5>
+                        <p class="text-white"> {{ producto.pro_descripcion }} </p>
+                    </div>
+
+                    <div>
+                        <h5 class="text-danger">Precio</h5>
+                        <p class="text-white"> {{ producto.pro_precio | currency }} </p>
+                    </div>
+
+
+                    <p class="text-danger alert alert-warning" *ngIf="agregarCar">
+                        <i class="fas fa-check-circle text-success"></i>Agregado exitosamente.
+                    </p>
+
+                    <p class="text-danger alert alert-danger" *ngIf="!alumnoLog">
+                        <i class="fas fa-check-circle text-danger"></i> Para poder llenar su carrito debe registrarse o iniciar sesión
+                    </p>
+
+                    <div *ngIf="producto.usu_apikey && producto.usu_merchantid && !agregarCar && alumnoLog && producto.usu_pais == this.user.usu_pais">
+                        <div class="row">
+                            <div class="col-5">
+                                <input type="number" min="1" [(ngModel)]="cantProd" class="form-control" id="basic-url" aria-describedby="basic-addon3">
+                            </div>
+                            <div class="col-7">
+                                <button type="button" *ngIf="!agregarCar" class="btn btn-danger btn-sm mt-1" (click)="agregarCarrito(producto, $event)"><i class="fas fa-cart-plus"></i> Añadir</button>
+                            </div>
+                        </div>
+
+                        <div class="col-6" role="alert">
+                            <p class="text-danger">Cantidad</p>
+                        </div>
+
+                    </div>
+                    <div *ngIf="this.user">
+                        <div *ngIf="producto.usu_pais != this.user.usu_pais">
+                            <p class="text-warning">Producto no disponible en su pais de registro</p>
+                        </div>
+                    </div>
+                    
+                    <div *ngIf="!producto.usu_apikey || !producto.usu_merchantid">
+                        <p class="text-danger">No disponible por el momento</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container mt-5">
+    <div class="moreProd p-3">
+        <h2 class="text-center neon text-danger">MAS PRODUCTOS</h2>
+        <ngb-carousel [interval]="2000">
+            <ng-template ngbSlide *ngFor="let pro of productos.slice(0, 5)">
+                <div class="picsum-img-wrapper" (click)="moreProd()">
+                    <div class="row">
+                        <div class="col-4"> <img class="img-thumbnail moreprod" src="{{ pathImg + pro.pro_foto1 }}">
+                        </div>
+                        <div class="col-4"> <img class="img-thumbnail moreprod" src="{{ pathImg + pro.pro_foto2 }}">
+                        </div>
+                        <div class="col-4"> <img class="img-thumbnail moreprod" src="{{ pathImg + pro.pro_foto3 }}">
+                        </div>
+                    </div>
+                </div>
+            </ng-template>
+        </ngb-carousel>
+    </div>
+</div>

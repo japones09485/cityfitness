@@ -1,0 +1,151 @@
+<div class="menu-fix">
+    <!-- Header Section Begin -->
+    <div class="container-fluid position-absolute fixed-top" style="z-index: 101;">
+        <div class="row">
+            <div class="col-12 text-center p-0" style="background-color: #d9534f;" *ngIf="user">
+                <button class="btn btn-xs p-1 dropdown-toggle text-light" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <i class="fas fa-user-cog"></i>
+            </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a href="#" class="dropdown-item text-danger" data-toggle="modal" data-target="#myPass">Cambiar contraseña</a>
+                    <a (click)="getOut()" class="dropdown-item">Salir</a>
+                </div>
+                <p class="m-0 text-center text-light d-inline">
+                    <strong> Usuario:  </strong> {{ user.usu_nombres+' '+user.usu_apellidos }}
+                </p>
+
+                <div class="top-social mr-3">
+                    <a href="https://www.facebook.com/CityFitnessEducacion/" target="_blank">
+                        <i class="fab fa-facebook"></i>
+                    </a>
+                    <a href="https://www.instagram.com/cityfitnesseducacion/?hl=es-la" target="_blank">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+
+                    <a routerLink="/listCar" *ngIf="totCarrito>0">
+                        <i class="fas fa-shopping-cart" data-toggle="tooltip" data-placement="bottom" title="Total de productos: {{ totCarrito }}"> {{totCarrito}} </i>
+                    </a>
+
+                </div>
+            </div>
+            <div class="col-12 text-center p-0" style="background-color: #d9534f;" *ngIf="!user">
+                <button class="btn btn-xs p-1 dropdown-toggle text-light" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fas fa-user text-danger"></i> Iniciar sesión - Registrarse
+            </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <form class="px-4 py-3" [formGroup]="frmUser" (ngSubmit)="logIn()">
+                        <div class="form-group">
+                            <label for="exampleDropdownFormEmail1">Correo electrónico</label>
+                            <input type="email" class="form-control" formControlName="usuario" placeholder="email@ejemplo.com">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleDropdownFormPassword1">Contraseña</label>
+                            <input type="password" class="form-control" formControlName="contrasenia" placeholder="Password">
+                            <input type="hidden" class="form-control" formControlName="perfil" value="2">
+                        </div>
+                        <div class="form-group">
+                            <a class="text-danger" routerLink="/registrarse">Registrarse</a>
+                        </div>
+                        <div class="form-group">
+                            <a class="text-danger" routerLink="/recordar-password">Olvide mi contraseña</a>
+                        </div>
+                        <button type="submit" *ngIf="frmUser.valid" class="btn btn-danger">Ingresar</button>
+                    </form>
+                </div>
+                <div class="top-social mr-3">
+                    <a href="https://www.facebook.com/CityFitnessEducacion/" target="_blank">
+                        <i class="fab fa-facebook"></i>
+                    </a>
+                    <a href="https://www.instagram.com/cityfitnesseducacion/?hl=es-la" target="_blank">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <header class="header-section" *ngIf="this.empSocio">
+    <a  href="" class="btn btn-outline-danger text-white" [routerLink]="['/websociosfontinstructores/' + this.empSocio]" style="background-color: #d9534f !important;"><i class="fas fa-long-arrow-alt-left"></i> VOLVER</a>
+    </header>
+
+    <header class="header-section" *ngIf="!this.empSocio">
+        <div class="container-fluid">
+            <div class="logo">
+                <a routerLink="/home">
+                    <img src="assets/img/logo.png" alt="" width="100" height="80" id="logmenu">
+                </a>
+            </div>
+
+            <div class="container">
+                <div class="nav-menu">
+                    <nav class="mainmenu mobile-menu">
+                        <ul>
+                            <li routerLinkActive="active">
+                                <a routerLink="/empresas">Aliados</a>
+                            </li>
+
+                            <li routerLinkActive="active">
+                                <a routerLink="/gimnasios">Gimnasios</a>
+                            </li>
+
+                            <li routerLinkActive="active">
+                                <a routerLink="/aliados">Entrena con nosotros</a>
+                            </li>
+
+                            <li routerLinkActive="active">
+                                <a routerLink="/cursos-disponibles">Estudia con nosotros</a>
+                            </li>
+
+                            <li routerLinkActive="active">
+                                <a routerLink="/tienda">Productos</a>
+                            </li>
+
+
+                            <li class="dropdown" routerLinkActive="active">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                           Nosotros
+                            </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDrsopdown">
+                                    <a class="text-danger text-center" href="#quienes">Quienes somos</a>
+                                    <a class="text-danger text-center" href="#contacto">Contacto</a>
+                                </div>
+                            </li>
+
+                            <li routerLinkActive="active">
+                              <a  href="#sedes">Sedes</a>
+                          </li>
+
+
+                            <li routerLinkActive="active">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownprf" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              Perfiles
+                            </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdownprf">
+                                    <a class="text-danger text-center" routerLink="/admin">Administrativo</a>
+                                    <!--  <a class="text-danger text-center" routerLink="/ventas/productos">Ventas</a>  -->
+                                </div>
+                            </li>
+
+                            <li routerLinkActive="active" *ngIf="this.validIns">
+                              <a class="nav-link dropdown-toggle text-danger" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fa fa-user text-danger" aria-hidden="true"></i> YO
+                                 </a>
+                                     <div class="dropdown-menu" aria-labelledby="navbarDrsopdown">
+                                         <a class="text-danger text-center" routerLink="/aliado/certificacion/{{this.Instructor.ins_id}}/1" target="_blank" >Certificaciones</a>
+                                         <a class="text-danger text-center"  routerLink="/admin/instructorY/1/{{this.Instructor.ins_correo}}" target="_blank">Contacto Instructor</a>
+                                         <a class="text-danger text-center"  routerLink="/admin/users/4/1/{{this.Instructor.ins_correo}}" target="_blank">Contacto Aliado</a>
+                                     </div>
+                          </li>
+
+
+
+
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+            <div id="mobile-menu-wrap"></div>
+        </div>
+    </header>
+</div>

@@ -1,0 +1,54 @@
+<app-header></app-header>
+
+<div id="content" style="padding-top:120px;">
+  <div *ngFor="let sed of sedes" class="jumbotron jumbotron-fluid p-1 bg-transparent" >
+      <div class="container">
+          <div class="row">
+              <div class="col-sm-4">
+                  <img src="{{ pathImg + sed.sed_foto1 }}" *ngIf="sed.sed_foto1" class="d-block w-100 y-50" />
+              </div>
+              <div class="col-sm-4">
+
+
+                  <!-- <h3 class="display-5 text-white"><img src="{{ banderaInstructor(ali.usu_pais ) }}" class="avatar"> - {{ ali.usu_pais | getNameContry}}</h3> -->
+                  <div class="card-dark text-light">
+                      <div class="card-body">
+
+                              <h3 class="text-white text-center">{{sed.sed_nombre}}</h3>
+                              <footer class="footer">
+                                  <div class="btn-group btn-group-justified" role="group" aria-label="...">
+                                      <div class="btn-group mx-2" role="group">
+                                          <a href="{{sed.sed_instagram}}" target="_blank">
+                                              <i class="fab fa-instagram fa-lg"></i>
+                                          </a>
+                                      </div>
+                                      <div class="btn-group mx-2" role="group">
+                                          <a href="{{sed.sed_facebook}}" target="_blank">
+                                              <i class="fab fa-facebook fa-lg"></i>
+                                          </a>
+                                      </div>
+                                      <div class="btn-group mx-2" role="group">
+                                          <a href="https://wa.me/{{ sed.sed_telefono }}?text=Comunicate%20con%20nosotros" class="text-success" target="_blank">
+                                              <i class="fab fa-whatsapp fa-lg"></i>
+                                          </a>
+                                      </div>
+                                  </div>
+                              </footer>
+                              <br>
+
+
+                      </div>
+                  </div>
+              </div>
+
+              <div class="col-4">
+                <div [innerHtml]="sed.sed_mapa | safeHtml" class="mapaGym"></div>
+                <h2><a [href]="sed.sed_ruta" class="text-info" target="_blank" rel="noopener noreferrer">Como
+                            llegar <small class="text-danger">Click aqui</small></a></h2>
+            </div>
+          </div>
+
+          <hr class="text-danger">
+      </div>
+  </div>
+</div>

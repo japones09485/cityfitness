@@ -1,0 +1,9 @@
+.logosoc{
+  height: 50px;
+  width: 50px;
+  border-radius: 40%;
+}
+
+#header {
+  background: url('../../../../assets/img/cabecero_empresas.jpg') center center / cover no-repeat ;
+}

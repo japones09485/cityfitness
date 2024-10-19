@@ -1,0 +1,13 @@
+#content {
+  background: url("../../../../assets/img/fondooscuro.jpg") !important;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+}
+
+.videoB{
+  border: solid 8px;
+  border-color: #d9534f;
+}
+
+

@@ -1,0 +1,70 @@
+<app-menuempresa></app-menuempresa>
+
+
+<div class="row justify-content-md-center" id="content">
+  <div class="col-md-12 col-sm-12 col-xs-12">
+
+    <button type="button" class="btn btn-danger m-3" (click)="descargarArchivo()"><i class="fas fa-file-download"></i> Descargar Archivo</button>
+    <ng-container id="contain">
+
+      <h2 class="text-center text-warning"> <img src="../../../../../assets/img/logo-peque.jpg" class="rounded-circle logo_dic"  alt=""> Resultados de examenes</h2>
+
+      <div id="tableinfo">
+        <table class="table table-sm text-ligh m-3" id="table_detalle">
+
+
+
+          <thead class="table-dark">
+
+            <tr>
+              <th>
+                <h4 class="text-warning">Alumno: {{this.alumno}}</h4>
+              </th>
+             </tr>
+
+             <tr>
+              <th>
+                <h4 class="text-warning">Examen: {{this.nomexamen}}</h4>
+              </th>
+             </tr>
+
+             <tr>
+              <th>
+                <h4 *ngIf="this.nota==1" class="text-info">Resultado: Aprobo</h4>
+                <h4 *ngIf="this.nota==0" class="text-danger">Resultado: Reprobo</h4>
+              </th>
+             </tr>
+
+             <tr>
+              <th>
+                <h4 class="text-warning">Resultado: {{this.cuantitativa}}</h4>
+              </th>
+             </tr>
+
+
+
+            <tr class="text-center bg-danger cabDetalle mt-3">
+              <th>Enunciado pregunta</th>
+              <th>Tipo pregunta</th>
+              <th>Respuesta del alumno</th>
+              <th>Respuesta correcta</th>
+              <th>Calificación</th>
+            </tr>
+          </thead>
+          <tbody class="bg-white">
+            <tr class="text-center" *ngFor="let det of this.detalle">
+              <td >{{ det.enunciado }}</td>
+              <td>{{ det.tipo_pregunta }}</td>
+              <td>{{ det.resp_alumno }}</td>
+              <td>{{ det.resp_true }}</td>
+              <td>{{ det.calificacion }}</td>
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
+
+    </ng-container>
+  </div>
+</div>
+

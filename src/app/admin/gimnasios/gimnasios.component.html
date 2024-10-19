@@ -1,0 +1,207 @@
+<app-menu></app-menu>
+<div class="container-fluid">
+    <div class="row justify-content-center" id="content">
+        <div class="col-12">
+
+            <ng-container *ngIf="!editer">
+                <button type="button" data-toggle="modal" data-target="#frmGimnasio" class="btn btn-danger mb-2">Agregar Gimnasio</button>
+                <table class="table table-sm table-hover table-bordered text-light">
+                    <thead>
+                        <tr class="table-primary text-center">
+                            <th></th>
+                            <th>Foto</th>
+                            <th>Nombre</th>
+                            <th>Correo</th>
+                            <th>Teléfono</th>
+                            <th>Ubicación</th>
+                            <th>País</th>
+                            <th>Ciudad</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let gim of list">
+                            <td>
+                                <button type="button" class="btn btn-danger btn-sm" (click)="editarGym(gim)">
+                           <i class="fas fa-pencil-alt"></i>
+                        </button>
+                                <button type="button" class="btn btn-info btn-sm" (click)="loadLikes(gim.likes)" data-toggle="modal" data-target="#likesModal">
+                          <i class="fas fa-thumbs-up"></i>
+                      </button>
+                            </td>
+                            <td>
+                                <img src="{{ pathIm + gim.gim_foto1 }}" class="avatar" />
+                            </td>
+                            <td>{{gim.gim_nombre}}</td>
+                            <td>{{gim.gim_email}}</td>
+                            <td>{{gim.gim_telefono}}</td>
+                            <td>{{gim.gim_ruta}}</td>
+                            <td> <!--<img src="{{ banderaGimnasio(gim.gim_pais) }}" class="avatar"> --></td>
+                            <td>{{ gim.gim_ciudad }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </ng-container>
+            <app-gimnasio-editar *ngIf="editer" (editer)="editer = $event" (gim)="returnGym($event)" [gimnasio]="gimnasio"></app-gimnasio-editar>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="modal fade" id="frmGimnasio" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header bg-danger text-white">
+                <h5 class="modal-title">Nuevo Gimnasio</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+           <span aria-hidden="true">&times;</span>
+         </button>
+            </div>
+            <form [formGroup]="frmGimnasio" (ngSubmit)="crearGimnasio()">
+                <div class="modal-body">
+                    <div class="form-group row">
+                        <label for="" class="form-label col-4">Nombre</label>
+                        <div class="col-8">
+                            <input type="text" class="form-control" formControlName="nombre">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="" class="form-label col-4">Nit</label>
+                        <div class="col-8">
+                            <input type="number" class="form-control" formControlName="nit">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="" class="form-label col-4">Correo electrónico</label>
+                        <div class="col-8">
+                            <input type="email" class="form-control" formControlName="email">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="" class="form-label col-4">Facebook</label>
+                        <div class="col-8">
+                            <input type="email" class="form-control" formControlName="facebook">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="" class="form-label col-4">Instagram</label>
+                        <div class="col-8">
+                            <input type="email" class="form-control" formControlName="instagram">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="exampleInputEmail1" class="form-label col-2">Pais</label>
+                        <div class="col-8">
+                            <select class="form-control " formControlName="pais" (change)="cambioPais()">
+                                <option *ngFor="let item of paisesList" [ngValue]="item.iso">{{ item.nombre }}
+                        </option>
+                    </select>
+                        </div>
+                        <div class="col-2">
+                            <img *ngIf="imgCountry" [src]="imgCountry" class="avatar" />
+                        </div>
+                    </div>
+
+
+
+                    <div class="form-group row">
+                        <label for="" class="form-label col-4">Ciudad</label>
+                        <div class="col-8">
+                            <input type="text" class="form-control" formControlName="ciudad">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="" class="form-label col-4">Teléfono</label>
+                        <div class="col-8">
+                            <input type="text" class="form-control" formControlName="telefono">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="" class="form-label col-4">Descripción</label>
+                        <div class="col-8">
+                            <textarea formControlName="descripcion" class="form-control" rows="3"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="" class="form-label col-4">Mapa</label>
+                        <div class="col-8">
+                            <input type="text" class="form-control" formControlName="mapa">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="" class="form-label col-4">Ruta</label>
+                        <div class="col-8">
+                            <input type="text" class="form-control" formControlName="ruta">
+                        </div>
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="imagenuno">Imagen (opcional)</span>
+                        </div>
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" (change)="agregarArchivo($event,1)" />
+                            <label class="custom-file-label" for="inputGroupFile01">Agregue una imagen</label>
+                        </div>
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="imagendos">Imagen (opcional)</span>
+                        </div>
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" (change)="agregarArchivo($event,2)" />
+                            <label class="custom-file-label" for="inputGroupFile01">Agregue una imagen</label>
+                        </div>
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="imagendos">Imagen (opcional)</span>
+                        </div>
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" (change)="agregarArchivo($event,3)" />
+                            <label class="custom-file-label" for="inputGroupFile01">Agregue una imagen</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" *ngIf="frmGimnasio.valid" class="btn btn-danger btn-block">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="likesModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-info text-white">
+                <h5 class="modal-title" id="exampleModalLabel">Likes de instructor</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+            </div>
+            <div class="modal-body">
+                <table class="table table-sm table-hover">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Email</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let lk of likesView">
+                            <td>{{lk.usu_nombres + lk.usu_apellidos}}</td>
+                            <td>{{lk.usu_email}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>

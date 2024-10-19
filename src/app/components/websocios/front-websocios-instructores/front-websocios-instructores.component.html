@@ -1,0 +1,31 @@
+<nav class="bg-dark navbar-dark">
+  <div class="container">
+   <h4>Bienvenidos</h4>
+  </div>
+  </nav>
+   <section id="header" class="jumbotron text-center">
+     <h1 class="t-stroke-shadow animate__animated  txtflp"> <img src="{{this.pathIm+emp_logo}}" class="logosoc" alt=""> {{this.emp_nombre}} </h1>
+     <p class="lead"> Nuestros instructores.</p>
+     <a href="" class="btn btn-danger"  [routerLink]="['/websociosfontempresas/' + this.codigo]">Volver</a>
+
+</section>
+
+<section id="gallery">
+  <div class="container">
+    <div class="row">
+    <div class="col-lg-4 mb-4" *ngFor="let usu of usuarios">
+    <div class="card">
+      <div class="card-header">
+        <h2>{{usu.usu_nombres+' '+usu.usu_apellidos}}</h2>
+      </div>
+      <img src="{{this.pathIm+usu.usu_logo}}" alt="" class="card-img-top">
+      <div class="card-body">
+        <p class="card-text text-dark">{{usu.usu_descrip_profesional}}</p>
+       <a href="" class="btn btn-outline-warning btn-sm" [routerLink]="['/aliados/FanPag/' + usu.usu_id]">Mis instructores</a>
+      </div>
+     </div>
+    </div>
+
+  </div>
+</div>
+</section>

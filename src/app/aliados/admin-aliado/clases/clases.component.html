@@ -1,0 +1,36 @@
+<app-menualiado></app-menualiado>
+<div class="row justify-content-md-center" id="content">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <ng-container>
+            <h2 class="text-center text-light">Clases Programadas</h2>
+            <table class="table table-sm table-bordered table-striped text-ligh">
+                <thead class="table-primary">
+                    <tr class="text-center">
+                        <th> <button type="button" class="btn bntn-sm btn-danger my-2" routerLink="/adminAlid/newclase">Nueva clase</button></th>
+                        <th>Nombre</th>
+                        <th>Descripción</th>
+                        <th>Fecha programación</th>
+                        <th>Hora programación</th>
+                        <th>Estado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="text-center border" *ngFor="let clase of clases">
+                        <td>
+                            <button type="button" [routerLink]="['/adminAlid/editclase/' + clase.claA_fk_aliado + '/' + clase.claA_id]" class="btn btn-sm btn-success">
+                                <i class="far fa-edit"></i>  Editar
+                            </button>
+                        </td>
+                        <td>{{ clase.clasA_nombre }}</td>
+                        <td>{{ clase.claA_descrip }}</td>
+                        <td>{{ clase.claA_fecha_proga }}</td>
+                        <td>{{ clase.claA_hora_proga }}</td>
+                        <td *ngIf="clase.calA_estado == 0 " class="text-success"><button type="button" (click)="estadoClase(clase.claA_id,1)" class="btn-sm btn-success"><i class="fas fa-video"></i> Iniciar Live</button> </td>
+                        <td *ngIf="clase.calA_estado == 1 " class="text-danger"> <button type="button" (click)="estadoClase(clase.claA_id,0)" class="btn-sm btn-danger"><i class="fas fa-video-slash"></i> Terminar Live</button></td>
+                    </tr>
+                </tbody>
+            </table>
+            <app-paginacion *ngIf="clases.length > 0" [nPaginas]="cantPaginas" (irPagina)="sigPag($event)"></app-paginacion>
+        </ng-container>
+    </div>
+</div>

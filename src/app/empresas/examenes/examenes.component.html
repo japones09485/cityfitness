@@ -1,0 +1,108 @@
+<app-menuempresa *ngIf=" this.perfilUsu != '5'"></app-menuempresa>
+<app-menualiado *ngIf=" this.perfilUsu == '5'"></app-menualiado>
+
+<div class="row justify-content-md-center" id="content">
+  <div class="col-md-12 col-sm-12 col-xs-12">
+    <ng-container id="content">
+      <h2 class="text-center text-light">Mis examenes</h2>
+      <div class="alert alert-danger text-center text-danger" *ngIf="!valid" role="alert">
+        <h3> <i class="fa-solid fa-circle-info text-danger"></i> {{this.alertv}}</h3>
+      </div>
+      <table class="table table-sm table-bordered text-ligh">
+
+
+
+        <thead class="table-dark">
+          <tr class="text-center">
+            <th><button type="button" class="btn btn-danger btn-sm" (click)="nuevoExamen(id_empresa,0)" *ngIf="this.perfilUsu != '5'">Nuevo
+                Examen</button></th>
+            <th>Id examen</th>
+            <th>Nombre</th>
+            <th>Descripción</th>
+            <th>Fecha inicio</th>
+            <th>Fecha fin</th>
+            <th># preguntas</th>
+            <th>Tipo de examen</th>
+            <th>Estado</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <tr class="text-center text-white" *ngFor="let ex of examenes index as i;">
+            <td>
+              <div >
+                <button type="button" class="btn btn-danger btn-sm m-1
+                        " data-toggle="modal" [attr.data-target]="'#conf_delte'+ex.id_examen" *ngIf="this.perfilUsu != '5'">
+                <i class="fas fa-trash-alt"></i>
+              </button>
+              <button type="button" class="btn btn-success btn-sm" (click)="nuevoExamen(id_empresa,ex.id_examen)"> <i
+                  class="far fa-edit"></i></button>
+
+                  <div *ngIf="this.perfilUsu != '5'">
+                    <button type="button" *ngIf="ex.status_edit==0"  class="btn btn-danger btn-sm m-1"
+                    (click)="PreguntasExamen(id_empresa,ex.id_examen)"><i class="fa fa-plus"></i>Configurar
+                    Preguntas</button>
+                  <button type="button" *ngIf="ex.status_edit==1" class="btn btn-success btn-sm m-1"
+                    (click)="PreguntasExamen(id_empresa,ex.id_examen)"><i class="fa fa-plus"></i>Preguntas</button>
+                  <button type="button" *ngIf="ex.status_edit==1" class="btn btn-info btn-sm m-1"
+                    (click)="RespuestasExamen(id_empresa,ex.id_examen)"><i class="fa fa-plus"></i>
+                    Respuestas</button>
+                  </div>
+
+              </div>
+
+                <button type="button"  class="btn btn-danger btn-sm m-1"
+                (click)="ResultadosExamen(ex.id_examen)"><i class="fa fa-plus"></i>
+                Resultados examen</button>
+
+
+
+
+              <!-- Modal confirmacion eliminacion-->
+              <div class="modal" id="conf_delte{{ex.id_examen}}" tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content bg-dark">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">Confirmación de eliminación</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      {{mensaje}}
+                    </div>
+                    <div class="modal-footer">
+                      <button *ngIf="eliminado" (click)="eliminarExamen(ex.id_examen,id_empresa)" type="button"
+                        class="btn btn-danger" data-dismiss="modal" data-backdrop="false">Confirmar</button>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </td>
+            <td>{{ ex.id_examen }}</td>
+            <td>{{ ex.nombre }}</td>
+            <td>{{ ex.descripcion }}</td>
+            <td>{{ ex.fecha_inicio }}</td>
+            <td>{{ ex.fecha_fin }}</td>
+            <td>{{ ex.numero_preguntas }}</td>
+            <td *ngIf="ex.estado == 1 " class="text-success">
+               <button *ngIf="ex.estado == 1" (click)="estadoExamen(ex.id_examen,0,ex.usuario_creacion)" type="button" class="btn btn-danger" data-dismiss="modal" data-backdrop="false">Inactivar</button>
+            </td>
+            <td *ngIf="ex.estado == 0 " class="text-danger">
+              <button *ngIf="ex.estado == 0" (click)="estadoExamen(ex.id_examen,1,ex.usuario_creacion)" type="button" class="btn btn-info btn-sm m-1" data-dismiss="modal" data-backdrop="false">Activar</button>
+            </td>
+            <td *ngIf="ex.tipo_examen == 1 " class="text-info">
+              Examen regular
+            </td>
+            <td *ngIf="ex.tipo_examen == 2 " class="text-danger">
+              <button (click)="alumExamenRecupera(ex.id_examen)" type="button" class="btn btn-info btn-sm m-1" data-dismiss="modal" data-backdrop="false">Alumnos examen de recuperación</button>
+
+            </td>
+          </tr>
+
+        </tbody>
+      </table>
+    </ng-container>
+  </div>
+</div>

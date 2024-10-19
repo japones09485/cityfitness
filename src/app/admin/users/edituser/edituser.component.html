@@ -1,0 +1,208 @@
+<app-menu *ngIf="perfilF!=6 && !this.mailY"></app-menu>
+<nav *ngIf="perfilF==6" class="navbar navbar-expand-lg navbar-light bg-light">
+  <i class="fas fa-user fa-2x text-danger"></i> <h4>{{nomsocio}}</h4>
+  <a class="nav-link"[routerLink]="['/websociosempresas/']"><h3 class="text-danger">Inicio</h3></a>
+</nav>
+<div id="content">
+<div class="container">
+    <div class="row">
+        <div class="col text-center" id="contenedor">
+            <h1 class="text-center text-danger neon" *ngIf="!perfilF">Editar Usuario</h1>
+            <h1 class="text-center text-danger neon" *ngIf="perfilF==6">Editar Instructor Empresa</h1>
+
+
+
+            <form [formGroup]="frmEditUsuario" (ngSubmit)="editUsuario()">
+                <div class="modal-body">
+                    <div class="form-group row">
+                        <label for="" class="form-label text-danger col-2">Nombres</label>
+                        <div class="col-10">
+                            <input type="text" class="form-control" formControlName="nombre">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="" class="form-label text-danger col-2">Apellidos</label>
+                        <div class="col-10">
+                            <input type="text" class="form-control" formControlName="apellidos">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="" class="form-label text-danger col-2">Descripción profesional</label>
+                        <div class="col-10">
+                            <textarea name="" id="" cols="20" rows="5" class="form-control" formControlName="descripcion"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="" class="form-label col-2 text-danger">Email</label>
+                        <div class="col-10">
+                            <input type="email" class="form-control" formControlName="email" disabled>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="" class="form-label col-2 text-danger">Telefono</label>
+                        <div class="col-10">
+                            <input type="telefono" class="form-control" formControlName="telefono">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="" class="form-label col-2 text-danger">Facebook</label>
+                        <div class="col-10">
+                            <input type="telefono" class="form-control" formControlName="facebook">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="" class="form-label col-2 text-danger">Instagram</label>
+                        <div class="col-10">
+                            <input type="telefono" class="form-control" formControlName="instagram">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="" class="form-label col-2 text-danger">Epayco</label>
+                        <div class="col-10">
+                            <input type="epayco" class="form-control" formControlName="epayco">
+                        </div>
+                    </div>
+
+
+                    <div class="form-group row">
+                        <label for="exampleInputEmail1" class="form-label col-2 text-danger">Pais</label>
+                        <div class="col-8">
+                            <select class="form-control " formControlName="pais" (change)="cambioPais()">
+                            <option *ngFor="let item of paisesList" [ngValue]="item.iso">{{ item.nombre }}
+                        </option>
+                    </select>
+                        </div>
+                        <div class="col-2">
+                            <img *ngIf="imgCountry" [src]="imgCountry" class="avatar" />
+                        </div>
+                    </div>
+
+                    <div class="form-group row" *ngIf="perfilF!=6 && perfilF!=4">
+                        <label for="" class="form-label col-2 text-danger">Perfil</label>
+                        <div class="col-10">
+                            <select class="form-control " [(ngModel)]="validAlid" formControlName="perfil">
+                        <option value="1"> Administrativo </option>
+                        <option value="3">  Ventas</option>
+                        <option value="4"> Instructores </option>
+                        <option value="5"> Cursos </option>
+                    </select>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group row" *ngIf="perfilF==4 || perfilF==6 ">
+                      <label for="" class="form-label col-2 text-danger">Perfil</label>
+                      <div class="col-10">
+                          <select class="form-control " [(ngModel)]="perfilF" formControlName="perfil">
+                      <option value="4" selected> Instructores </option>
+
+                  </select>
+                      </div>
+                  </div>
+
+
+                    <div *ngIf="validAlid == 4 || validAlid == 5">
+
+                        <div class="form-group row">
+                            <label for="" class="form-label col-2 text-danger">Link pago mes</label>
+                            <div class="col-10">
+                                <input type="text" class="form-control" formControlName="link_mes">
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="" class="form-label col-2 text-danger">Link pago trimestre</label>
+                            <div class="col-10">
+                                <input type="text" class="form-control" formControlName="link_trimestre">
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="" class="form-label col-2 text-danger">Link pago semestre</label>
+                            <div class="col-10">
+                                <input type="text" class="form-control" formControlName="link_semestre">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div *ngIf="validAlid == 3">
+
+                        <div class="form-group row">
+                            <label for="" class="form-label col-2 text-danger">Api Key</label>
+                            <div class="col-10">
+                                <input type="text" class="form-control" formControlName="apikey">
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="" class="form-label col-2 text-danger">Merchant Id</label>
+                            <div class="col-10">
+                                <input type="text" class="form-control" formControlName="merchantid">
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group row">
+                      <label for="exampleInputEmail1" class="form-label col-2 text-danger">Video Bienvenida(Opcional)</label>
+                      <div class="col-10">
+                          <input type="text" class="form-control" formControlName="videoB" />
+                      </div>
+                  </div>
+
+
+
+                    <div class="form-group row">
+                        <label for="" class="form-label col-2 text-danger">Contraseña</label>
+                        <div class="col-10">
+                            <input type="password" autocomplete="off" class="form-control" formControlName="contras">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="" class="form-label col-2 text-danger">Verificar Contraseña</label>
+                        <div class="col-10">
+                            <input type="password" class="form-control" autocomplete="off" formControlName="vericontras">
+                        </div>
+                    </div>
+
+
+                    <div class="form-group row">
+                        <label for="exampleInputEmail1" class="form-label col-2 text-danger">Estado</label>
+                        <div class="col-10">
+                            <select class="form-control" formControlName="estado">
+                                <option value="1" selected="selected">Activo</option>
+                                <option value="0">Inactivo</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="" class="form-label col-2 text-danger">Foto o Logo</label>
+                        <div class="col-10">
+                            <input type="file" class="custom-file-input" (change)="agregarArchivo($event,1)" name="emp_foto1" aria-describedby="inputGroupFileAddon01" />
+                            <label class="custom-file-label" for="inputGroupFile01">{{  nameImg }}</label>
+                        </div>
+                    </div>
+
+                    <div class="form group">
+                        <img [src]="imgLogo" id="logo_img" class="img-fluid" alt="">
+                    </div>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="submit" *ngIf="frmEditUsuario.valid" class="btn btn-danger btn-block">Guardar</button>
+                </div>
+            </form>
+            <div *ngIf="flagGuardado" class="alert alert-info" role="alert">
+                {{mensaje}}
+            </div>
+        </div>
+    </div>
+</div>
+</div>

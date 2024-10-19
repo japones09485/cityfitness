@@ -1,0 +1,375 @@
+<app-menu *ngIf="this.inst!=1"></app-menu>
+<div class="container-fluid">
+    <div class="row justify-content-md-center" id="content" >
+        <div *ngIf="!creando" class="col">
+
+          <div class="row" *ngIf="this.inst!=1">
+            <div class="col-lg-9 form-inline">
+                <input type="text" name="namesearch" class="form-control form-control-lg text-center m-3"
+                    [(ngModel)]="filts.nameSearch" placeholder="&#xF00e;  Nombre" style="font-family: FontAwesome;">
+                <input type="text" name="apellisearch" class="form-control form-control-lg text-center m-3"
+                    [(ngModel)]="filts.apellisearch" placeholder="&#xF00e; Apellido" style="font-family: FontAwesome;">
+                <button type="submit" (click)="buscarInstruc()" class="btn btn-info btn-lg m-3">Buscar</button>
+            </div>
+        </div>
+
+            <h1 class="text-center text-light">Listado de instructores</h1>
+            <button type="button" class="btn btn-danger my-2" (click)="creando = true" *ngIf="this.inst!=1">Nuevo instructor</button>
+            <table class="table table-sm table-bordered text-light">
+                <thead>
+                    <tr class="table-primary text-center">
+                        <th></th>
+                        <th>Id</th>
+                        <th>Foto</th>
+                        <th>Nombre</th>
+                        <th>Teléfono</th>
+                        <th>Correo electrónico</th>
+                        <th>Perfil</th>
+                        <th>Ciudad</th>
+                        <th *ngIf="this.inst!=1">Certificaciones</th>
+                        <th *ngIf="this.inst!=1">Codigo QR</th>
+                    </tr>
+                </thead>
+                <tbody class="text-center">
+                    <tr *ngFor="let instructor of listado" [ngClass]="{'table-danger text-ce': instructor.ins_estado == '0'}">
+                        <td>
+                           
+                            <button type="button" [routerLink]="['/admin/instructores/editar/' + instructor.ins_id]" class="btn btn-sm btn-danger" *ngIf="this.inst!=1">
+                                <i class="fas fa-edit" data-toggle="tooltip" title="Editar" ></i>
+                            </button>
+
+                            <button type="button" [routerLink]="['/admin/instructores/editarex/1/' + instructor.ins_id]" class="btn btn-sm btn-warning" *ngIf="this.inst==1">
+                                <i class="fas fa-edit"></i>
+                            </button>
+
+                            <button type="button" class="btn btn-info btn-sm m1" (click)="loadLikes(instructor.likes)" data-toggle="modal" data-target="#likesModal" *ngIf="this.inst!=1">
+                                <i class="fas fa-thumbs-up" data-toggle="tooltip" title="Likes" ></i>
+                            </button>
+                            <button type="button" class="btn btn-danger btn-sm m1" (click)="eliminarInstructor(instructor.ins_id)" *ngIf="this.inst!=1">
+                                
+                              <i data-toggle="tooltip" title="Eliminar"  class="fas fa-close"></i>
+                          </button>
+
+                          <button type="button" class="btn btn-success btn-sm m1" *ngIf="this.inst!=1"  data-toggle="modal" [attr.data-target]="'#carreras_'+ instructor.ins_id" (click)="traer_carreras(instructor.ins_id)">
+                            
+                            <i class='fas fa-award' data-toggle="tooltip" title="Agregar carreras" ></i>
+                        </button>
+
+                        <!-- Modal carreras-->
+                        <div class="modal fade" id="carreras_{{instructor.ins_id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                  
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+
+                                </div>
+                                <div class="modal-body">
+                                    
+                                    <form [formGroup]="frmCarrera" (ngSubmit)="AgregarCarrera(instructor.ins_id)">
+                                        <div class="modal-body">
+                                          <div class="form-group row">
+                                            <div class="col-12">
+                                                <label for="" class="form-label col-4">Elige carrera</label>
+                                              </div>
+                                              
+                                            <div class="col-12">
+                                                <select class="form-control " formControlName="carreraEle">
+                                                    <option *ngFor="let car of this.carrerasDisponible" [ngValue]="car.id">{{ car.nombre }}
+                                                    </option>
+                                                  </select>
+                                            </div>
+                                          </div>
+                            
+                                        </div>
+                                        <div class="modal-footer">
+                                          <button type="submit" *ngIf="frmCarrera.valid" class="btn btn-danger btn-block">Agregar</button>
+                                        </div>
+                                      </form>   
+
+                                    
+                                    <h5 class="text-center text-danger" id="exampleModalLabel">Carreras para: {{ instructor.ins_nombre+' '+instructor.ins_apellido}}</h5>
+                                    <table class="table">
+                                        <thead>
+                                          <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">Id</th>
+                                            <th scope="col">Carrera</th>
+                                            <th scope="col">Puntaje</th>
+                                          </tr>
+                                        </thead>
+                                        <tbody>
+                                          <tr *ngFor="let dis of this.carrerasAliado">
+                                            <th> <button type="button" class="btn btn-danger btn-sm m1" (click)="eliminarCarreraAlid(instructor.ins_id,dis.id)" >
+                                
+                                                <i data-toggle="tooltip" title="Eliminar"  class="fas fa-close"></i>
+                                            </button></th>
+                                            <td>{{dis.id}}</td>
+                                            <td>{{dis.nombre}}</td>
+                                            <td>{{dis.puntaje}}</td>
+                                          </tr>
+                                          <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td><h4 class="text-danger">Puntaje: </h4></td>
+                                            <td>{{this.totalAliado}}</td>
+                                          </tr>
+                                          
+                                        </tbody>
+                                      </table>
+                                </div>
+                                <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+                               
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                        </td>
+
+                        <td>{{ instructor.ins_id }}</td>
+                        <td class="text-center">
+                            <img src="{{ pathIm + instructor.ins_foto1 }}" class="avatar" />
+                        </td>
+                        <td>{{ instructor.ins_nombre+' '+instructor.ins_apellido}}</td>
+                        <td>
+                            <a href="https://wa.me/{{ instructor.ins_telefono }}?text=Comunicate%20con%20nosotros" class="text-success" target="_blank">
+                                <i class="fab fa-whatsapp fa-lg"></i>
+                            </a>
+                            {{ instructor.ins_telefono}}
+                        </td>
+                        <td>{{ instructor.ins_correo }} </td>
+                        <td class="text-success" *ngIf="instructor.ins_fk_perfil == 0"> <i class="fas fa-user-graduate"></i> CAPACITADO</td>
+                        <td class="text-info" *ngIf="instructor.ins_fk_perfil == 1"><i class="fas fa-award"></i> CAPACITADOR
+                        </td>
+
+
+                        <td>{{instructor.ins_fk_ciudad }}</td>
+                        <td *ngIf="this.inst!=1">
+                          <div >
+                            <button class="btn btn-info" (click)="Certificacion(instructor.ins_id)"><i class="fa fa-bookmark" aria-hidden="true"></i> Certificaciones</button>
+                          </div>
+
+                        </td>
+                        <td *ngIf="this.inst!=1">
+                            <div>
+                              <button class="btn btn-warning" (click)="downloadQRCode(instructor.ins_id,instructor.ins_nombre+' '+instructor.ins_apellido)"><i class="fas fa-qrcode"></i> Descargar Código QR</button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="100%">
+                            <nav aria-label="Page navigation example">
+                                <ul class="pagination">
+                                    <li *ngFor="let item of pags(); let i = index;" (click)="obtenerPagina(i + 1)" class="page-item">
+                                        <span class="page-link">{{ i + 1 }}</span>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-6 col-sm-6 col-xs-8" *ngIf="creando">
+            <div class="card mt-2">
+                <h2 class="card-header text-center text-danger">Crear Instructor</h2>
+                <div class="card-body">
+                    <form [formGroup]="frmInsCreator" (ngSubmit)="crearInstructor()">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Identificación</label>
+                            <input type="text" class="form-control" formControlName="ins_identificacion" />
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Nombres</label>
+                            <input type="text" class="form-control" formControlName="ins_nombre" disable />
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Apellidos</label>
+                            <input type="text" class="form-control" formControlName="ins_apellido" />
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Telefono</label>
+                            <input type="text" class="form-control" formControlName="ins_telefono" />
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="exampleInputEmail1" class="form-label col-2">Pais</label>
+                            <div class="col-8">
+                                <select class="form-control " formControlName="ins_fk_pais" (change)="cambioPais()">
+                                    <option *ngFor="let item of paisesList" [ngValue]="item.iso">{{ item.nombre }}
+                            </option>
+                        </select>
+                            </div>
+                            <div class="col-2">
+                                <img *ngIf="imgCountry" [src]="imgCountry" class="avatar" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Ciudad</label>
+                            <input type="text" class="form-control" formControlName="ins_fk_ciudad" />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Empresa</label>
+                            <select class="form-control" formControlName="ins_fk_empresa">
+                                <option *ngFor="let emp of empresas" [ngValue]="emp.emp_id">{{ emp.emp_nombre }}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Gimnasio</label>
+                            <select class="form-control" (change)="changeGym($event)">
+                                <option value="" selected>Seleccione gimnasios....</option>
+                                <option *ngFor="let gym of gimnasios" [value]="gym.gim_id">{{ gym.gim_nombre }}
+                                </option>
+                            </select>
+                            <span *ngFor="let gym of listGims" class="badge badge-success mx-1 mt-1">
+                                <button type="button" (click)="quitGym(gym)" class="btn btn-link btn-sm p-0"><i
+                                        class="fas fa-trash-alt"></i></button>
+                                {{gym.gim_nombre}}
+                            </span>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Descripción profesional</label>
+                            <input type="text" class="form-control" formControlName="ins_descrp_profesional" />
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Perfil</label>
+                            <select class="form-control" formControlName="ins_fk_perfil">
+                                <option value="0" selected="selected">Capacitado</option>
+                                <option value="1">CAPACITADOR</option>
+                            </select>
+                        </div>
+                        <div class="form-group row" [formGroup]="selectEmpresa">
+                            <label for="exampleInputEmail1" class="form-label col-sm-2">Cursos</label>
+                            <div class="col-sm-5">
+                                <select class="form-control" formControlName="empSelect" (change)="cargarCursos()">
+                                    <option value="" selected>Ver cursos de empresa....</option>
+                                    <option *ngFor="let emp of empresas" [ngValue]="emp.emp_id">
+                                        {{emp.emp_nombre}}</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-5">
+                                <select class="form-control" formControlName="curEmpSelect" (change)="agregarCursados()">
+                                    <option value="" selected>Agregar curso a experiencia....</option>
+                                    <option *ngFor="let item of copySelect" [ngValue]="item.cur_id">
+                                        {{item.cur_nombre}}</option>
+                                </select>
+                            </div>
+                            <span *ngFor="let crsd of cursados" class="badge badge-danger mx-1 mt-1">
+                                <button type="button" (click)="quitarCursado(crsd)" class="btn btn-link btn-sm p-0"><i
+                                        class="fas fa-trash-alt"></i></button>
+                                {{crsd.cur_nombre}}
+                            </span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Correo</label>
+                            <input type="text" class="form-control" formControlName="ins_correo" />
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Facebook</label>
+                            <input type="text" class="form-control" formControlName="ins_facebook" />
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Instagram</label>
+                            <input type="text" class="form-control" formControlName="ins_instagram" />
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Estado</label>
+                            <select class="form-control" formControlName="ins_estado">
+                                <option value="1" selected="selected">Activo</option>
+                                <option value="0">Inactivo</option>
+                            </select>
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="imagenuno">Imagen (opcional)</span>
+                            </div>
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input" (change)="agregarArchivo($event,1)" />
+                                <label class="custom-file-label" for="inputGroupFile01">Agregue una imagen</label>
+                            </div>
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="imagendos">Imagen (opcional)</span>
+                            </div>
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input" (change)="agregarArchivo($event,2)" />
+                                <label class="custom-file-label" for="inputGroupFile01">Agregue una imagen</label>
+                            </div>
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="imagentres">Imagen (opcional)</span>
+                            </div>
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input" (change)="agregarArchivo($event,3)" />
+                                <label class="custom-file-label" for="inputGroupFile01">Agregue una imagen</label>
+                            </div>
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="imagencuatro">Imagen (opcional)</span>
+                            </div>
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input" (change)="agregarArchivo($event,4)" />
+                                <label class="custom-file-label" for="inputGroupFile01">Agregue una imagen</label>
+                            </div>
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="imagencinco">Imagen (opcional)</span>
+                            </div>
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input" (change)="agregarArchivo($event,5)" />
+                                <label class="custom-file-label" for="inputGroupFile01">Agregue una imagen</label>
+                            </div>
+                        </div>
+                        <button type="submit" *ngIf="frmInsCreator.valid && !flagSave" class="btn btn-danger btn-block">Guardar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="likesModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-info text-white">
+                <h5 class="modal-title" id="exampleModalLabel">Likes de instructor</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+            </div>
+            <div class="modal-body">
+                <table class="table table-sm table-hover">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Email</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let lk of likesView">
+                            <td>{{lk.usu_nombres + lk.usu_apellidos}}</td>
+                            <td>{{lk.usu_email}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,56 @@
+<app-header></app-header>
+<div class="cont-admin">
+    <div class="form-admin">
+        <h1 class="text-center m-2 text-danger">Administración</h1>
+        <form [formGroup]="frmLg" (ngSubmit)="acceso()">
+            <div class="form-group">
+                <label for="exampleDropdownFormEmail1">Correo electrónico</label>
+                <input type="email" class="form-control" formControlName="usuario" placeholder="email@ejemplo.com">
+
+            </div>
+            <div class="form-group">
+                <label for="exampleDropdownFormPassword1">Contraseña</label>
+                <input type="password" class="form-control" formControlName="contrasenia" placeholder="Password">
+            </div>
+
+            <div class="form-group">
+                <label for="exampleDropdownFormPassword1">Perfil</label>
+                <select class="form-control" id="perfil" formControlName="perfil">
+                  <option value="1">Administrador</option>
+                  <option value="3">Ventas</option>
+                  <option value="4">Aliado</option>
+                  <option value="5">Profesor</option>
+                  <option value="6">Socios</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <a routerLink="/recordar-password">Olvidaste tu contraseña?</a>
+            </div>
+            <button *ngIf="frmLg.valid" type="submit" class="btn btn-danger btn-lg btn-block">Ingresar</button>
+        </form>
+
+    </div>
+</div>
+
+<!--
+  <div class="cont_admin">
+    <div class="container-fluid login-container mx-5">
+      <div class="row justify-content-md-center">
+        <div class="col-md-6 login-form-2">
+          <h3>Ingreso al sistema</h3>
+          <form [formGroup]="frmLg" (ngSubmit)="acceso()">
+            <div class="form-group">
+              <input type="text" class="form-control" formControlName="usuario" placeholder="Email" autocomplete="off" required/>
+            </div>
+            <div class="form-group">
+              <input type="password" class="form-control" formControlName="contrasenia" placeholder="Contraseña" autocomplete="off" required/>
+            </div>
+            <div class="form-group">
+              <input type="submit" class="btnSubmit btn-block" value="Ingresar" />
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    </div>
+-->

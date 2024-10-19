@@ -1,0 +1,25 @@
+<app-header *ngIf="!bienvenida"></app-header>
+<div *ngIf="!bienvenida">
+    <h1 class="card-header text-center text-white" style="padding-top:140px;"><a (click)="pag_principal(idAliado)"><i class="fas fa-arrow-alt-circle-left float-left text-light"></i></a>Videos</h1>
+    <div class="row row-cols-1 row-cols-md-3 m-5">
+        <div class="col mb-4" *ngFor="let vid of videos">
+            <div class="card border-danger content">
+
+                <div class="card-body">
+                    <div class="embed-responsive embed-responsive-16by9">
+                        <iframe allowfullscreen="true" [src]="getURL(vid.vid_ruta)" automute="true" width="640" height="480"></iframe>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <h3 class="card-title text-warning text-center m-2">{{vid.vid_titulo}}</h3>
+                    <p class="text-white">{{vid.vid_descripcion}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="bienvenida" style="padding-top:100px;">
+
+  <iframe  [src]="getURL(this.usuario.usu_videoB)" width="640" height="480" allow="autoplay"></iframe>
+</div>

@@ -1,0 +1,57 @@
+<app-menuempresa *ngIf=" this.perfilUsu != '5'"></app-menuempresa>
+<app-menualiado *ngIf=" this.perfilUsu == '5'"></app-menualiado>
+
+<div class="row justify-content-md-center" id="content">
+  <div class="col-md-12 col-sm-12 col-xs-12">
+    <ng-container id="content">
+      <h2 class="text-center text-light" *ngIf="this.tipo_doc==1">Mis documentos</h2>
+      <h2 class="text-center text-light" *ngIf="this.tipo_doc==2">Mis trabajos</h2>
+
+      <table class="table table-sm table-bordered text-ligh">
+        <thead class="table-dark">
+          <tr class="text-center">
+            <th><button type="button" class="btn btn-danger btn-sm" (click)="nuevoTrabajo(id_empresa,0,0,this.tipo_doc)">Nuevo
+                Documento</button></th>
+            <th>Id documento</th>
+            <th>Nombre</th>
+            <th>Descripción</th>
+            <th>Fecha inicio</th>
+            <th>Fecha fin</th>
+            <th>Estado</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <tr class="text-center text-white" *ngFor="let tra of trabajos index as i;">
+            <td>
+
+                <button type="button" class="btn btn-success btn-sm" (click)="nuevoTrabajo(id_empresa,tra.id,1,this.tipo_doc)"> <i
+                class="far fa-edit"></i></button>
+
+                <button type="button" class="btn btn-danger btn-sm m-1" (click)="eliminarTrabajo(tra.id)"> <i class="fas fa-trash-alt"></i> </button>
+
+                <a href="{{this.pathImg+tra.ruta_arch}}" target="_blank" class = "btn btn-warning btn-sm m-1">  <i class="fas fa-file text-white m-1" ></i> Ver Documento </a>
+                <a (click)="resultados(tra.id)" target="_blank" class = "btn btn-success btn-sm m-1" *ngIf="this.tipo_doc == 2">  <i class="fas fa-search text-white m-1" ></i> Ver Resultados </a>
+
+            </td>
+            <td>{{ tra.id }}</td>
+            <td>{{ tra.nombre }}</td>
+            <td>{{ tra.descripcion }}</td>
+            <td>{{ tra.fecha_inicio }}</td>
+            <td>{{ tra.fecha_fin }}</td>
+
+            <td *ngIf="tra.estado == 1 " class="text-success">
+               Activo
+            </td>
+            <td *ngIf="tra.estado == 0 " class="text-danger">
+             Inactivo
+            </td>
+
+
+          </tr>
+
+        </tbody>
+      </table>
+    </ng-container>
+  </div>
+</div>

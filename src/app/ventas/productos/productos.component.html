@@ -1,0 +1,48 @@
+<app-menu-ventas></app-menu-ventas>
+
+<div class="container-fluid bg-dark">
+  <div class="row">
+    <div class="col-lg-6 form-inline">
+      <input type="text" name="namesearch" class="form-control form-control-lg text-center m-3" [(ngModel)]="filts.nameSearch" placeholder="&#xF00e; Buscar Producto" style="font-family: FontAwesome;">
+        <button type="submit" (click)="buscarProducto()" class="btn btn-info btn-lg m-3">Buscar</button>
+    </div>
+    
+    <div class="col-lg-6">
+      <div class="m-3">
+        <app-paginacion *ngIf="productos.length > 0" [nPaginas]="cantPaginas" (irPagina)="sigPag($event)"></app-paginacion>
+      </div>
+    </div>
+  </div>
+
+  <div class="alert alert-info text-center" role="alert" *ngIf="failResult">
+    <i class="fas fa-info-circle"></i> No existen resultados
+  </div>
+  
+  <div class="col-sm col-md col-lg">
+    <div class="row justify-content-md-center">
+      <table class="table table-sm table-hover table-bordered text-light">
+        <thead class="bg-danger">
+          <tr>
+            <th>Foto</th>
+            <th>Nombre</th>
+            <th>Cantidad</th>
+            <th>Referencia</th>
+            <th>Precio</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let pro of productos" [ngClass]="{'agotado': pro.pro_cantidad < 5}">
+            <td>  <img [src]="pathImg + pro.pro_foto1" class="avatar float-center" alt=""><button type="button" class="btn btn-sm ml-5" [ngClass]="{'btn-danger': pro.pro_cantidad >= 5, 'btn-info': pro.pro_cantidad < 5}" (click)=" editProducto(pro.pro_id) ">Editar</button></td>
+            <td>{{ pro.pro_nombre }}</td>
+            <td>{{ pro.pro_cantidad }}</td>
+            <td>{{ pro.pro_referencia }}</td>
+            <td>{{ pro.pro_precio }}</td>
+          </tr>
+        </tbody>
+      </table>
+  </div>
+  </div>
+</div>
+
+
+

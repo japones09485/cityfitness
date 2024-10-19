@@ -1,0 +1,45 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" [routerLink]="['/admin/recursoshumanos/']">Entrenamiento</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/admin/recursoshumanos" routerLinkActive="active"> <span class="spinner-border spinner-border-sm text-warning" role="status" aria-hidden="true"></span>
+                    Recursos Humanos
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/admin/clientes" routerLinkActive="active">Aliados</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/admin/instructores" routerLinkActive="active">Instructores</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/admin/gimnasios" routerLinkActive="active">Gimnasios</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/admin/pagos" routerLinkActive="active">Pagos</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/admin/socios" routerLinkActive="active">Socios</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/admin/sedes" routerLinkActive="active">Sedes</a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" routerLink="/admin/carreras" routerLinkActive="active">Carreras</a>
+        </li>
+
+        </ul>
+        <ul class="nav justify-content-end">
+            <li class="nav-item bg-danger">
+                <a (click)="salir()" href="#" class=" nav-link">salir</a>
+            </li>
+        </ul>
+    </div>
+</nav>

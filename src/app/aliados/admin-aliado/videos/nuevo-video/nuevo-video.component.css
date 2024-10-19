@@ -1,0 +1,21 @@
+@media only screen and (min-width: 700px) {
+    .new {
+        float: none;
+        margin-left: 20%;
+        margin-right: 20%;
+        margin-top: 15px;
+        margin-bottom: auto;
+        padding: 6px;
+    }
+    #content {
+        background: url("../../../../../assets/img/fondo-transp.png") !important;
+        background-attachment: fixed;
+    }
+}
+
+@media only screen and (max-width: 700px) {
+    #content {
+        background: url("../../../../../assets/img/fondo-transp.png") !important;
+        background-attachment: fixed;
+    }
+}

@@ -1,0 +1,51 @@
+<app-menu></app-menu>
+<div class="container-fluid">
+    <div class="row justify-content-center" id="content">
+        <div class="col-12">
+
+            <ng-container >
+                <button type="button" class="btn btn-danger mb-2" (click)="CrearSed()">Agregar Sede</button>
+                <table class="table table-sm table-hover table-bordered text-light">
+                    <thead>
+                        <tr class="table-primary text-center">
+                            <th></th>
+                            <th>Foto</th>
+                            <th>Nombre</th>
+                            <th>Correo</th>
+                            <th>Teléfono</th>
+                            <th>Dirección</th>
+                            <th>País</th>
+                            <th>Ciudad</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let sed of list">
+                        <td>
+                    <button type="button" class="btn btn-success btn-sm" (click)="EditSed(sed.sed_id)">
+                       <i class="fas fa-pencil-alt"></i>
+                    </button>
+
+                    <button type="button" class="m-1 btn btn-danger btn-sm" (click)="EliminarSed(sed.sed_id)">
+                     Eliminar
+                   </button>
+
+                        </td>
+                        <td>
+                            <img src="{{ pathIm + sed.sed_foto1 }}" class="avatar" />
+                        </td>
+                        <td>{{sed.sed_nombre}}</td>
+                        <td>{{sed.sed_email}}</td>
+                        <td>{{sed.sed_telefono}}</td>
+                        <td>{{sed.sed_ruta}}</td>
+                        <td> <img src="{{ banderaPais(sed.sed_pais) }}" class="avatar">{{nombrePais}}</td>
+                        <td>{{ sed.sed_ciudad }}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </ng-container>
+        </div>
+    </div>
+</div>
+
+
+

@@ -1,0 +1,82 @@
+<!-- Modal -->
+<div class="modal fade" id="modalHojadeVida" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h5 class="modal-title" id="exampleModalLabel">{{ instructor.ins_nombre+' '+instructor.ins_apellido }}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <div class="row">
+            <div class="col">
+              <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+                <div class="carousel-inner">
+                    <div *ngIf="instructor.ins_foto1" class="carousel-item active">
+                        <img src="{{ pathIm + instructor.ins_foto1 }}" class="d-block w-100 y-50"
+                            alt="..." />
+                    </div>
+                    <div *ngIf="instructor.ins_foto2" class="carousel-item">
+                        <img src="{{ pathIm + instructor.ins_foto2 }}" class="d-block w-100" alt="..." />
+                    </div>
+                    <div *ngIf="instructor.ins_foto3" class="carousel-item">
+                        <img src="{{ pathIm + instructor.ins_foto3 }}" class="d-block w-100" alt="..." />
+                    </div>
+                    <div *ngIf="instructor.ins_foto4" class="carousel-item">
+                        <img src="{{ pathIm + instructor.ins_foto4 }}" class="d-block w-100" alt="..." />
+                    </div>
+                    <div *ngIf="instructor.ins_foto5" class="carousel-item">
+                        <img src="{{ pathIm + instructor.ins_foto5 }}" class="d-block w-100" alt="..." />
+                    </div>
+                </div>
+                <a class="carousel-control-prev" href="#carouselExampleControls" role="button"
+                    data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Anterior</span>
+                </a>
+                <a class="carousel-control-next" href="#carouselExampleControls" role="button"
+                    data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Siguiente</span>
+                </a>
+            </div>
+            </div>
+            <div class="col">
+              <div class="card">
+                <div class="card-header">
+                  <h5>Descripcion Profesional</h5>
+                </div>
+                <div class="card-body">
+                  <blockquote class="blockquote mb-0">
+                    <p class="text-dark">{{instructor.ins_descrp_profesional}}</p>
+                  </blockquote>
+                </div>
+              </div>
+            </div>
+        </div>
+
+
+        <br><br>
+        <div *ngFor="let curso of instructor.cursos" class="alert alert-info d-inline-block p-1 mx-1 my-1 "
+          role="alert">
+
+
+          <div class="card text-center">
+            <div class="card-header">
+              Certificado en:
+            </div>
+            <div class="card-body">
+              <h5 class="card-title"> <h5  class="text-dark">{{curso.cur_nombre}}</h5></h5>
+              <p class="card-text text-dark">{{curso.cur_descripcion}}</p>
+            </div>
+            <div class="card-footer text-muted">
+              Capacitador: <img src="{{ pathIm + curso.emp_foto1}}" class="avatar" /> {{curso.emp_nombre}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

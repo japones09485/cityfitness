@@ -1,0 +1,14 @@
+.container-fluid {
+  height: 90%;
+  width: 100%;
+}
+
+.carousel-inner img {
+  height: 300px;
+  width: 300%;
+}
+
+.nhjk {
+  margin-left: auto;
+  margin-right: auto;
+}

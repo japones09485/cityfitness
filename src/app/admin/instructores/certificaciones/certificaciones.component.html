@@ -1,0 +1,64 @@
+<app-menu *ngIf="this.validVista != 1"></app-menu>
+<div class="container-fluid">
+    <div class="row justify-content-md-center" id="content">
+        <div *ngIf="!creando" class="col">
+
+
+            <h1 class="text-center text-light">Listado de certificaciones</h1>
+            <button type="button" class="btn btn-danger my-2" *ngIf="this.validVista != 1"  (click)="NuevoCert()">Nuevo certificacion</button>
+            <table class="table table-sm table-bordered">
+                <thead>
+                    <tr class="table-primary text-center">
+
+                        <th *ngIf="this.validVista != 1">Id</th>
+                        <th>Descripcion</th>
+                        <th>fecha carga</th>
+                        <th>Estado</th>
+                        <th>Documento</th>
+
+                    </tr>
+                </thead>
+                <tbody class="text-center">
+                  <tr *ngFor="let cer of lista" class="text-light">
+                    <td *ngIf="this.validVista != 1" >{{cer.id}}
+                      <button  type="button" class="btn btn-warning m-2" (click)="EditaCerti(cer.id)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> </button>
+                      <button type="button" class="btn btn-danger m-2" (click)="DeleteCert(cer.id)"><i class="fa fa-close" aria-hidden="true"></i> </button>
+
+                    </td>
+                    <td>{{cer.descripcion}}</td>
+                    <td>{{cer.fecha_carga}}</td>
+                    <td class="text-danger" *ngIf="cer.estado == 0">Inactivo</td>
+                    <td class="text-success" *ngIf="cer.estado == 1">Activo</td>
+                    <td>
+                      <div>
+                        <button class="btn btn-warning" (click)="downloadDoc(cer.documento)"><i class="fa fa-book" aria-hidden="true"></i> </button>
+                      </div>
+                    </td>
+
+                  </tr>
+
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-8 col-sm-8 col-xs-12 m-4" *ngIf="creando">
+            <div class="card mt-2">
+                <h2 class="card-header text-center">Cargar certificacion</h2>
+                <div class="card-body">
+                    <form [formGroup]="frmInsCreator" (ngSubmit)="crearCertificacion()">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Descripción</label>
+                            <input type="text" class="form-control" formControlName="descripcion" />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Documento (certificación)</label>
+                            <input type="file" class="form-control" (change)="agregarArchivo($event,1)"/>
+                        </div>
+                        <button type="submit" *ngIf="frmInsCreator.valid " class="btn btn-danger btn-block">Guardar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

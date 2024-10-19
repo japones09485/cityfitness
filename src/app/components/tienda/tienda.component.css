@@ -1,0 +1,35 @@
+h2                                                             {
+    font-family: "Mystery Quest", cursive;
+    font-size: 150%;
+  }
+
+  .whatsapp-icon {
+    margin-top:13px;
+  }
+
+  #centrador{
+    position: relative;
+    width: 400px;
+    height: 400px;
+    background-color: red;
+  }
+
+  #imagen{
+      position: absolute;
+      width: 100px;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      margin: auto;
+  }
+
+  .pr_pro{
+    width: 600px;
+    height: 250px;
+  }
+
+  .crd-pro{
+    border: rgb(255, 255, 255) solid 1px;
+  }
+

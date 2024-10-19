@@ -1,0 +1,152 @@
+<app-menu></app-menu>
+<div class="container-fluid" id="content">
+    <div class="row justify-content-md-center">
+        <div class="col-md-12 col-sm-12 col-xs-12" *ngIf="!creando && !modeEditar && !verclases">
+            <div *ngIf="!creando" class="col">
+                <h1 class="text-center text-light">Listado de cursos</h1>
+                <table class="table table-sm table-bordered text-ligh text-center">
+                    <thead>
+                        <tr class="table-primary">
+                            <th><button type="button" class="btn btn-sm btn-danger" (click)="creando = true" >Nuevo
+                                    curso</button></th>
+                            <th>Foto</th>
+                            <th>Curso</th>
+                            <th>Descripción</th>
+                           
+                            <th>Orden</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let curso of listado" [ngClass]="{'table-danger': curso.cur_id == '0'}">
+                            <td>
+                                <button type="button" (click)="editarCurso(curso);" class="btn btn-sm btn-danger">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button type="button"routerLink="/admin/userscur/5/{{curso.cur_id}}" class="btn btn-sm btn-success">
+                                    <i class="fas fa-calendar-alt"></i>
+                                </button>
+
+                                <button type="button" (click)="eliminarCurso(this.idEmpresa,curso.cur_id)" class="btn btn-sm btn-danger">
+                                  <i class="fas fa-calendar-alt">Eliminar</i>
+                              </button>
+                            </td>
+                            <td class="text-center">
+                                <img src="{{ pathIm + curso.cur_foto1 }}" class="avatar" />
+                            </td>
+                            <td  class="text-white">{{ curso.cur_nombre }}</td>
+                            <td  class="text-white">{{ curso.cur_descripcion| slice:0:100 }}</td>
+                           
+                            <td>
+
+                              <select class="form-control"  (change)="updateOrden(curso.cur_fk_empresa,curso.cur_id,curso.cur_orden)" [(ngModel)]="curso.cur_orden" id="{{ curso.cur_id }}">
+                                <option value="">Sin orden</option>
+                                <option value="{{item}}" *ngFor="let item of this.cantidadArr">
+                                  {{item}}
+                                </option>
+                              </select>
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="100%">
+                                <nav aria-label="Page navigation example">
+                                    <ul class="pagination">
+                                        <li *ngFor="let item of pags(); let i = index;" (click)="obtenerPagina(i + 1)"
+                                            class="page-item">
+                                            <span class="page-link">{{ i + 1 }}</span>
+                                        </li>
+                                    </ul>
+                                </nav>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col-md-8 col-sm-8 col-xs-12" *ngIf="creando">
+            <div class="card mt-2">
+                <h2 class="card-header text-center"><a (click)="creando = false"><i
+                            class="fas fa-arrow-alt-circle-left float-left text-danger"></i></a> Nuevo Curso</h2>
+                <div class="card-body">
+                    <form [formGroup]="frmCurCreator" (ngSubmit)="crearCurso()">
+                        <div class="form-group row">
+                            <label for="exampleInputEmail1" class="form-label col-sm-2">Nombre</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" formControlName="cur_nombre" />
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="exampleInputEmail1" class="form-label col-sm-2">Descripción</label>
+                            <div class="col-sm-10">
+                                <textarea type="text" class="form-control" formControlName="cur_descripcion"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="exampleInputEmail1" class="form-label col-sm-2">Estado</label>
+                            <div class="col-sm-10">
+                                <select type="email" class="form-control" formControlName="cur_estado">
+                                    <option value="1" selected="selected">Activo</option>
+                                    <option value="0">Inactivo</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="imagenuno">Imagen (opcional)</span>
+                            </div>
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input" (change)="agregarArchivo($event,1)" />
+                                <label class="custom-file-label" for="inputGroupFile01">Agregue una imagen</label>
+                            </div>
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="imagendos">Imagen (opcional)</span>
+                            </div>
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input" (change)="agregarArchivo($event,2)" />
+                                <label class="custom-file-label" for="inputGroupFile01">Agregue una imagen</label>
+                            </div>
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="imagentres">Imagen (opcional)</span>
+                            </div>
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input" (change)="agregarArchivo($event,3)" />
+                                <label class="custom-file-label" for="inputGroupFile01">Agregue una imagen</label>
+                            </div>
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="imagencuatro">Imagen (opcional)</span>
+                            </div>
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input" (change)="agregarArchivo($event,4)" />
+                                <label class="custom-file-label" for="inputGroupFile01">Agregue una imagen</label>
+                            </div>
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="imagencinco">Imagen (opcional)</span>
+                            </div>
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input" (change)="agregarArchivo($event,5)" />
+                                <label class="custom-file-label" for="inputGroupFile01">Agregue una imagen</label>
+                            </div>
+                        </div>
+                        <div class="fa-3x text-center" *ngIf="flagSave">
+                            <i class="fas fa-spinner fa-pulse"></i>
+                        </div>
+                        <button type="submit" *ngIf="frmCurCreator.valid && !flagSave"
+                            class="btn btn-danger btn-block">Guardar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <app-editar-curso *ngIf="modeEditar && cursoEditar" [curso]="cursoEditar"
+            (cursoEditado)="recepcionCurEditado($event)" (editado)="modeEditar = $event"></app-editar-curso>
+
+    </div>
+    <app-clases-curso *ngIf="verclases" [curso]="cursoEditar" (retToCur)="verclases = $event"></app-clases-curso>
+</div>

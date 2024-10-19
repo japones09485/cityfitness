@@ -1,0 +1,23 @@
+#descp {
+    display: flex;
+    align-items: center;
+}
+
+.namePage {
+    font-family: Georgia, 'Times New Roman', Times, serif !important;
+    font-style: italic !important;
+    font-size: 25px !important; 
+}
+
+body {
+    background-color: #f5f5f5;
+    color: #1b1b1b;
+}
+
+#planesAliado {
+    background: brown;
+}
+
+#presentacion {
+    background: black;
+}

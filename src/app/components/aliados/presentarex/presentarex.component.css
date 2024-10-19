@@ -1,0 +1,15 @@
+#conferencia {
+  background: url("../../../../../src/assets/img/fondo-transp.png") !important;
+}
+
+#form_pres{
+  border: red 2px solid;
+  margin: 20px;
+  padding: 10px;
+}
+
+#pregunta_b{
+  border: rgb(252, 115, 24) 2px solid;
+  margin: 20px;
+  padding: 10px;
+}

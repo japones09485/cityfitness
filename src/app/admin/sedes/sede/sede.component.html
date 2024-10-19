@@ -1,0 +1,167 @@
+<app-menu></app-menu>
+<div class="row justify-content-md-center" id="content">
+  <div class="col-md-6">
+    <div class="new">
+
+      <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+          <div class="modal-header bg-danger text-white">
+            <h5 class="modal-title">Nueva sede</h5>
+
+          </div>
+          <form [formGroup]="frmSede" (ngSubmit)="crearSede()">
+            <div class="modal-body">
+              <div class="form-group row">
+                <label for="" class="form-label col-4">Nombre</label>
+                <div class="col-8">
+                  <input type="text" class="form-control" formControlName="nombre">
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label for="" class="form-label col-4">Correo electrónico</label>
+                <div class="col-8">
+                  <input type="email" class="form-control" formControlName="email">
+                </div>
+              </div>
+
+
+              <div class="form-group row">
+                <label for="" class="form-label col-4">Telefóno</label>
+                <div class="col-8">
+                  <input type="text" class="form-control" formControlName="telefono">
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label for="" class="form-label col-4">Facebook</label>
+                <div class="col-8">
+                  <input type="text" class="form-control" formControlName="facebook">
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label for="" class="form-label col-4">Instagram</label>
+                <div class="col-8">
+                  <input type="text" class="form-control" formControlName="instagram">
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label for="" class="form-label col-4">Dirección</label>
+                <div class="col-8">
+                  <input type="text" class="form-control" formControlName="direccion">
+                </div>
+              </div>
+
+
+
+
+              <div class="form-group row">
+                <label for="exampleInputEmail1" class="form-label col-2">Pais</label>
+                <div class="col-8">
+                  <select class="form-control " formControlName="pais" (change)="cambioPais()">
+                    <option *ngFor="let item of paisesList" [ngValue]="item.iso">{{ item.nombre }}
+                    </option>
+                  </select>
+                </div>
+                <div class="col-2">
+                  <img *ngIf="imgCountry" [src]="imgCountry" class="avatar" />
+                </div>
+              </div>
+
+
+
+              <div class="form-group row">
+                <label for="" class="form-label col-4">Ciudad</label>
+                <div class="col-8">
+                  <input type="text" class="form-control" formControlName="ciudad">
+                </div>
+              </div>
+
+
+              <div class="form-group row">
+                <label for="" class="form-label col-4">Mapa</label>
+                <div class="col-8">
+                  <input type="text" class="form-control" formControlName="mapa">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="" class="form-label col-4">Ruta</label>
+                <div class="col-8">
+                  <input type="text" class="form-control" formControlName="ruta">
+                </div>
+              </div>
+
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="imagenuno">Imagen (obligatorio)</span>
+                </div>
+                <div class="custom-file">
+                  <input type="file" class="custom-file-input" (change)="agregarArchivo($event,1)" />
+                  <label class="custom-file-label" for="inputGroupFile01">{{this.img1}}</label>
+                </div>
+              </div>
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="imagendos">Imagen (opcional)</span>
+                </div>
+                <div class="custom-file">
+                  <input type="file" class="custom-file-input" (change)="agregarArchivo($event,2)" />
+                  <label class="custom-file-label" for="inputGroupFile01">{{this.img2}}</label>
+                </div>
+              </div>
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="imagendos">Imagen (opcional)</span>
+                </div>
+                <div class="custom-file">
+                  <input type="file" class="custom-file-input" (change)="agregarArchivo($event,3)" />
+                  <label class="custom-file-label" for="inputGroupFile01">{{this.img3}}</label>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="exampleInputEmail1">Estado</label>
+                <select type="email" class="form-control" formControlName="estado">
+                  <option value="1" selected="selected">Activo</option>
+                  <option value="0">Inactivo</option>
+                </select>
+              </div>
+
+
+              <div id="carouselExampleControls" class="carousel slide" data-ride="carousel" *ngIf="this.id_sede > 0">
+                <div class="carousel-inner">
+                    <div *ngIf="this.img1F" class="carousel-item active">
+                        <img src="{{ pathIm + this.img1F }}" class="d-block imgcrs" alt="..." />
+                    </div>
+                    <div *ngIf="this.img2F" class="carousel-item">
+                        <img src="{{ pathIm + this.img2F }}" class="d-block imgcrs" alt="..." />
+                    </div>
+                    <div *ngIf="this.img3F" class="carousel-item">
+                        <img src="{{ pathIm + this.img3F }}" class="d-block imgcrs" alt="..." />
+                    </div>
+
+                </div>
+                <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Anterior</span>
+                </a>
+                <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Siguiente</span>
+                </a>
+            </div>
+
+
+
+            </div>
+            <div class="modal-footer">
+              <button type="submit" *ngIf="frmSede.valid" class="btn btn-danger btn-block">Guardar</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

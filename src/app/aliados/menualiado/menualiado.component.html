@@ -1,0 +1,62 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="#"><img class="logo_menu" src="../../../assets//img/logo.png" alt=""></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/adminAlid" routerLinkActive="active">
+                    <h4 class="text-white"><i class="fas fa-donate text-warning"></i> Precios & costos </h4>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/adminAlid/clases" routerLinkActive="active">
+                    <h4 class="text-white"><i class="far fa-calendar-alt text-warning"></i> Clases </h4>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/adminAlid/videos" routerLinkActive="active">
+                    <h4 class="text-white"><i class="fas fa-video  text-warning"></i> Videos </h4>
+                </a>
+            </li>
+
+            <li class="nav-item" *ngIf="this.PerfilUsu != '5'">
+                <a class="nav-link" routerLink="/adminAlid/inscripcion" routerLinkActive="active">
+                    <h4 class="text-white"><i class="fas fa-edit  text-warning"></i> Inscripción de alumnos </h4>
+                </a>
+            </li>
+
+
+            <li class="nav-item">
+              <a class="nav-link" [routerLink]="['/empresa/Examenes/' + id_empresa]" routerLinkActive="active">
+                  <h4 class="text-white"><i class="fas fa-book text-warning"></i> Creación de examenes </h4>
+              </a>
+          </li>
+
+
+          <li class="nav-item">
+            <a class="nav-link" [routerLink]="['/empresa/Apoyo/' + id_empresa+'/1']" routerLinkActive="active">
+                <h4 class="text-white"><i class="fas fa-book text-warning"></i>Documentación de apoyo </h4>
+            </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['/empresa/Trabajos/' + id_empresa +'/2']">
+              <h4 class="text-white"><i class="fas fa-book text-warning"></i>Trabajos y actividades </h4>
+          </a>
+      </li>
+
+
+        </ul>
+
+        <ul class="nav justify-content-end">
+            <li class="nav-item bg-danger">
+                <button (click)="salir()" href="#" class="  btn-danger nav-link">salir</button>
+            </li>
+        </ul>
+    </div>
+</nav>

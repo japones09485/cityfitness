@@ -1,0 +1,133 @@
+<app-menuempresa></app-menuempresa>
+<div class="row justify-content-md-center" id="content">
+  <div class="col-md-12 col-sm-12 col-xs-12">
+    <div class="new">
+      <ng-container id="content">
+        <h1 class="text-danger text-center m-5"> Respuestas </h1>
+        <form (ngSubmit)="guardarResp(f)" #f="ngForm" id="form-preg" >
+
+
+          <div class="form-group" *ngFor="let preg of preguntas">
+            <div>
+              <label for="inputtext6" class="col-form-label text-info">* {{preg.enunciado}}</label>
+            </div>
+
+            <!--codigo si ya vienen llenas las respuestas-->
+
+            <div>
+
+
+            <div id="opcion" *ngIf="preg.tipo_pregunta==1">
+
+              <div *ngFor="let res of respuestas[preg.id_pregunta]">
+
+                <div class="row g-3 m-1 align-items-center" *ngIf="res.orden == 1">
+                  <div class="col-auto">
+                    <label for="inputtext6" class="col-form-label text-white">Opción 1</label>
+                  </div>
+                  <div class="col-9">
+                    <input type="text" name="1_{{preg.id_pregunta}}" class="form-control m-3" required ngModel
+                      [(ngModel)]="res.texto_respuesta">
+                  </div>
+                </div>
+
+                <div class="row g-3 m-1 align-items-center" *ngIf="res.orden == 2">
+                  <div class="col-auto">
+                    <label for="inputtext6" class="col-form-label text-white">Opción 2</label>
+                  </div>
+                  <div class="col-9">
+                    <input type="text" name="2_{{preg.id_pregunta}}" class="form-control m-3" required ngModel
+                      [(ngModel)]="res.texto_respuesta">
+                  </div>
+                </div>
+
+                <div class="row g-3 m-1 align-items-center" *ngIf="res.orden == 3">
+                  <div class="col-auto">
+                    <label for="inputtext6" class="col-form-label text-white">Opción 3</label>
+                  </div>
+                  <div class="col-9">
+                    <input type="text" name="3_{{preg.id_pregunta}}" class="form-control m-3" required ngModel
+                      [(ngModel)]="res.texto_respuesta">
+                  </div>
+                </div>
+
+                <div class="row g-3 m-1 align-items-center" *ngIf="res.orden == 4">
+                  <div class="col-auto">
+                    <label for="inputtext6" class="col-form-label text-white">Opción 4</label>
+                  </div>
+                  <div class="col-9">
+                    <input type="text" name="4_{{preg.id_pregunta}}" class="form-control m-3" required ngModel
+                      [(ngModel)]="res.texto_respuesta">
+                  </div>
+                </div>
+
+
+                <div class="row g-3 m-2 align-items-center" *ngIf="res.orden==5">
+                  <div class="col-auto">
+                    <label for="inputtext6" class="col-form-label text-white">Opción correcta</label>
+                  </div>
+                  <div class="col-9">
+                    <select type="email" class="form-control" name="5_{{preg.id_pregunta}}" required ngModel
+                    [(ngModel)]="res.texto_respuesta">
+                      <option value="1" selected="selected">1</option>
+                      <option value="2" selected="selected">2</option>
+                      <option value="3" selected="selected">3</option>
+                      <option value="4" selected="selected">4</option>
+              </select>
+
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+
+
+            <div id="opcion" *ngIf="preg.tipo_pregunta==2">
+
+              <div *ngFor="let res of respuestas[preg.id_pregunta]">
+
+                <div class="row g-3 m-2 align-items-center" *ngIf="res.orden == 0">
+                <div class="form-check m-1">
+                  <input class="form-check-input" type="radio" name="vs_{{preg.id_pregunta}}" value="true"  required ngModel [(ngModel)]="res.texto_respuesta"
+                    checked>
+                  <label class="form-check-label text-white" for="exampleRadios1">
+                    Verdadero
+                  </label>
+                </div>
+                <div class="form-check m-1">
+                  <input class="form-check-input" type="radio" name="vs_{{preg.id_pregunta}}"  value="false"  required ngModel [(ngModel)]="res.texto_respuesta">
+                  <label class="form-check-label text-white" for="exampleRadios2">
+                    Falso
+                  </label>
+                </div>
+              </div>
+              </div>
+            </div>
+
+            <div id="libre" *ngIf="preg.tipo_pregunta==3">
+              <div *ngFor="let res of respuestas[preg.id_pregunta]">
+                <div class="row g-3 m-1 align-items-center" *ngIf="res.orden == 0">
+
+                  <div class="col-12">
+                    <input type="text" name="libre_{{preg.id_pregunta}}" class="form-control m-3" required ngModel
+                      [(ngModel)]="res.texto_respuesta" placeholder="Informacion digitada por el alumno" value="42">
+                      <label for="inputtext6" class="col-form-label text-warning">LLene con un *</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+          <div class="alert alert-warning" *ngIf="sucess" role="alert">
+            <p class="text-dark text-center"> {{ mensaje }} </p>
+          </div>
+
+          <button type="submit" class="btn btn-danger btn-block">Guardar</button>
+        </form>
+      </ng-container>
+    </div>
+  </div>
+</div>
