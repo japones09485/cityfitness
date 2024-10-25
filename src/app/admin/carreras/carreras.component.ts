@@ -49,6 +49,8 @@ export class CarrerasComponent implements OnInit{
     this.frmCliCreator = this.fb.group({
       nombre: ['', Validators.required],
       puntaje: ['', Validators.required],
+      sistema: ['', Validators.required],
+      nivel: ['', Validators.required],
       estado: ['', Validators.required]
     });
   }
@@ -57,6 +59,8 @@ export class CarrerasComponent implements OnInit{
     this.frmCliCreator = this.fb.group({
       nombre: [this.carreraEdit.nombre, Validators.required],
       puntaje: [this.carreraEdit.puntaje, Validators.required],
+      sistema: [this.carreraEdit.sistema, Validators.required],
+      nivel: [this.carreraEdit.nivel, Validators.required],
       estado: [this.carreraEdit.estado, Validators.required]  
     });
   }

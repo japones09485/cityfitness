@@ -585,6 +585,8 @@ export interface Carreras{
   fecha_creacion:string;
   puntaje:string;
   estado:string;
+  sistema:string;
+  nivel:number;
   
 }
 

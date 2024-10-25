@@ -13,8 +13,10 @@
               <th></th>
               <th>Id</th>
               <th>Nombre</th>
-              <th>Fecha Creación</th>
               <th>Puntaje</th>
+              <th>Sistema</th>
+              <th>Nivel</th>
+              <th>Fecha Creación</th>
               <th>Estado</th>
             </tr>
           </thead>
@@ -39,8 +41,10 @@
               </td>
               <td>{{ car.id }}</td>
               <td>{{ car.nombre }}</td>
-              <td>{{ car.fecha_creacion }}</td>
               <td>{{ car.puntaje }}</td>
+              <td>{{ car.sistema }}</td>
+              <td>{{ car.nivel }}</td>
+              <td>{{ car.fecha_creacion }}</td>
               <td>{{ car.estado === '1' ? 'Activo' : 'Inactivo' }}</td>
             </tr>
           </tbody>
@@ -62,6 +66,30 @@
                         <label for="exampleInputEmail1" class="text-light">Puntaje</label>
                         <input type="number" class="form-control" formControlName="puntaje" />
                     </div>
+
+                  <div class="form-group">
+                      <label for="exampleInputEmail1" class="text-light">Sistema</label>
+                      <select type="email" class="form-control" formControlName="sistema">
+                        <option value="CPD" selected="selected">CPD</option>
+                        <option value="LAQF">LAQF</option>
+                    </select>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="exampleInputEmail1" class="text-light">Nivel</label>
+                      <select type="email" class="form-control" formControlName="nivel">
+                        <option value="1" selected="selected">1</option>
+                        <option value="2" selected="selected">2</option>
+                        <option value="3" selected="selected">3</option>
+                        <option value="4" selected="selected">4</option>
+                        <option value="5" selected="selected">5</option>
+                        <option value="6" selected="selected">6</option>
+                        <option value="7" selected="selected">7</option>
+                        <option value="8" selected="selected">8</option>
+                        
+                    </select>
+                  </div>
+
                     <div class="form-group">
                         <label for="exampleInputEmail1" class="text-light">Estado</label>
                         <select type="email" class="form-control" formControlName="estado">
