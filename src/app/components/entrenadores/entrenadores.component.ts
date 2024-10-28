@@ -54,6 +54,7 @@ export class EntrenadoresComponent implements OnInit {
     this.api.getInstructoresFront()
       .subscribe((res: any) => { 
         this.instructores = res.lista; 
+    console.log( this.instructores );
     
         this.paginas = res.cant_pag; });
   }

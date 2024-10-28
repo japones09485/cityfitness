@@ -55,6 +55,30 @@
                 </div>
               </div>
             </div>
+
+           
+        </div>
+
+        <div *ngIf="instructor.carreras.length > 0">
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Carrera</th>
+                <th scope="col">Puntaje</th>
+                <th scope="col">Sistema</th>
+                <th scope="col">Nivel</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr  *ngFor="let car of instructor.carreras">
+                <th>{{car.nombre}}</th>
+                <td>{{car.puntaje}}</td>
+                <td>{{car.sistema}}</td>
+                <td>{{car.nivel}}</td>
+              </tr>
+        
+            </tbody>
+          </table>
         </div>
 
 

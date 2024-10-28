@@ -26,7 +26,9 @@
                     <div class="col-sm-8">
                         <h1 class="display-4 text-info">{{ ins.ins_nombre+' '+ins.ins_apellido }}</h1>
                         <h3 class="display-5 text-secondary"><img src="{{ banderaPais(ins.ins_fk_pais) }}" class="avatar">{{nombrePais}}</h3>
-                        <h3 class="display-5 text-danger" *ngIf="ins.fk_puntaje_carrera>0">Puntaje:  {{ins.fk_puntaje_carrera}} </h3>
+                        <h3 class="display-5 text-info" *ngIf="ins.fk_puntaje_carrera>0">Puntaje:  {{ins.fk_puntaje_carrera}} </h3>
+                        <h3 class="display-5 text-success" *ngIf="ins.fk_puntaje_carrera>0">Sistema:  {{ins.nivelAlto.sistema}} </h3>
+                        <h3 class="display-5 text-success" *ngIf="ins.fk_puntaje_carrera>0">Nivel:  {{ins.nivelAlto.nivel}} </h3>
                           
                         <div class="card-dark text-light">
                             <div class="card-body">

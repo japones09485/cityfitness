@@ -51,6 +51,8 @@ export interface Instructor {
   ins_foto4?: string;
   ins_foto5?: string;
   cursos?: Curso[];
+  carreras?: Carreras[];
+  nivelAlto?: any[];
   gimnasios?: Gimnasio[];
   likes?: Like[];
   ins_likes?: number;

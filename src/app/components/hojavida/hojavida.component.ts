@@ -20,6 +20,6 @@ export class HojavidaComponent implements OnInit {
     $('#modalHojadeVida').on('hidden.bs.modal', () => {
       this.finalizar.emit(false);
     });
-    console.log(this.instructor);
+    console.log(this.instructor.carreras);
   }
 }
