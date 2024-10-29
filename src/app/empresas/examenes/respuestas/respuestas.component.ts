@@ -16,7 +16,7 @@ export class RespuestasComponent implements OnInit {
   numpreg:number;
   frmClasCreator: UntypedFormGroup;
   frmGuardar = new FormData();
-  examen: Examen;
+  examen: Examen; 
   mensaje: string;
   sucess:boolean;
   user:User;

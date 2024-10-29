@@ -51,6 +51,8 @@ export class HeaderComponent implements OnInit {
     this.apiAuth.logInFront(this.frmUser.value)
       .subscribe((res: ResLogin) => {
         if (res.status === true) {
+          console.log(res);
+          
           sessionStorage.setItem('token', res.token);
           sessionStorage.setItem('user', JSON.stringify(res.user));
           sessionStorage.setItem('instructor', JSON.stringify(res.instructor));

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AliadosService } from '../../../services/aliados.service';
+import { environment } from '../../../../environments/environment';
 import { AuthService } from '../../../services/auth.service';
 import { Resultados } from 'src/app/interfaces/interfaces';
 import Swal from 'sweetalert2';
@@ -14,6 +15,7 @@ export class ResultadosComponent implements OnInit {
   id_examen :number;
   mensaje : string;
   resultados: Resultados[] = [];
+  private urlAPI = environment.apiURL;
 
   constructor(  private apiAlid: AliadosService,
     private authApi:AuthService,
@@ -30,6 +32,7 @@ export class ResultadosComponent implements OnInit {
         .subscribe((res: any) => {
           if (res.sucess == true) {
             this.resultados = res.resultados;
+           
           }
         });
     });
@@ -59,6 +62,30 @@ export class ResultadosComponent implements OnInit {
      });
       }
     })
+  }
+
+  ResultadoPdf( presentacion:number ){
+
+    this.apiAlid.PdfResultado(presentacion)
+    .subscribe((res:any)=>{
+      console.log(res);
+      
+        if (res.success && res.ruta_pdf) {
+          // Crear una URL completa de la ruta PDF que te devuelve el backend
+          const url = `${this.urlAPI}/${res.ruta_pdf}`; // Reemplaza con tu URL base si es diferente
+    
+          // Crear un enlace de descarga
+          const link = document.createElement('a');
+          link.href = url;
+          link.download = 'resultados-examen.pdf'; // Nombre del archivo para la descarga
+          link.target = '_blank'; // Para abrir el archivo en una nueva pestaña si se desea
+          link.click();
+        } else {
+          console.error('Error al generar o recuperar el PDF');
+        }
+        
+     });
+
   }
 
 }

@@ -321,5 +321,9 @@ export class AliadosService {
     return this.http.post(this.urlAPI + `Rest_aliados/eliminarCarreraAlid`, { idAliado,idCarrera });
   }
 
+  PdfResultado(idPresentacion){
+    return this.http.post(this.urlAPI + `Rest_examenes/PdfResultado`, { idPresentacion });
+  }
+
 
 }
