@@ -56,7 +56,7 @@ export class FanPageComponent implements OnInit {
               this.fechafin = data.fecha_fin;
               this.activationplan = true;
             } else {
-              Swal.fire('Su plan ha expirado por favor ponerse en contacto con su instructor');
+              Swal.fire('Su plan ha expirado por favor comuniquese con el administrador.');
               this.activationplan = false
             }
           });
