@@ -53,7 +53,8 @@ export class EditarGimnasioComponent implements OnInit {
       descripcion: [this.gimnasio.gim_descripcion, Validators.required],
       mapa: [this.gimnasio.gim_mapa, Validators.required],
       ruta: [this.gimnasio.gim_ruta, Validators.required],
-      estado: [this.gimnasio.gim_estado, Validators.required]
+      estado: [this.gimnasio.gim_estado, Validators.required],
+      tipo_gimnasio: [this.gimnasio.tipo_gimnasio, Validators.required]
     });
   }
 
@@ -88,9 +89,18 @@ export class EditarGimnasioComponent implements OnInit {
   }
 
   agregarArchivo(ev: any, numFile: number) {
-    const imgs: any = ev.target;
-    if (imgs.files.length > 0) {
-      this.frmGuardar.append(`${numFile}`, imgs.files[0]);
+    const inputFile = ev.target as HTMLInputElement;
+    if (inputFile.files && inputFile.files.length > 0) {
+        // Agregar el archivo al formulario
+        this.frmGuardar.append(`${numFile}`, inputFile.files[0]);
+        
+        // Obtener el label asociado y actualizar su texto
+        const fileName = inputFile.files[0].name;
+        const labelElement = document.getElementById(`labelFile${numFile}`);
+        if (labelElement) {
+            labelElement.textContent = fileName;
+        }
     }
-  }
+}
+
 }

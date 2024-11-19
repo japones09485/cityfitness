@@ -22,6 +22,7 @@ import { PagoComponent } from './components/pago/pago.component';
 import { ConfirmationComponent } from './components/confirmation/confirmation.component';
 import { InfocursoComponent } from './components/infocurso/infocurso.component';
 import { GimnasiosComponent } from './admin/gimnasios/gimnasios.component';
+import { SedesGimComponent } from './admin/sedes-gim/sedes-gim.component';
 import { RegistrarseComponent } from './components/registrarse/registrarse.component';
 import { GimfrontComponent } from './components/gimfront/gimfront.component';
 import { PagosComponent } from './admin/pagos/pagos.component';
@@ -134,6 +135,7 @@ const routes: Routes = [
   { path: 'aliados/videos/:id/:empresasocio', component: VideosAliadosComponent },
   { path: 'registrarse', component: RegistrarseComponent },
   { path: 'gimnasios', component: GimfrontComponent },
+  { path: 'sedesGim/:fk_gim', component: SedesGimComponent },
   { path: 'recordar-password', component: RecuperarPassComponent },
   { path: 'cursos-disponibles', component: CursosHomeComponent },
   { path: 'clasesDetalle/:idCurso', component: ClaseDetalleComponent },

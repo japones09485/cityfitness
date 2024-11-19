@@ -5,6 +5,7 @@ import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms
 import { environment } from 'src/environments/environment';
 
 declare var $: any;
+
 @Component({
   selector: 'app-gimnasios',
   templateUrl: './gimnasios.component.html',
@@ -23,7 +24,8 @@ export class GimnasiosComponent implements OnInit {
   imgCountry: String;
   paisesList: Paises[] = [];
   paises: Paises[] = [];
-  nombrePais:String;
+  nombrePais: String;
+
   constructor(
     public api: ApiRestService,
     private fb: UntypedFormBuilder
@@ -35,45 +37,36 @@ export class GimnasiosComponent implements OnInit {
       this.frmGimnasio.reset();
     });
     this.listGimnasios();
-     this.api.getPaisesList()
-    .subscribe((res:any)=>{
-      this.paisesList = res.lista
-    });
+    this.api.getPaisesList()
+      .subscribe((res: any) => {
+        this.paisesList = res.lista;
+      });
 
     this.api.getPaises()
-    .subscribe((res:any)=>{
-      this.paises = res.lista
-    });
-
-
+      .subscribe((res: any) => {
+        this.paises = res.lista;
+      });
   }
-
-
-
 
   cambioPais() {
     this.banderaPais(this.frmGimnasio.get('pais').value);
   }
 
-
-
   banderaPais(bandera: string) {
-
     let infopais = this.paises[bandera].flag;
     this.nombrePais = this.paises[bandera].nombre;
-    const flagPais = this.pathIm +'imagenes/paises/'+ infopais;
+    const flagPais = this.pathIm + 'imagenes/paises/' + infopais;
     this.imgCountry = flagPais;
-   }
+  }
 
-
-  listGimnasios(){
+  listGimnasios() {
     this.api.getAllGimnasios()
       .subscribe((res: RespGimnasios) => {
         this.list = res.lista;
       });
   }
 
-  initForm(){
+  initForm() {
     this.frmGimnasio = this.fb.group({
       nombre: ['', Validators.required],
       nit: ['', Validators.required],
@@ -85,11 +78,10 @@ export class GimnasiosComponent implements OnInit {
       telefono: ['', Validators.required],
       descripcion: ['', Validators.required],
       mapa: ['', Validators.required],
-      ruta: ['', Validators.required]
+      ruta: ['', Validators.required],
+      tipo_gimnasio: ['', Validators.required]
     });
   }
-
-
 
   crearGimnasio() {
     this.frmGuardar.append('data', JSON.stringify(this.frmGimnasio.value));
@@ -103,21 +95,27 @@ export class GimnasiosComponent implements OnInit {
       });
   }
 
-  editarGym(gim: Gimnasio){
+  editarGym(gim: Gimnasio) {
     this.gimnasio = gim;
     this.editer = true;
   }
 
   agregarArchivo(ev: any, numFile: number) {
-    console.log(ev);
-
-    const imgs: any = ev.target;
-    if (imgs.files.length > 0) {
-      this.frmGuardar.append(`${numFile}`, imgs.files[0]);
+    const inputFile = ev.target as HTMLInputElement;
+    if (inputFile.files && inputFile.files.length > 0) {
+      // Agregar el archivo al formulario
+      this.frmGuardar.append(`${numFile}`, inputFile.files[0]);
+      
+      // Obtener el label asociado y actualizar su texto
+      const fileName = inputFile.files[0].name;
+      const labelElement = document.getElementById(`labelFile${numFile}`);
+      if (labelElement) {
+        labelElement.textContent = fileName;
+      }
     }
   }
 
-  returnGym(gimnasio: Gimnasio){
+  returnGym(gimnasio: Gimnasio) {
     const updateIt = this.list.find((gim: Gimnasio) => gim.gim_id === gimnasio.gim_id);
     const index = this.list.indexOf(updateIt);
     this.list[index] = gimnasio;
@@ -130,7 +128,5 @@ export class GimnasiosComponent implements OnInit {
 
   loadLikes(likes) {
     this.likesView = likes;
-
   }
-
 }

@@ -112,6 +112,7 @@ import { SedesFrontComponent } from './components/sedes-front/sedes-front.compon
 import { IntructorPageComponent } from './components/intructor-page/intructor-page.component';
 import { CertificacionesComponent } from './admin/instructores/certificaciones/certificaciones.component';
 import { CarrerasComponent } from './admin/carreras/carreras.component';
+import { SedesGimComponent } from './admin/sedes-gim/sedes-gim.component';
 
 
 
@@ -224,7 +225,8 @@ import { CarrerasComponent } from './admin/carreras/carreras.component';
     SedesFrontComponent,
     IntructorPageComponent,
     CertificacionesComponent,
-    CarrerasComponent
+    CarrerasComponent,
+    SedesGimComponent
   ],
   imports: [
     BrowserModule,

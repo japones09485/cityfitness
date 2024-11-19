@@ -233,6 +233,7 @@ export interface Gimnasio {
   instructores: Instructor[];
   likes?: Like[];
   verlike?: boolean;
+  tipo_gimnasio?: string;
 }
 
 export interface Sedes {
