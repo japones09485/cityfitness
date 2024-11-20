@@ -236,6 +236,35 @@ export interface Gimnasio {
   tipo_gimnasio?: string;
 }
 
+
+export interface SedesGim {
+  sed_id: string;
+  sed_fk_gimnasio: number;
+  sed_nombre: string;
+  sed_nit: string;
+  sed_pais: string;
+  sed_ciudad: string;
+  sed_email: string;
+  sed_telefono: string;
+  sed_descripcion: string;
+  sed_facebook?: string;
+  sed_instagram?: string;
+  sed_mapa: string;
+  sed_ruta: string;
+  sed_estado: string;
+  sed_foto1: string;
+  sed_foto2: string;
+  sed_foto3: string;
+  sed_servicios: string;
+  sed_horarios: string;
+  sed_precio_mes: string;
+  sed_link_mes:number,
+  sed_precio_trimestre: string;
+  sed_link_trimestre:number,
+  sed_precio_semestre: string;
+  sed_link_semestre:number,
+}
+
 export interface Sedes {
   sed_id: string;
   sed_nombre: string;

@@ -21,6 +21,7 @@ export class GimnasiosComponent implements OnInit {
   frmGuardar = new FormData();
   editer = false;
   pathIm = environment.pathImgs;
+  ImgPaises = environment.pathImgsPaises;
   imgCountry: String;
   paisesList: Paises[] = [];
   paises: Paises[] = [];
@@ -122,11 +123,13 @@ export class GimnasiosComponent implements OnInit {
   }
 
   banderaGimnasio(bandera: string) {
-    const country = this.api.paises.find(pais => pais.alpha3Code === bandera);
-    return country.flag;
+    const country = this.paisesList.find(pais => pais.iso === bandera); 
+    
+    return this.ImgPaises+'/'+country.flag;
   }
 
   loadLikes(likes) {
+    console.log(likes);
     this.likesView = likes;
   }
 }

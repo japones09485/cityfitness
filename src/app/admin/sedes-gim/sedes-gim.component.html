@@ -1,8 +1,268 @@
 <app-menu></app-menu>
 <div class="container-fluid">
     <div class="row justify-content-center" id="content">
+        <div class="col-12">
+
+            <ng-container *ngIf="!editer">
+                <button type="button" data-toggle="modal" data-target="#frmSede" class="btn btn-danger m-2">Agregar Sede</button>
+                <table class="table table-sm table-hover table-bordered text-light">
+                    <thead>
+                        <tr class="table-primary text-center">
+                            <th></th>
+                            <th>Foto</th>
+                            <th>Nombre</th>
+                            <th>Correo</th>
+                            <th>Teléfono</th>
+                            <th>Ubicación</th>
+                            <th>País</th>
+                            <th>Ciudad</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let sed of list">
+                            <td>
+                                <button type="button" class="btn btn-danger btn-sm" (click)="editarSed(sed)" title="Editar" data-toggle="tooltip">
+                           <i class="fas fa-pencil-alt"></i>
+                        </button>
+                                <button type="button" class="btn btn-info btn-sm" (click)="loadLikes(sed.likes)" data-toggle="modal" data-target="#likesModal" title="Likes" data-toggle="tooltip">
+                          <i class="fas fa-thumbs-up"></i>
+                      </button>
+
+                      <button type="button" class="btn btn-info btn-sm" [routerLink]="['/sedesGim/', sed.gim_id]" title="Sedes" data-toggle="tooltip">
+                        <i class="fa fa-list"></i>
+                    </button>
+
+                            </td>
+                            <td>
+                                <img src="{{ pathIm + sed.sed_foto1 }}" class="avatar" />
+                            </td>
+                            <td>{{sed.sed_nombre}}</td>
+                            <td>{{sed.sed_email}}</td>
+                            <td>{{sed.sed_telefono}}</td>
+                            <td>{{sed.sed_ruta}}</td>
+                            <td class="text-center"> <img src="{{ banderaSede(sed.sed_pais) }}" class="avatar"> </td>
+                            <td>{{ sed.sed_ciudad }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </ng-container>
+            
+        </div>
     </div>
 </div>
 
 
 
+<div class="modal fade" id="frmSede" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header bg-danger text-white">
+                <h5 class="modal-title">Nueva Sede</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+           <span aria-hidden="true">&times;</span>
+         </button>
+            </div>
+            <form [formGroup]="frmSede" (ngSubmit)="crearSede()">
+                <div class="modal-body">
+                    <div class="form-group row">
+                        <label for="" class="form-label col-4 text-white ">Nombre</label>
+                        <div class="col-8">
+                            <input type="text" class="form-control" formControlName="nombre">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="" class="form-label col-4 text-white">Nit</label>
+                        <div class="col-8">
+                            <input type="text" class="form-control " formControlName="nit">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="" class="form-label col-4 text-white">Correo electrónico</label>
+                        <div class="col-8">
+                            <input type="email" class="form-control" formControlName="email">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="" class="form-label col-4 text-white">Facebook</label>
+                        <div class="col-8">
+                            <input type="email" class="form-control" formControlName="facebook">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="" class="form-label col-4 text-white">Instagram</label>
+                        <div class="col-8">
+                            <input type="email" class="form-control" formControlName="instagram">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="" class="form-label col-4 text-white">Teléfono</label>
+                        <div class="col-8">
+                            <input type="text" class="form-control" formControlName="telefono">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="" class="form-label col-4 text-white">Descripción</label>
+                        <div class="col-8">
+                            <textarea formControlName="descripcion" class="form-control" rows="3"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="" class="form-label col-4 text-white">Mapa</label>
+                        <div class="col-8">
+                            <input type="text" class="form-control" formControlName="mapa">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="" class="form-label col-4 text-white">Ruta</label>
+                        <div class="col-8">
+                            <input type="text" class="form-control" formControlName="ruta">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="" class="form-label col-4 text-white">Servicios</label>
+                        <div class="col-8">
+                            <input type="text" class="form-control" formControlName="servicios">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group row">
+                        <label for="" class="form-label col-4 text-white">Horarios</label>
+                        <div class="col-8">
+                            <input type="text" class="form-control" formControlName="horarios">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="" class="form-label col-2 text-white">Precio mes</label>
+                        <div class="col-4">
+                            <input type="number" class="form-control" formControlName="precio_m">
+                        </div>
+
+                        <label for="" class="form-label col-2 text-white">Link pago mes</label>
+                        <div class="col-4">
+                            <input type="text" class="form-control" formControlName="link_mes">
+                        </div>
+
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="" class="form-label col-2 text-white">Precio trimestre</label>
+                        <div class="col-4">
+                            <input type="number" class="form-control" formControlName="precio_t">
+                        </div>
+
+                        
+                        <label for="" class="form-label col-2 text-white">Link pago trimestre</label>
+                        <div class="col-4">
+                            <input type="text" class="form-control" formControlName="link_tri">
+                        </div>
+
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="" class="form-label col-2 text-white">Precio Semestre</label>
+                        <div class="col-4">
+                            <input type="number" class="form-control" formControlName="precio_sm">
+                        </div>
+
+
+                        <label for="" class="form-label col-2 text-white">Link pago semestre</label>
+                        <div class="col-4">
+                            <input type="text" class="form-control" formControlName="link_sem">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="exampleInputEmail1" class="form-label col-2 text-white">Pais</label>
+                        <div class="col-8">
+                            <select class="form-control " formControlName="pais" (change)="cambioPais()">
+                                <option *ngFor="let item of paisesList" [ngValue]="item.iso">{{ item.nombre }}
+                        </option>
+                    </select>
+                        </div>
+                        <div class="col-2">
+                            <img *ngIf="imgCountry" [src]="imgCountry" class="avatar" />
+                        </div>
+                    </div>
+
+
+
+                    <div class="form-group row">
+                        <label for="" class="form-label col-4 text-white">Ciudad</label>
+                        <div class="col-8">
+                            <input type="text" class="form-control" formControlName="ciudad">
+                        </div>
+                    </div>
+
+
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="imagenuno">Imagen (Obligatoria Logo)</span>
+                        </div>
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" (change)="agregarArchivo($event, 1)" id="file1" />
+                            <label class="custom-file-label" for="file1" id="labelFile1">Agregue una imagen</label>
+                        </div>
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="imagendos">Imagen (opcional)</span>
+                        </div>
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" (change)="agregarArchivo($event, 2)" id="file2" />
+                            <label class="custom-file-label" for="file2" id="labelFile2">Agregue una imagen</label>
+                        </div>
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="imagentres">Imagen (opcional)</span>
+                        </div>
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" (change)="agregarArchivo($event, 3)" id="file2" />
+                            <label class="custom-file-label" for="file3" id="labelFile3">Agregue una imagen</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" *ngIf="frmSede.valid" class="btn btn-danger btn-block">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="likesModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-info text-white">
+                <h5 class="modal-title" id="exampleModalLabel">Likes de instructor</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+            </div>
+            <div class="modal-body">
+                <table class="table table-sm table-hover">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Email</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let lk of likesView">
+                            <td>{{lk.usu_nombres + lk.usu_apellidos}}</td>
+                            <td>{{lk.usu_email}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>

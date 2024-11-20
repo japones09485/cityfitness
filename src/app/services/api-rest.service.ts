@@ -387,6 +387,14 @@ export class ApiRestService {
     return this.http.post(this.urlAPI + `Rest_usuarios/validUsu`, { idUsuario,newEstado,curso,perfil });
   }
 
+  getSedesGim(idGim:number){
+    return this.http.post(this.urlAPI + `Rest_sedes_gim/listar`, { idGim });
+  }
+
+  createSedeGym(payload: any){
+    return this.http.post(this.urlAPI + `Rest_sedes_gim/crear`, payload);
+  }
+
 
 
 }
