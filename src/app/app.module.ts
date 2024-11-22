@@ -113,6 +113,7 @@ import { IntructorPageComponent } from './components/intructor-page/intructor-pa
 import { CertificacionesComponent } from './admin/instructores/certificaciones/certificaciones.component';
 import { CarrerasComponent } from './admin/carreras/carreras.component';
 import { SedesGimComponent } from './admin/sedes-gim/sedes-gim.component';
+import { EditSedeGComponent } from './admin/sedes-gim/edit-sede-g.component';
 
 
 
@@ -226,7 +227,8 @@ import { SedesGimComponent } from './admin/sedes-gim/sedes-gim.component';
     IntructorPageComponent,
     CertificacionesComponent,
     CarrerasComponent,
-    SedesGimComponent
+    SedesGimComponent,
+    EditSedeGComponent
   ],
   imports: [
     BrowserModule,

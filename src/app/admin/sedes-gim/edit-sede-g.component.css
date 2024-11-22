@@ -23,19 +23,6 @@ table thead th {
     outline: 0;
 }
 
-.card{
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    pointer-events: auto;
-    background-color: red;
-    background-clip: padding-box;
-    border: 1px solid rgba(0, 0, 0, .2);
-    border-radius: .3rem;
-    outline: 0;
-}
-
 @media only screen and (min-width: 700px) {
     #content {
         background: url("../../.././assets/img/fondo-transp.png") !important;

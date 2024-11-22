@@ -78,7 +78,7 @@ export class EditarGimnasioComponent implements OnInit {
         this.frmGimnasioEdit.reset();
         this.api.mensajeUser = 'Editado correctamente';
         this.api.mostrarMsj = true;
-        this.editer.emit(false);
+        this.editer.emit(true);
         this.gim.emit(data.data);
       });
   }

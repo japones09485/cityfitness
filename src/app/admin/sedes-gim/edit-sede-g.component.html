@@ -1,0 +1,203 @@
+<div class="container-fluid">
+    <div class="row justify-content-md-center" id="content">
+        <div class="col-md-8 col-sm-8 col-xs-12">
+            <div class="card mt-2 bg-dark text-light">
+                <h2 class="card-header text-light text-center">Editar Sede</h2>
+                <div class="card-body">
+                    <form [formGroup]="frmSede" (ngSubmit)="guardarEditSede()" >
+                        <div class="modal-body">
+                            <div class="form-group row">
+                                <label for="" class="form-label col-4 text-white ">Nombre</label>
+                                <div class="col-8">
+                                    <input type="text" class="form-control" formControlName="nombre">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="" class="form-label col-4 text-white">Nit</label>
+                                <div class="col-8">
+                                    <input type="text" class="form-control " formControlName="nit">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="" class="form-label col-4 text-white">Correo electrónico</label>
+                                <div class="col-8">
+                                    <input type="email" class="form-control" formControlName="email">
+                                </div>
+                            </div>
+        
+                            <div class="form-group row">
+                                <label for="" class="form-label col-4 text-white">Facebook</label>
+                                <div class="col-8">
+                                    <input type="email" class="form-control" formControlName="facebook">
+                                </div>
+                            </div>
+        
+                            <div class="form-group row">
+                                <label for="" class="form-label col-4 text-white">Instagram</label>
+                                <div class="col-8">
+                                    <input type="email" class="form-control" formControlName="instagram">
+                                </div>
+                            </div>
+        
+                            <div class="form-group row">
+                                <label for="" class="form-label col-4 text-white">Teléfono</label>
+                                <div class="col-8">
+                                    <input type="text" class="form-control" formControlName="telefono">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="" class="form-label col-4 text-white">Descripción</label>
+                                <div class="col-8">
+                                    <textarea formControlName="descripcion" class="form-control" rows="3"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="" class="form-label col-4 text-white">Mapa</label>
+                                <div class="col-8">
+                                    <input type="text" class="form-control" formControlName="mapa">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="" class="form-label col-4 text-white">Ruta</label>
+                                <div class="col-8">
+                                    <input type="text" class="form-control" formControlName="ruta">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="" class="form-label col-4 text-white">Servicios</label>
+                                <div class="col-8">
+                                    <input type="text" class="form-control" formControlName="servicios">
+                                </div>
+                            </div>
+                            
+                            <div class="form-group row">
+                                <label for="" class="form-label col-4 text-white">Horarios</label>
+                                <div class="col-8">
+                                    <input type="text" class="form-control" formControlName="horarios">
+                                </div>
+                            </div>
+        
+                            <div class="form-group row">
+                                <label for="" class="form-label col-2 text-white">Precio mes</label>
+                                <div class="col-4">
+                                    <input type="number" class="form-control" formControlName="precio_m">
+                                </div>
+        
+                                <label for="" class="form-label col-2 text-white">Link pago mes</label>
+                                <div class="col-4">
+                                    <input type="text" class="form-control" formControlName="link_mes">
+                                </div>
+        
+                            </div>
+        
+                            <div class="form-group row">
+                                <label for="" class="form-label col-2 text-white">Precio trimestre</label>
+                                <div class="col-4">
+                                    <input type="number" class="form-control" formControlName="precio_t">
+                                </div>
+        
+                                
+                                <label for="" class="form-label col-2 text-white">Link pago trimestre</label>
+                                <div class="col-4">
+                                    <input type="text" class="form-control" formControlName="link_tri">
+                                </div>
+        
+                            </div>
+        
+                            <div class="form-group row">
+                                <label for="" class="form-label col-2 text-white">Precio Semestre</label>
+                                <div class="col-4">
+                                    <input type="number" class="form-control" formControlName="precio_sm">
+                                </div>
+        
+        
+                                <label for="" class="form-label col-2 text-white">Link pago semestre</label>
+                                <div class="col-4">
+                                    <input type="text" class="form-control" formControlName="link_sem">
+                                </div>
+                            </div>
+        
+                            <div class="form-group row">
+                                <label for="exampleInputEmail1" class="form-label col-2 text-white">Pais</label>
+                                <div class="col-8">
+                                    <select class="form-control " formControlName="pais" (change)="cambioPais()">
+                                        <option *ngFor="let item of paisesList" [ngValue]="item.iso">{{ item.nombre }}
+                                </option>
+                            </select>
+                                </div>
+                                <div class="col-2">
+                                    <img *ngIf="imgCountry" [src]="imgCountry" class="avatar" />
+                                </div>
+                            </div>
+        
+        
+        
+                            <div class="form-group row">
+                                <label for="" class="form-label col-4 text-white">Ciudad</label>
+                                <div class="col-8">
+                                    <input type="text" class="form-control" formControlName="ciudad">
+                                </div>
+                            </div>
+        
+        
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="imagenuno">Imagen (Obligatoria Logo)</span>
+                                </div>
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input" (change)="agregarArchivo($event, 1)" id="file1" />
+                                    <label class="custom-file-label" for="file1" id="labelFile1">Agregue una imagen</label>
+                                </div>
+                            </div>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="imagendos">Imagen (opcional)</span>
+                                </div>
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input" (change)="agregarArchivo($event, 2)" id="file2" />
+                                    <label class="custom-file-label" for="file2" id="labelFile2">Agregue una imagen</label>
+                                </div>
+                            </div>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="imagentres">Imagen (opcional)</span>
+                                </div>
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input" (change)="agregarArchivo($event, 3)" id="file2" />
+                                    <label class="custom-file-label" for="file3" id="labelFile3">Agregue una imagen</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+                            <div class="carousel-inner">
+                                <div *ngIf="sedeG.sed_foto1" class="carousel-item active">
+                                    <img src="{{ pathIm + sedeG.sed_foto1 }}" class="d-block w-100 y-50" alt="..." />
+                                </div>
+                                <div *ngIf="sedeG.sed_foto2" class="carousel-item">
+                                    <img src="{{ pathIm + sedeG.sed_foto2 }}" class="d-block w-100" alt="..." />
+                                </div>
+                                <div *ngIf="sedeG.sed_foto3" class="carousel-item">
+                                    <img src="{{ pathIm + sedeG.sed_foto3 }}" class="d-block w-100" alt="..." />
+                                </div>
+
+                            </div>
+                            <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="sr-only">Anterior</span>
+                            </a>
+                            <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="sr-only">Siguiente</span>
+                            </a>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="submit" *ngIf="frmSede.valid" class="btn btn-danger btn-block">Guardar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>                      

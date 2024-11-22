@@ -395,6 +395,10 @@ export class ApiRestService {
     return this.http.post(this.urlAPI + `Rest_sedes_gim/crear`, payload);
   }
 
+  guardarEditSede(payload: any){
+    return this.http.post(this.urlAPI + `Rest_sedes_gim/editar`, payload);
+  }
+
 
 
 }

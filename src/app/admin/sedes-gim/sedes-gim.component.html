@@ -8,14 +8,14 @@
                 <table class="table table-sm table-hover table-bordered text-light">
                     <thead>
                         <tr class="table-primary text-center">
-                            <th></th>
-                            <th>Foto</th>
-                            <th>Nombre</th>
-                            <th>Correo</th>
-                            <th>Teléfono</th>
-                            <th>Ubicación</th>
-                            <th>País</th>
-                            <th>Ciudad</th>
+                            <th class="text-white"></th>
+                            <th class="text-white">Foto</th>
+                            <th class="text-white">Nombre</th>
+                            <th class="text-white">Correo</th>
+                            <th class="text-white">Teléfono</th>
+                            <th class="text-white">Ubicación</th>
+                            <th class="text-white">País</th>
+                            <th class="text-white">Ciudad</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -24,10 +24,7 @@
                                 <button type="button" class="btn btn-danger btn-sm" (click)="editarSed(sed)" title="Editar" data-toggle="tooltip">
                            <i class="fas fa-pencil-alt"></i>
                         </button>
-                                <button type="button" class="btn btn-info btn-sm" (click)="loadLikes(sed.likes)" data-toggle="modal" data-target="#likesModal" title="Likes" data-toggle="tooltip">
-                          <i class="fas fa-thumbs-up"></i>
-                      </button>
-
+                                
                       <button type="button" class="btn btn-info btn-sm" [routerLink]="['/sedesGim/', sed.gim_id]" title="Sedes" data-toggle="tooltip">
                         <i class="fa fa-list"></i>
                     </button>
@@ -36,16 +33,19 @@
                             <td>
                                 <img src="{{ pathIm + sed.sed_foto1 }}" class="avatar" />
                             </td>
-                            <td>{{sed.sed_nombre}}</td>
-                            <td>{{sed.sed_email}}</td>
-                            <td>{{sed.sed_telefono}}</td>
-                            <td>{{sed.sed_ruta}}</td>
+                            <td class="text-white">{{sed.sed_nombre}}</td>
+                            <td class="text-white">{{sed.sed_email}}</td>
+                            <td class="text-white">{{sed.sed_telefono}}</td>
+                            <td class="text-white">{{sed.sed_ruta}}</td>
                             <td class="text-center"> <img src="{{ banderaSede(sed.sed_pais) }}" class="avatar"> </td>
-                            <td>{{ sed.sed_ciudad }}</td>
+                            <td class="text-white">{{ sed.sed_ciudad }}</td>
                         </tr>
                     </tbody>
                 </table>
             </ng-container>
+
+            <app-edit-sede-g *ngIf="editer" (editer)="editer = $event" (sed)="returnSede($event)" [sedeG]="sede"></app-edit-sede-g>
+
             
         </div>
     </div>

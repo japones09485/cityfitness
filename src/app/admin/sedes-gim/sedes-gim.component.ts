@@ -1,9 +1,10 @@
 import { Component,OnInit } from '@angular/core';
 import { ApiRestService } from 'src/app/services/api-rest.service';
-import { SedesGim, Paises, RespGimnasios } from 'src/app/interfaces/interfaces';
+import { SedesGim, Paises } from 'src/app/interfaces/interfaces';
 import { ActivatedRoute } from '@angular/router';
 import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { environment } from 'src/environments/environment';
+
 
 declare var $: any;
 
@@ -18,7 +19,7 @@ export class SedesGimComponent implements OnInit{
   $: any;
   list: SedesGim[] = [];
   frmSede: UntypedFormGroup;
-  gimnasio: SedesGim;
+  sede: SedesGim;
   fkGim :  number;
   likesView = [];
   frmGuardar = new FormData();
@@ -107,7 +108,8 @@ export class SedesGimComponent implements OnInit{
 
 
   editarSed(Sede:SedesGim){
-
+    this.sede = Sede;
+    this.editer = true;
   }
 
 
@@ -145,6 +147,13 @@ export class SedesGimComponent implements OnInit{
     const country = this.paisesList.find(pais => pais.iso === bandera); 
     
     return this.ImgPaises+'/'+country.flag;
+  }
+
+  returnSede(SedeG: SedesGim) {
+ 
+    const updateIt = this.list.find((sed: SedesGim) => sed.sed_id === SedeG.sed_id);
+    const index = this.list.indexOf(updateIt);
+    this.list[index] = SedeG;
   }
 
   
