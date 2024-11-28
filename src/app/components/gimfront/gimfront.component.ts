@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Gimnasio, RespGimnasios, User, Instructor,Paises,RespuestaPaises } from 'src/app/interfaces/interfaces';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { environment } from 'src/environments/environment';
 import { ApiRestService } from 'src/app/services/api-rest.service';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -7,6 +8,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { InstructoresComponent } from 'src/app/admin/instructores/instructores.component';
 
 declare var $: any;
+frmRegister: UntypedFormGroup;
 
 @Component({
   selector: 'app-gimfront',
@@ -24,6 +26,9 @@ export class GimfrontComponent implements OnInit {
   paginas = 0;
   namegim: string;
   descrip: string;
+  frmRegister: UntypedFormGroup;
+  imgCountry: String;
+  paisesList: Paises[] = [];
   paises: Paises[] = [];
   nombrePais:String;
 
@@ -36,10 +41,20 @@ export class GimfrontComponent implements OnInit {
   constructor(
     public api: ApiRestService,
     public sanitizer: DomSanitizer,
-    private apiAuth: AuthService
+    private apiAuth: AuthService,
+    private fb: UntypedFormBuilder
   ) { }
 
   ngOnInit(): void {
+
+    this.api.getPaisesList()
+    .subscribe((res:any)=>{
+      this.paisesList = res.lista
+    });
+
+
+    this.InitForm();
+    
     $(document).ready(() => {
       $('.mobile-menu').slicknav({
           prependTo: '#mobile-menu-wrap',
@@ -60,7 +75,7 @@ export class GimfrontComponent implements OnInit {
   listGimnasios(){
     this.api.getAllGimnasios()
       .subscribe( (res: RespGimnasios) => {
-        this.list = res.lista;
+        this.list = res.lista; 
         this.paginas = res.cant_pag;
       });
   }
@@ -70,12 +85,7 @@ export class GimfrontComponent implements OnInit {
     return country.flag;
   }
 
-  banderaPais(bandera: string) {
-    let infopais = this.paises[bandera].flag;
-    this.nombrePais = this.paises[bandera].nombre;
-    const flagPais = this.pathImg +'imagenes/paises/'+ infopais;
-     return flagPais;
-   }
+
 
   like(gim: Gimnasio){
     this.user = this.apiAuth.getUser();
@@ -106,6 +116,19 @@ export class GimfrontComponent implements OnInit {
       });
   }
 
+  InitForm(){
+    this.frmRegister = this.fb.group({
+      nombres: ['', Validators.required],
+      apellidos: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      pais: ['', Validators.required],
+      gimnasio: ['', Validators.required],
+      contrasena: ['', [Validators.required, Validators.minLength(5)]],
+      confirmPass: ['', [Validators.required, Validators.minLength(5)]],
+    }, {validator: this.checkPasswords});
+
+  }
+
   sigPag(pag: number){
     this.api.getAllGimnasios(pag)
       .subscribe((res: any) => { this.list = res.lista; this.paginas = res.cant_pag; });
@@ -124,4 +147,35 @@ export class GimfrontComponent implements OnInit {
     this.namegim = name;
     this.descrip = desc;
   }
+
+  cambioPais() {
+   
+    this.banderaPais(this.frmRegister.get('pais').value);
+  }
+
+
+  banderaPais(bandera: string) {
+
+    let infopais = this.paises[bandera].flag;
+    this.nombrePais = this.paises[bandera].nombre;
+    const flagPais = this.pathImg +'imagenes/paises/'+ infopais;
+    this.imgCountry = flagPais;
+   }
+
+   checkPasswords(group: any) {
+    const pass = group.get('contrasena').value;
+    const confirmPass = group.get('confirmPass').value;
+    return pass === confirmPass ? null : { notSame: true };
+  }
+
+  register(){
+    this.api.register(this.frmRegister.value,7)
+    .subscribe((res: any) => {
+      this.frmRegister.reset();
+      this.api.mensajeUser = res.mensaje;
+      this.api.mostrarMsj = true;
+
+    });
+  }
+
 }

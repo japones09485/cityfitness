@@ -48,6 +48,7 @@ import { SedesFrontComponent } from "./components/sedes-front/sedes-front.compon
 import { IntructorPageComponent } from "./components/intructor-page/intructor-page.component";
 import { CertificacionesComponent } from "./admin//instructores/certificaciones/certificaciones.component";
 import { CarrerasComponent } from "./admin/carreras/carreras.component";
+import { ClasesSedeComponent } from '././admin/sedes-gim/clases-sede/clases-sede.component';
 /* Fin Componentes Administrativos */
 /*Componentes de Ventas*/
 
@@ -109,6 +110,7 @@ const routes: Routes = [
   { path: 'admin/instructores/editarex/:externo/:id', component: EditarInstructorComponent },
   { path: 'admin/cursos/:id', component: CursosComponent , canActivate:[GuardAutGuard] },
   { path: 'admin/gimnasios', component: GimnasiosComponent , canActivate:[GuardAutGuard] },
+  { path: 'admin/gimnasiosUser/:idUser', component: GimnasiosComponent , canActivate:[GuardAutGuard] },
   { path: 'admin/socios', component: SociosComponent , canActivate:[GuardAutGuard] },
   { path: 'admin/sedes', component: SedesComponent , canActivate:[GuardAutGuard] },
   { path: 'admin/sede/:idsede', component: SedeComponent , canActivate:[GuardAutGuard] },
@@ -136,6 +138,7 @@ const routes: Routes = [
   { path: 'registrarse', component: RegistrarseComponent },
   { path: 'gimnasios', component: GimfrontComponent },
   { path: 'sedesGim/:fk_gim', component: SedesGimComponent },
+  { path: 'clasesSede/:fk_gim/:idSede', component: ClasesSedeComponent },
   { path: 'recordar-password', component: RecuperarPassComponent },
   { path: 'cursos-disponibles', component: CursosHomeComponent },
   { path: 'clasesDetalle/:idCurso', component: ClaseDetalleComponent },
@@ -160,6 +163,7 @@ const routes: Routes = [
   { path: 'adminAlid/newvideo', component:  NuevoVideoComponent , canActivate:[GuardAutGuard] },
   { path: 'adminAlid/editvideo/:id', component: EditarVideoComponent , canActivate:[GuardAutGuard] },
   { path: 'adminAlid/inscripcion', component: InscripcionComponent , canActivate:[GuardAutGuard] },
+  
   { path: 'conferencia/:id', component: ConferenciaComponent },
   { path: 'resetpass/:id', component: RessetPasswordComponent },
   { path : 'infocurso' , component: InfocursoComponent},

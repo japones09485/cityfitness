@@ -97,4 +97,5 @@ export class RegistrarseComponent implements OnInit {
     return pass === confirmPass ? null : { notSame: true };
   }
 
+
 }

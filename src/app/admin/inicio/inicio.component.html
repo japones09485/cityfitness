@@ -16,11 +16,11 @@
             <div class="form-group">
                 <label for="exampleDropdownFormPassword1">Perfil</label>
                 <select class="form-control" id="perfil" formControlName="perfil">
-                  <option value="1">Administrador</option>
-                  <option value="3">Ventas</option>
-                  <option value="4">Aliado</option>
-                  <option value="5">Profesor</option>
-                  <option value="6">Socios</option>
+
+                  <option  *ngFor="let perf of this.perfiles" [ngValue]="perf.id">
+                    {{ perf.descripcion }}
+                </option>
+
                 </select>
             </div>
             <div class="form-group">

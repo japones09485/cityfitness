@@ -50,7 +50,9 @@ export class ApiRestService {
   }
   */
 
-
+getPerfiles(){
+  return this.http.get(this.urlAPI + `Rest_perfiles/getPerfiles`);
+}
 
   getPaises() {
     return this.http.get(this.urlAPI + `Auth/getPaises`);
@@ -61,8 +63,8 @@ export class ApiRestService {
     return this.http.get(this.urlAPI + `Auth/getPaisesList`);
   }
 
-  register(payload: any){
-    return this.http.post(this.urlAPI + `rest_usuarios/registrarse`, payload );
+  register(payload: any , perfil?: number){
+    return this.http.post(this.urlAPI + `rest_usuarios/registrarse`, {payload,perfil});
   }
 
   getClientes(pagina: number) {
@@ -92,6 +94,10 @@ export class ApiRestService {
 
   getInstructores(pagina: number) {
     return this.http.get(this.urlAPI + `rest_instructores/listar?pagina=${pagina}`);
+  }
+
+  getInstructoresAll() {
+    return this.http.get(this.urlAPI + `rest_instructores/listarAll`);
   }
 
   guardarInstructor(payload: any) {
@@ -399,6 +405,25 @@ export class ApiRestService {
     return this.http.post(this.urlAPI + `Rest_sedes_gim/editar`, payload);
   }
 
+  getSedesClase(fk_gim:number,idSede:number){
+    return this.http.post(this.urlAPI + `Rest_clases_sedes/listar`, { fk_gim,idSede });
+  }
+
+  createClaseSed(payload: any){
+    return this.http.post(this.urlAPI + `Rest_clases_sedes/createClaseSed`, payload);
+  }
+
+  EditClase(payload: any){
+    return this.http.post(this.urlAPI + `Rest_clases_sedes/EditClase`, payload);
+  }
+
+  DeleteClase(idClase:number,idSede:number){
+    return this.http.post(this.urlAPI + `Rest_clases_sedes/DeleteClase`, { idClase,idSede });
+
+  }
+
+
+  
 
 
 }

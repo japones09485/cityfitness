@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiRestService } from 'src/app/services/api-rest.service';
-import { Gimnasio, Paises, RespGimnasios } from 'src/app/interfaces/interfaces';
+import { Gimnasio, Paises, RespGimnasios, User } from 'src/app/interfaces/interfaces';
 import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { environment } from 'src/environments/environment';
+import { ActivatedRoute } from '@angular/router';
 
 declare var $: any;
 
@@ -26,18 +27,23 @@ export class GimnasiosComponent implements OnInit {
   paisesList: Paises[] = [];
   paises: Paises[] = [];
   nombrePais: String;
+  user: User;
 
   constructor(
     public api: ApiRestService,
-    private fb: UntypedFormBuilder
+    private fb: UntypedFormBuilder,
+    private acRouter: ActivatedRoute,
   ) { }
 
   ngOnInit(): void {
+
+    this.user = JSON.parse(sessionStorage.getItem('user'));
+    
     this.initForm();
     $('#frmGimnasio').on('hidden.bs.modal', (e) => {
       this.frmGimnasio.reset();
     });
-    this.listGimnasios();
+   
     this.api.getPaisesList()
       .subscribe((res: any) => {
         this.paisesList = res.lista;
@@ -47,6 +53,16 @@ export class GimnasiosComponent implements OnInit {
       .subscribe((res: any) => {
         this.paises = res.lista;
       });
+
+      this.acRouter.params.subscribe(param => {
+        if(param.idUser){
+          this.listGimnasiosUser(param.idUser);
+        }else{
+          this.listGimnasios();
+        }
+        
+      });
+
   }
 
   cambioPais() {
@@ -65,6 +81,15 @@ export class GimnasiosComponent implements OnInit {
       .subscribe((res: RespGimnasios) => {
         this.list = res.lista;
       });
+  }
+
+  listGimnasiosUser(Gim:string) {
+    this.api.getAllGimnasios()
+    .subscribe((res: RespGimnasios) => {
+      
+        this.list = res.lista.filter(gimnasio => gimnasio.gim_id === Gim);
+      
+    });
   }
 
   initForm() {

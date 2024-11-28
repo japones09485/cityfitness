@@ -3,21 +3,125 @@
 
 <div class="container-fluid bg-dark  d-inline-block" style="padding-top:120px;">
     <div class="form-row align-items-center">
-
         <div class="col-auto">
-            <input type="text" name="namesearch" class="form-control form-control-lg text-center" [(ngModel)]="filts.nameSearch" placeholder="buscar gimnasio">
+            <input 
+                type="text" 
+                name="namesearch" 
+                class="form-control form-control-lg text-center" 
+                [(ngModel)]="filts.nameSearch" 
+                placeholder="buscar gimnasio"
+            >
         </div>
         <div class="col-auto">
-            <select class="form-control form-control-lg" [(ngModel)]="filts.paisSearch" required name="paissearch">
+            <select 
+                class="form-control form-control-lg" 
+                [(ngModel)]="filts.paisSearch" 
+                required 
+                name="paissearch"
+            >
                 <option value="">Seleccione ---</option>
                 <option *ngFor="let pais of api.paises" [ngValue]="pais.alpha3Code">{{ pais.name }}</option>
             </select>
         </div>
-
         <div class="col-auto">
-            <button type="submit" (click)="buscarGimnasio()" class="btn btn-info btn-lg">Buscar</button>
+            <button 
+                type="submit" 
+                (click)="buscarGimnasio()" 
+                class="btn btn-info btn-lg"
+            >
+                Buscar
+            </button>
+        </div>
+    
+        <!-- Este contenedor usa ml-auto para alinear a la derecha -->
+        <div class="col-auto ml-auto" style="margin-right: 100px;">
+            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#crearUser">
+                <i class="fas fa-user-cog"></i> Registrar Usuario
+                
+            </button>
+
+            <div class="modal fade" id="crearUser" tabindex="-1" role="dialog" aria-labelledby="crearUser" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content bg-dark text-white"> <!-- Fondo oscuro y texto blanco -->
+                    <div class="modal-header">
+                      <h5 class="modal-title text-center" id="exampleModalLabel">Registrar Usuario</h5>
+                      <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                        <form [formGroup]="frmRegister" (ngSubmit)="register()" class="m-3">
+
+                            <div class="form-group row">
+                                <label for="" class="form-label text-danger col-4">Nombres</label>
+                                <div class="col-8">
+                                    <input type="text" class="form-control" formControlName="nombres">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="" class="form-label text-danger col-4">Apellidos</label>
+                                <div class="col-8">
+                                    <input type="text" class="form-control" formControlName="apellidos">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="" class="form-label text-danger col-4">Correo electrónico</label>
+                                <div class="col-8">
+                                    <input type="email" class="form-control" formControlName="email">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="exampleInputEmail1" class="text-danger col-4 col-form-label">Pais</label>
+                                <div class="col-6">
+                                    <select class="form-control " formControlName="pais" (change)="cambioPais()">
+                                <option *ngFor="let item of paisesList" [ngValue]="item.iso">{{ item.nombre }}
+                                </option>
+                                </select>
+                                </div>
+                                <div class="col-2">
+                                    <img *ngIf="imgCountry" [src]="imgCountry" class="avatar" />
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="exampleInputEmail1" class="text-danger col-4 col-form-label">Gimnasio</label>
+                                <div class="col-8">
+                                    <select class="form-control" id="perfil" formControlName="gimnasio">
+                                        <option  *ngFor="let gim of this.list" [ngValue]="gim.gim_id">
+                                            {{ gim.gim_nombre }}
+                                        </option>
+                                    </select>
+                                
+                                </div>
+                                
+                            </div>
+                          
+                            <div class="form-group row">
+                                <label for="" class="form-label text-danger col-4">Contraseña</label>
+                                <div class="col-8">
+                                    <input type="password" class="form-control" formControlName="contrasena">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="" class="form-label text-danger col-4">Confirmar Contraseña</label>
+                                <div class="col-8">
+                                    <input type="password" class="form-control" formControlName="confirmPass">
+                                </div>
+                            </div>
+                            <button type="submit" *ngIf="frmRegister.valid" class="btn btn-danger btn-block">Guardar</button>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              
         </div>
     </div>
+    
     <div class="container-fluid bg-dark ml-5 mr-5" style="padding-top:60px;">
         <div *ngFor="let gim of list" class="jumbotron jumbotron-fluid p-1 bg-transparent ">
             <div class="row" id="content">

@@ -622,3 +622,25 @@ export interface Carreras{
   
 }
 
+export interface ClasesSede{
+  id:number;
+  nombre:string;
+  gimnasio:number;
+  sede:number;
+  id_instructor:number;
+  fecha_inicio:string;
+  hora_inicio:number;
+  fecha_fin:string;
+  hora_fin:number;
+  
+}
+
+export interface Perfiles{
+  id:number;
+  descripcion:string;
+}
+
+export interface ApiResponse {
+  perfiles: Perfiles[];
+}
+

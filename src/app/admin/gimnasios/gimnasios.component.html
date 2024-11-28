@@ -1,10 +1,11 @@
-<app-menu></app-menu>
+<app-menu *ngIf="this.user.usu_perfil !== '7'"></app-menu>
+
 <div class="container-fluid">
     <div class="row justify-content-center" id="content">
-        <div class="col-12">
+        <div class="col-12 mt-3">
 
             <ng-container *ngIf="!editer">
-                <button type="button" data-toggle="modal" data-target="#frmGimnasio" class="btn btn-danger mb-2">Agregar Gimnasio</button>
+                <button *ngIf="this.user.usu_perfil !== '7'" type="button" data-toggle="modal" data-target="#frmGimnasio" class="btn btn-danger mb-2">Agregar Gimnasio</button>
                 <table class="table table-sm table-hover table-bordered text-light">
                     <thead>
                         <tr class="table-primary text-center">

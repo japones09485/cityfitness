@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
+import { NgSelectModule } from '@ng-select/ng-select';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -114,6 +114,7 @@ import { CertificacionesComponent } from './admin/instructores/certificaciones/c
 import { CarrerasComponent } from './admin/carreras/carreras.component';
 import { SedesGimComponent } from './admin/sedes-gim/sedes-gim.component';
 import { EditSedeGComponent } from './admin/sedes-gim/edit-sede-g.component';
+import { ClasesSedeComponent } from './admin/sedes-gim/clases-sede/clases-sede.component';
 
 
 
@@ -228,7 +229,8 @@ import { EditSedeGComponent } from './admin/sedes-gim/edit-sede-g.component';
     CertificacionesComponent,
     CarrerasComponent,
     SedesGimComponent,
-    EditSedeGComponent
+    EditSedeGComponent,
+    ClasesSedeComponent
   ],
   imports: [
     BrowserModule,
@@ -237,6 +239,7 @@ import { EditSedeGComponent } from './admin/sedes-gim/edit-sede-g.component';
     FormsModule,
     ReactiveFormsModule,
     NgbModule,
+    NgSelectModule,
 
   ],
   providers: [

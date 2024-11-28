@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule, FormControl } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
-import { ResLogin } from 'src/app/interfaces/interfaces';
+import { ResLogin,Perfiles,ApiResponse } from 'src/app/interfaces/interfaces';
 import { ApiRestService } from 'src/app/services/api-rest.service';
 @Component({
   selector: 'app-inicio',
@@ -13,6 +13,8 @@ export class InicioComponent implements OnInit {
 
   frmLg: UntypedFormGroup;
   user:any;
+  perfiles: Perfiles[] = [];
+
   constructor(
     public router: Router,
     private fb: UntypedFormBuilder,
@@ -21,6 +23,14 @@ export class InicioComponent implements OnInit {
   }
 
   async ngOnInit() {
+
+    this.api.getPerfiles()
+    .subscribe((res:ApiResponse)=>{
+    this.perfiles = res.perfiles
+     
+    });
+
+
     this.frmLg = this.fb.group({
       usuario: ['', [Validators.required]],
       contrasenia: ['', Validators.required],
@@ -51,6 +61,8 @@ export class InicioComponent implements OnInit {
             this.router.navigate(['adminAlid']);
           }else if(this.user.usu_perfil == 6){
             this.router.navigate(['adminAlid']);
+          }else if(this.user.usu_perfil == 7){
+            this.router.navigate(['admin/gimnasiosUser/'+this.user.usu_fk_gimnasio]);
           }
 
         } else {
@@ -60,5 +72,6 @@ export class InicioComponent implements OnInit {
         this.frmLg.reset();
       });
   }
+  
 
 }
