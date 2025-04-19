@@ -53,9 +53,9 @@
 
       <div class="col-md-8 col-sm-8 col-xs-12" *ngIf="creando">
         <div class="card mt-2">
-            <h2 class="card-header text-center"><a (click)="Volver()"><i
+            <h2 class="card-header text-center bg-danger"><a (click)="Volver()"><i
                         class="fas fa-arrow-alt-circle-left float-left text-light"></i></a>Crear carrera</h2>
-            <div class="card-body">
+            <div class="card-body bg-dark">
                 <form [formGroup]="frmCliCreator" (ngSubmit)="crearCarrera(this.Idcarrera)">
                   
                     <div class="form-group">

@@ -54,10 +54,10 @@
             </table>
         </div>
         <div class="col-md-8 col-sm-8 col-xs-12" *ngIf="creando">
-            <div class="card mt-2">
+            <div class="card bg-danger mt-2">
                 <h2 class="card-header text-center"><a (click)="creando = false"><i
                             class="fas fa-arrow-alt-circle-left float-left text-light"></i></a>Crear cliente</h2>
-                <div class="card-body">
+                <div class="card-body bg-dark">
                     <form [formGroup]="frmCliCreator" (ngSubmit)="crearCliente()">
                         <div class="form-group">
                             <label for="exampleInputEmail1">Nit</label>

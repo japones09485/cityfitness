@@ -318,5 +318,24 @@ export class UsersComponent implements OnInit {
 
   }
 
+  activarUsu(idUsu:number,perfil:number){
+    
+    this.apiRest.activarUsu(idUsu,perfil)
+      .subscribe((res:any)=>{
+        this.usuarios = res.usuarios;
+        Swal.fire(res.mensaje, "", "success");
+      });
+  }
+
+  InactivarUsu(idUsu:number,perfil:number){
+    
+    this.apiRest.InactivarUsu(idUsu,perfil)
+      .subscribe((res:any)=>{
+        this.usuarios = res.usuarios;
+        Swal.fire(res.mensaje, "", "success");
+      });
+
+  }
+
 
 }

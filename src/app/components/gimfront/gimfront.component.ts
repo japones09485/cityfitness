@@ -31,6 +31,7 @@ export class GimfrontComponent implements OnInit {
   paisesList: Paises[] = [];
   paises: Paises[] = [];
   nombrePais:String;
+  ImgPaises = environment.pathImgsPaises;
 
   filts = {
     nameSearch: '',
@@ -81,8 +82,9 @@ export class GimfrontComponent implements OnInit {
   }
 
   banderaGimnasio(bandera: string) {
-    const country = this.api.paises.find(pais => pais.alpha3Code === bandera);
-    return country.flag;
+    const country = this.paisesList.find(pais => pais.iso === bandera); 
+    
+    return this.ImgPaises+'/'+country.flag;
   }
 
 
@@ -122,7 +124,6 @@ export class GimfrontComponent implements OnInit {
       apellidos: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       pais: ['', Validators.required],
-      gimnasio: ['', Validators.required],
       contrasena: ['', [Validators.required, Validators.minLength(5)]],
       confirmPass: ['', [Validators.required, Validators.minLength(5)]],
     }, {validator: this.checkPasswords});
@@ -177,5 +178,7 @@ export class GimfrontComponent implements OnInit {
 
     });
   }
+
+  
 
 }

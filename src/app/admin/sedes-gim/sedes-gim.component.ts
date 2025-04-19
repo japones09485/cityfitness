@@ -1,7 +1,8 @@
 import { Component,OnInit } from '@angular/core';
 import { ApiRestService } from 'src/app/services/api-rest.service';
-import { SedesGim, Paises } from 'src/app/interfaces/interfaces';
+import { SedesGim, Paises, User } from 'src/app/interfaces/interfaces';
 import { ActivatedRoute } from '@angular/router';
+import Swal from 'sweetalert2';
 import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { environment } from 'src/environments/environment';
 
@@ -19,10 +20,12 @@ export class SedesGimComponent implements OnInit{
   $: any;
   list: SedesGim[] = [];
   frmSede: UntypedFormGroup;
+  frmAddIns: UntypedFormGroup;
   sede: SedesGim;
   fkGim :  number;
   likesView = [];
   frmGuardar = new FormData();
+  frmInsGuardar = new FormData();
   editer = false;
   pathIm = environment.pathImgs;
   ImgPaises = environment.pathImgsPaises;
@@ -30,8 +33,12 @@ export class SedesGimComponent implements OnInit{
   paisesList: Paises[] = [];
   paises: Paises[] = [];
   nombrePais: String;
-
-
+  user:User;
+  perfilUser : string;
+  idUser : number;
+  Instructores: any;
+  sedeAux : number;
+  InstructoresSede: any;
 
   constructor( public api: ApiRestService,
                private acRouter: ActivatedRoute,
@@ -39,13 +46,17 @@ export class SedesGimComponent implements OnInit{
 
   ngOnInit(): void {
 
-  
-
+    this.user = JSON.parse(sessionStorage.getItem('user'));
+    this.perfilUser = this.user.usu_perfil;
+    this.idUser = this.user.usu_id;
+    
     $('#frmSede').on('hidden.bs.modal', (e) => {
       this.frmSede.reset();
     });
 
     this.initForm();
+    this.initFormIns();
+
     this.acRouter.params.subscribe(param => {
       this.fkGim = param.fk_gim;
       this.api.getSedesGim(this.fkGim)
@@ -63,6 +74,13 @@ export class SedesGimComponent implements OnInit{
     this.api.getPaises()
       .subscribe((res: any) => {
         this.paises = res.lista;
+      });
+
+      this.api.getInstructoresAll()
+      .subscribe((res:any)=>{
+      
+        this.Instructores = res.instructores;
+       
       });
     
    
@@ -92,6 +110,12 @@ export class SedesGimComponent implements OnInit{
     });
   }
 
+  initFormIns() {
+    this.frmAddIns = this.fb.group({
+      instructor: ['', Validators.required],
+      tipo: ['', Validators.required]
+    });
+  }
   crearSede() {
     this.frmGuardar.append('data', JSON.stringify(this.frmSede.value));
     this.frmGuardar.append('fkGim', JSON.stringify( this.fkGim ));
@@ -102,6 +126,20 @@ export class SedesGimComponent implements OnInit{
         this.api.mensajeUser = 'Creado correctamente';
         this.api.mostrarMsj = true;
         $('#frmSede').modal('hide');
+      });
+  }
+
+  AgregarIns() {
+    
+    this.frmInsGuardar.append('data', JSON.stringify(this.frmAddIns.value));
+    this.frmInsGuardar.append('sede', JSON.stringify( this.sedeAux ));
+    
+    this.api.createIns(this.frmInsGuardar)
+      .subscribe((data: any) => {
+
+        Swal.fire(data.mensaje);
+        this.InstructoresSede=data.instructoresSede;
+       
       });
   }
 
@@ -156,6 +194,60 @@ export class SedesGimComponent implements OnInit{
     this.list[index] = SedeG;
   }
 
+  DeleteSede(idSede:number,sed_fk_gimnasio:number){
+
+    Swal.fire({
+      title: "Desea eliminar esta sede?",
+      showDenyButton: true,
+      confirmButtonText: "SI",
+     
+    }).then((result) => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+
+        this.api.DeleteSede(idSede,sed_fk_gimnasio)
+      .subscribe((data: any) => {
+        this.list = data.lista;
+        if (result.isConfirmed) {
+          Swal.fire(data.mensaje, "", "success");
+        } 
+        
+      });
+      } 
+    });
+
+  }
+
+  listarInsS(idSede:number){
+    this.sedeAux = idSede;
+    this.api.listarInsS(idSede)
+      .subscribe((data: any) => {
+          this.InstructoresSede=data.instructoresSede;
+      });
+  }
+
+  DeleteInsSede(id:number,instructor:number){
+    Swal.fire({
+      title: "Desea eliminar este instructor?",
+      showDenyButton: true,
+      confirmButtonText: "SI",
+     
+    }).then((result) => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+
+        this.api.DeleteInsSede(id,instructor)
+      .subscribe((data: any) => {
+        
+        if (result.isConfirmed) {
+          Swal.fire(data.mensaje, "", "success");
+          this.InstructoresSede=data.instructoresSede;
+        } 
+        
+      });
+      } 
+    });
+  }
   
 
 }

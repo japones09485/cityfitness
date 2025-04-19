@@ -26,7 +26,7 @@
     </div>
 
     <div class="col-sm col-md col-lg">
-        <button type="button" (click)="nuevoUsuario(this.perfilF,1,1)" class="btn btn-danger mb-2" *ngIf="!cursoins && !empws && this.validCrear">Crear Usuario</button>
+        <button type="button" (click)="nuevoUsuario(this.perfilF,1,1)" class="btn btn-danger mb-2" *ngIf="!cursoins && !empws && this.validCrear && this.perfilF != 7">Crear Usuario</button>
         <button type="button" (click)="nuevoUsuario(this.perfilF,this.cursoins,this.cursoins)" class="btn btn-danger mb-2" *ngIf="cursoins && !empws">Crear Horario</button>
         <button type="button" (click)="nuevoUsuario(this.perfilF,1,this.empws)" class="btn btn-danger mb-2" *ngIf="!cursoins && empws">Crear Instructor Empresa</button>
         <table class="table table-sm table-bordered text-light">
@@ -41,6 +41,7 @@
                     <th>Perfil</th>
                     <th>Contraseña</th>
                     <th *ngIf="this.perfilF==5">estado</th>
+                    <th *ngIf="this.perfilF==7">Activar</th>
               </tr>
             </thead>
             <tbody>
@@ -167,7 +168,15 @@
                 <td *ngIf="usu.usu_perfil == 6" class="text-center text-info"> <i class="fas fa-users-cog"></i>
                     Usuario Socio
                 </td>
+                <td *ngIf="usu.usu_perfil == 7" class="text-center text-info"> <i class="fas fa-users-cog"></i>
+                   Gimnasio
+                </td>
                 <td class="text-warning">{{ usu.usu_textoclaro }}</td>
+
+                <td *ngIf="this.perfilF==7 && usu.usu_estado_verificacion==0" class="text-warning"><button (click)="activarUsu(usu.usu_id,usu.usu_perfil)" type="button" class="btn btn-info">Activar</button></td>
+                <td *ngIf="this.perfilF==7 && usu.usu_estado_verificacion==1" class="text-warning"><button (click)="InactivarUsu(usu.usu_id,usu.usu_perfil)" type="button" class="btn btn-danger">Inactivar</button></td>
+
+
                 <td class="text-warning" *ngIf="this.perfilF==5">
                   <button (click)="validUsu(usu.usu_id,0,usu.fk_curso)" *ngIf="usu.usu_estado_verificacion == 1" type="button"
                       class="btn btn-danger btn-sm m-2" >

@@ -1,0 +1,251 @@
+<app-header></app-header>
+
+<app-header></app-header>
+
+<div class="container" style="padding-top:140px;" id="presentacion"
+    [ngStyle]="{'background-image': 'url(' + pathImg + this.sede.sed_foto1 + ')'}">
+    <div class="row">
+
+        <div class="col-lg-5" id="descp">
+
+            <span class="text-white m-5   animate__animated animate__backInLeft">
+                <h1 class="text-danger namePage m-3"> {{this.sede.sed_nombre}} </h1><br> <br>
+                <h5>{{this.sede.sed_descripcion}}</h5>
+
+
+
+
+                <div class="m-5">
+                    <h4 class="text-warning">
+                        <div class="card border-danger content"></div>
+
+                        <div class="btn-group btn-group-justified m-4" role="group" aria-label="...">
+                            <div class="btn-group mx-2" role="group">
+                                <a href="{{this.sede.sed_instagram}}" target="_blank" class="text-danger">
+                                    <i class="fab fa-instagram fa-lg"></i>
+                                </a>
+                            </div>
+                            <div class="btn-group mx-2" role="group">
+                                <a href="{{this.sede.sed_facebook}}" target="_blank" class="text-danger">
+                                    <i class="fab fa-facebook fa-lg"></i>
+                                </a>
+                            </div>
+                            <div class="btn-group mx-2" role="group">
+                                <a href="https://wa.me/{{ this.sede.sed_telefono }}?text=Comunicate%20con%20nosotros"
+                                    class="text-danger" target="_blank">
+                                    <i class="fab fa-whatsapp fa-lg"></i>
+                                </a>
+                            </div>
+
+                        </div>
+                    </h4>
+                </div>
+            </span>
+
+        </div>
+        <div class="col-lg-7">
+            <img [src]="pathImg+this.sede.sed_foto2" alt="" class="m-5">
+        </div>
+    </div>
+</div>
+
+
+<section class="price-section spad set-bg m-1" id="Servicios">
+
+    <div class="container">
+        
+
+    <div class="row">
+        <div class="col-lg-6">
+
+            <div class="section-title">
+                <h2 class="text-danger">SERVICIOS</h2>
+
+            </div>
+
+            <div class="single-price-plan">
+                <h4>{{this.sede.sed_servicios}}</h4>
+               
+            </div>
+        </div>
+
+
+        <div class="col-lg-6">
+
+            <div class="section-title">
+                <h2 class="text-danger">Horarios</h2>
+
+            </div>
+
+            <div class="single-price-plan">
+                <h4>{{this.sede.sed_horarios}}</h4>
+               
+            </div>
+        </div>
+
+    </div>
+    </div>
+
+</section>
+
+
+<section class="price-section spad set-bg m-1" id="planesAliado"
+[ngStyle]="{'background-image': 'linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(' + pathImg + this.sede.sed_foto3 + ')'}" class="background-image">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="section-title">
+                    <h2 class="text-danger">PLANES & COSTOS.</h2>
+                    <h2 class="text-danger">DISFRUTA DE NUESTROS PLANES.</h2>
+
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="single-price-plan">
+                    <h4>Mes</h4>
+                    <div class="price-plan">
+                        <h2>{{ this.sede.sed_precio_mes }}
+                            <span>$</span>
+                        </h2>
+                    </div>
+
+                    <a href="{{this.sede.sed_link_mes}}" target="_blank" class="primary-btn price-btn">SUBSCRIBETE</a>
+                    <div class="tic-text">
+                        <i class="fa fa-star text-secondary"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="single-price-plan">
+                    <h4>Semestre</h4>
+                    <div class="price-plan">
+                        <h2>{{this.sede.sed_precio_semestre }}
+                            <span>$</span>
+                        </h2>
+                    </div>
+
+                    <a target="_blank" href="{{this.sede.sed_precio_semestre}}"
+                        class="primary-btn price-btn">SUBSCRIBETE</a>
+                    <div class="tic-text">
+                        <i class="fa fa-star text-warning"></i>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-lg-4">
+                <div class="single-price-plan">
+                    <h4>Año</h4>
+                    <div class="price-plan">
+                        <h2>{{ this.sede.sed_precio_ano }}
+                            <span>$</span>
+                        </h2>
+                    </div>
+
+                    <a target="_blank" href="{{this.sede.sed_link_ano}}" class="primary-btn price-btn">SUBSCRIBETE</a>
+                    <div class="tic-text">
+                        <i class="fa fa-star text-white"></i>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<section class="classtime-section class-time-table spad" *ngIf="clasesSede.length>0 ">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <div class="section-title">
+                    <h2 class="text-danger">Listado Instructores</h2>
+                </div>
+            </div>
+        </div>
+
+        <ngb-carousel>
+            <ng-container *ngFor="let ins of Instructores.slice(0, 5)">
+                <ng-template ngbSlide>
+                    <div class="picsum-img-wrapper">
+                        <img src="{{ pathImg + ins.ins_foto1 }}" alt="Personalized Instructor">
+                    </div>
+                    <div class="carousel-caption section-title pl-lg-4 pr-lg-4 pl-0 pr-0">
+                        <h2 class="text-danger">{{ ins.ins_nombre }} {{ ins.ins_apellido }}</h2>
+                    </div>
+                </ng-template>
+            </ng-container>
+        </ngb-carousel>
+
+
+
+    </div>
+</section>
+
+<section class="classtime-section class-time-table spad" *ngIf="clasesSede.length>0 " id="calendary">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <div class="section-title">
+                    <h2 class="text-danger">Horario de clases</h2>
+                </div>
+            </div>
+
+            <div class="classtime-table">
+                <table border="1">
+                    <thead>
+                        <tr>
+                            <th class="text-danger">Lunes</th>
+                            <th class="text-danger">Martes</th>
+                            <th class="text-danger">Miércoles</th>
+                            <th class="text-danger">Jueves</th>
+                            <th class="text-danger">Viernes</th>
+                            <th class="text-danger">Sábado</th>
+                            <th class="text-danger">Domingo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td
+                                *ngFor="let dia of ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo']">
+
+                                <div *ngFor="let clase of clasesPorDia[dia]"
+                                    [ngStyle]="{ 'border': '0.5px solid red' , 'margin': '5px' }">
+                                    <p class="text-white">
+                                        {{ clase.clas_nombre }} <br>
+                                        <span class="text-danger">
+                                            {{ clase.hora_inicio | timeFormat }} - {{ clase.hora_fin | timeFormat }}
+                                        </span> <br>
+
+                                        <span class="text-warning">
+                                            <a [href]="baseUrl + 'InstructorPage/'+clase.clas_fk_instructor"
+                                                target="_blank" rel="noopener noreferrer">({{
+                                                nameInstructor(clase.clas_fk_instructor) }})</a>
+                                        </span>
+
+                                    </p>
+                                </div>
+
+                                <hr>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-10 text-center mt-5">
+                <div [innerHtml]="this.sede.sed_mapa | safeHtml"></div>
+                <h2><a [href]="this.sede.sed_ruta" class="text-info" target="_blank" rel="noopener noreferrer">Como
+                        llegar <small class="text-danger">Click aqui</small></a></h2>
+            </div>
+        </div>
+
+
+
+    </div>
+</section>

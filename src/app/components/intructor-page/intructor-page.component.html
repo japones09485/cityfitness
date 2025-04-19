@@ -65,22 +65,22 @@
   </div>
 
 
-  <div class="row m-2" id="certilist">
-
-    <div *ngFor="let cer of this.certificaciones" class="m-2alert alert-info d-inline-block p-1 mx-1 my-1 m-2" role="alert">
-      <div class="card text-center bg-dark"> <!-- Agrega la clase bg-dark a la tarjeta -->
-        <div class="card-header text-danger"> <!-- Agrega la clase bg-dark al encabezado -->
-          Certificado en:  {{cer.descripcion}}
-        </div>
-        <div class="card-body">
-          <button type="button" class="btn btn-danger" (click)="downloadDoc(cer.documento)"><i class="fa fa-book" aria-hidden="true" ngbTooltip="Descargar certificacion"></i></button>
-        </div>
-
+<!--
+<div class="row m-2" id="certilist">
+  <div *ngFor="let cer of this.certificaciones" class="m-2alert alert-info d-inline-block p-1 mx-1 my-1 m-2" role="alert">
+    <div class="card text-center bg-dark">
+      <div class="card-header text-danger">
+        Certificado en:  {{cer.descripcion}}
+      </div>
+      <div class="card-body">
+        <button type="button" class="btn btn-danger" (click)="downloadDoc(cer.documento)">
+          <i class="fa fa-book" aria-hidden="true" ngbTooltip="Descargar certificacion"></i>
+        </button>
       </div>
     </div>
-
-
   </div>
+</div>
+-->
 
 
 

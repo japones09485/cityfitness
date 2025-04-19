@@ -18,3 +18,7 @@ table thead th {
         position: absolute;
     }
 }
+
+label{
+    color: white;
+}

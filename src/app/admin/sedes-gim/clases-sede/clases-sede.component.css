@@ -31,3 +31,73 @@ table thead th {
         position: absolute;
     }
 }
+
+.bg-lunes {
+    background-color: #D6F0FF; /* Azul pastel claro */
+    color: #2E2E2E; /* Gris oscuro para buena legibilidad */
+}
+
+.bg-lunes:hover {
+    background-color: #D6F0FF; /* Sin cambios */
+    color: #2E2E2E;
+}
+
+.bg-martes {
+    background-color: #B3E5FC; /* Azul pastel medio */
+    color: #2E2E2E;
+}
+
+.bg-martes:hover {
+    background-color: #B3E5FC; /* Sin cambios */
+    color: #2E2E2E;
+}
+
+.bg-miercoles {
+    background-color: #A5D6FA; /* Azul-verde pastel */
+    color: #2E2E2E;
+}
+
+.bg-miercoles:hover {
+    background-color: #A5D6FA; /* Sin cambios */
+    color: #2E2E2E;
+}
+
+.bg-jueves {
+    background-color: #C8E6C9; /* Verde pastel claro */
+    color: #2E2E2E;
+}
+
+.bg-jueves:hover {
+    background-color: #C8E6C9; /* Sin cambios */
+    color: #2E2E2E;
+}
+
+.bg-viernes {
+    background-color: #A5D6A7; /* Verde pastel medio */
+    color: #2E2E2E;
+}
+
+.bg-viernes:hover {
+    background-color: #A5D6A7; /* Sin cambios */
+    color: #2E2E2E;
+}
+
+.bg-sabado {
+    background-color: #81C784; /* Verde pastel más intenso */
+    color: #2E2E2E;
+}
+
+.bg-sabado:hover {
+    background-color: #81C784; /* Sin cambios */
+    color: #2E2E2E;
+}
+
+.bg-domingo {
+    background-color: #66BB6A; /* Verde sólido pastel */
+    color: #2E2E2E;
+}
+
+.bg-domingo:hover {
+    background-color: #66BB6A; /* Sin cambios */
+    color: #2E2E2E;
+}

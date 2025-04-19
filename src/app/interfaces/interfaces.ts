@@ -234,6 +234,7 @@ export interface Gimnasio {
   likes?: Like[];
   verlike?: boolean;
   tipo_gimnasio?: string;
+  fk_usuario_gim?: number;
 }
 
 
@@ -259,8 +260,8 @@ export interface SedesGim {
   sed_horarios: string;
   sed_precio_mes: string;
   sed_link_mes:number,
-  sed_precio_trimestre: string;
-  sed_link_trimestre:number,
+  sed_precio_ano: string;
+  sed_link_ano:number,
   sed_precio_semestre: string;
   sed_link_semestre:number,
 }

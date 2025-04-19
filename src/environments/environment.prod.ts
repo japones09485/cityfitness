@@ -5,6 +5,7 @@ export const environment = {
   pathImgsPaises: 'http://cityfitnessworld.com/fitnes/imagenes/paises',
   pathVideos: 'https://cityfitnessworld.com/fitnes/',
   pKeyEpayco: 'eb9f86089142822140b2989c52433272',
+   baseUrl: 'https://www.cityfitnessworld.com/#'
 };
 
 

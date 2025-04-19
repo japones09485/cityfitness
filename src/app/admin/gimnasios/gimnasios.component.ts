@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import Swal from 'sweetalert2';
 import { ApiRestService } from 'src/app/services/api-rest.service';
 import { Gimnasio, Paises, RespGimnasios, User } from 'src/app/interfaces/interfaces';
 import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
@@ -28,6 +29,7 @@ export class GimnasiosComponent implements OnInit {
   paises: Paises[] = [];
   nombrePais: String;
   user: User;
+  UserGim=0;
 
   constructor(
     public api: ApiRestService,
@@ -55,8 +57,9 @@ export class GimnasiosComponent implements OnInit {
       });
 
       this.acRouter.params.subscribe(param => {
-        if(param.idUser){
-          this.listGimnasiosUser(param.idUser);
+        this.UserGim = param.idUser;
+        if(this.UserGim){
+          this.listGimnasiosUser(this.UserGim);
         }else{
           this.listGimnasios();
         }
@@ -83,11 +86,12 @@ export class GimnasiosComponent implements OnInit {
       });
   }
 
-  listGimnasiosUser(Gim:string) {
+  listGimnasiosUser(idUsu:number) {
+   
     this.api.getAllGimnasios()
     .subscribe((res: RespGimnasios) => {
       
-        this.list = res.lista.filter(gimnasio => gimnasio.gim_id === Gim);
+        this.list = res.lista.filter(gimnasio => gimnasio.fk_usuario_gim === idUsu);
       
     });
   }
@@ -103,14 +107,14 @@ export class GimnasiosComponent implements OnInit {
       ciudad: ['', Validators.required],
       telefono: ['', Validators.required],
       descripcion: ['', Validators.required],
-      mapa: ['', Validators.required],
-      ruta: ['', Validators.required],
       tipo_gimnasio: ['', Validators.required]
     });
   }
 
   crearGimnasio() {
+
     this.frmGuardar.append('data', JSON.stringify(this.frmGimnasio.value));
+    this.frmGuardar.append('UserGim', JSON.stringify(this.UserGim));
     this.api.createGym(this.frmGuardar)
       .subscribe((data: any) => {
         this.list.unshift(data.data);
@@ -157,4 +161,32 @@ export class GimnasiosComponent implements OnInit {
     console.log(likes);
     this.likesView = likes;
   }
+
+  DeleteGim(idGim:number){
+
+    Swal.fire({
+      title: "Desea eliminar este gimnasio?",
+      html: `
+      Tenga en cuenta que se eliminaran las sedes y clases creadas para este gimnasio.
+      `,
+      showDenyButton: true,
+      confirmButtonText: "SI",
+     
+    }).then((result) => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+        this.api.DeleteGim(idGim,this.UserGim)
+        .subscribe((data: any) => {
+          this.list = data.lista;
+          if (result.isConfirmed) {
+            Swal.fire(data.mensaje, "", "success");
+          } 
+        });
+      } 
+    });
+
+  }
 }
+
+
+

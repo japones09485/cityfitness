@@ -1,7 +1,8 @@
 <!--Header Component-->
 <app-header></app-header>
 
-<div class="container-fluid bg-dark  d-inline-block" style="padding-top:120px;">
+
+<div class="container-fluid bg-dark  d-inline-block" style="padding-top:120px;" >
     <div class="form-row align-items-center">
         <div class="col-auto">
             <input 
@@ -36,7 +37,7 @@
         <!-- Este contenedor usa ml-auto para alinear a la derecha -->
         <div class="col-auto ml-auto" style="margin-right: 100px;">
             <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#crearUser">
-                <i class="fas fa-user-cog"></i> Registrar Usuario
+                <i class="fas fa-user-cog"></i> Registrar tu gimnasio
                 
             </button>
 
@@ -44,7 +45,7 @@
                 <div class="modal-dialog" role="document">
                   <div class="modal-content bg-dark text-white"> <!-- Fondo oscuro y texto blanco -->
                     <div class="modal-header">
-                      <h5 class="modal-title text-center" id="exampleModalLabel">Registrar Usuario</h5>
+                      <h5 class="modal-title text-center" id="exampleModalLabel">Registrar Gimnasio</h5>
                       <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                       </button>
@@ -82,19 +83,6 @@
                                     <img *ngIf="imgCountry" [src]="imgCountry" class="avatar" />
                                 </div>
                             </div>
-
-                            <div class="form-group row">
-                                <label for="exampleInputEmail1" class="text-danger col-4 col-form-label">Gimnasio</label>
-                                <div class="col-8">
-                                    <select class="form-control" id="perfil" formControlName="gimnasio">
-                                        <option  *ngFor="let gim of this.list" [ngValue]="gim.gim_id">
-                                            {{ gim.gim_nombre }}
-                                        </option>
-                                    </select>
-                                
-                                </div>
-                                
-                            </div>
                           
                             <div class="form-group row">
                                 <label for="" class="form-label text-danger col-4">Contraseña</label>
@@ -111,9 +99,7 @@
                             <button type="submit" *ngIf="frmRegister.valid" class="btn btn-danger btn-block">Guardar</button>
                         </form>
                     </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    </div>
+                   
                   </div>
                 </div>
               </div>
@@ -156,9 +142,9 @@
                 </div>
                 <div class="col-sm-4">
                     <h1 class="display-4 text-info">{{ gim.gim_nombre }}</h1>
-                    <h3 class="display-5 text-secondary"><img src="{{ banderaPais(gim.gim_pais) }}" class="avatar">{{nombrePais}}</h3>
+                    <h3 class="display-5 text-secondary"><img src="{{ banderaGimnasio(gim.gim_pais) }}" class="avatar">{{nombrePais}}</h3>
                     <h3 class="display-5 text-white"></h3>
-                    <div class="card-dark text-light">
+                    <div class="card-dark text-light"> 
                         <div class="card-body">
                             <footer class="footer">
                                 <div class="btn-group btn-group-justified" role="group" aria-label="...">
@@ -188,35 +174,16 @@
                                             </span>
                                     </div>
                                     <div>
-                                        <button class="btn btn-info btn-sm" (click)="loadIntructores(gim.instructores)" style="margin-left: 5px;" data-toggle="modal" data-target="#InsModal">Instructores</button>
+                                        <button class="btn btn-info btn-sm" (click)="loadIntructores(gim.instructores)" style="margin-left: 5px;" data-toggle="modal" data-target="#InsModal">
+                                            <i class="fa fa-user"></i> Instructores</button>
                                     </div>
 
                                     <div>
 
-                                        <button type="button" (click)="infogim(gim.gim_nombre,gim.gim_descripcion)" class="btn btn-info btn-sm ml-2" data-toggle="modal" data-target="#exampleModal">
-                                               Información
+                                        <button type="button"  [routerLink]="['/sedesGF/' + gim.gim_id+'/'+ gim.gim_nombre]" class="btn btn-danger btn-sm ml-2" data-toggle="modal" data-target="#exampleModal">
+                                            <i class="fa fa-school"></i> Sedes Gimnasio
                                             </button>
-                                        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog" role="document">
-                                                <div class="modal-content">
-                                                    <div class="modal-header bg-warning">
-                                                        <h5 class="modal-title text-center" id="exampleModalLabel">
-                                                            {{ namegim }}
-                                                        </h5>
-                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                <span aria-hidden="true">&times;</span>
-                                                            </button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <p class="text-dark">{{ descrip }}</p>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Cerrar</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
+                                      
                                     </div>
 
 
@@ -226,11 +193,13 @@
 
                     </div>
                 </div>
-                <div class="col-4">
-                    <div [innerHtml]="gim.gim_mapa | safeHtml" class="mapaGym"></div>
-                    <h2><a [href]="gim.gim_ruta" class="text-info" target="_blank" rel="noopener noreferrer">Como
-                                llegar <small class="text-danger">Click aqui</small></a></h2>
-                </div>
+                    <!--
+                    <div class="col-4">
+                        <div [innerHtml]="gim.gim_mapa | safeHtml" class="mapaGym"></div>
+                        <h2><a [href]="gim.gim_ruta" class="text-info" target="_blank" rel="noopener noreferrer">Como
+                                    llegar <small class="text-danger">Click aqui</small></a></h2>
+                    </div>
+                    -->
             </div>
 
         </div>

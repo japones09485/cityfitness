@@ -1,8 +1,9 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { Gimnasio, Paises } from 'src/app/interfaces/interfaces';
+import { Gimnasio, Paises,User } from 'src/app/interfaces/interfaces';
 import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { ApiRestService } from 'src/app/services/api-rest.service';
 import { environment } from 'src/environments/environment';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-gimnasio-editar',
@@ -11,6 +12,7 @@ import { environment } from 'src/environments/environment';
 export class EditarGimnasioComponent implements OnInit {
 
   @Input() gimnasio: Gimnasio;
+  @Input() UserGim: any;
   @Output() editer = new EventEmitter<boolean>();
   @Output() gim = new EventEmitter<Gimnasio>();
   frmGimnasioEdit: UntypedFormGroup;
@@ -20,12 +22,16 @@ export class EditarGimnasioComponent implements OnInit {
   paises: Paises[] = [];
   nombrePais:String;
   pathIm = environment.pathImgs;
+  user: User;
+
   constructor(
     public api: ApiRestService,
-    private fb: UntypedFormBuilder
+    private fb: UntypedFormBuilder,
+    public router: Router,
   ) { }
 
   ngOnInit(): void {
+    this.user = JSON.parse(sessionStorage.getItem('user'));
     this.initForm();
   
     this.api.getPaisesList()
@@ -51,8 +57,6 @@ export class EditarGimnasioComponent implements OnInit {
       ciudad: [this.gimnasio.gim_ciudad, Validators.required],
       telefono: [this.gimnasio.gim_telefono, Validators.required],
       descripcion: [this.gimnasio.gim_descripcion, Validators.required],
-      mapa: [this.gimnasio.gim_mapa, Validators.required],
-      ruta: [this.gimnasio.gim_ruta, Validators.required],
       estado: [this.gimnasio.gim_estado, Validators.required],
       tipo_gimnasio: [this.gimnasio.tipo_gimnasio, Validators.required]
     });
@@ -75,11 +79,11 @@ export class EditarGimnasioComponent implements OnInit {
     this.frmGuardar.append('data', JSON.stringify(this.frmGimnasioEdit.value));
     this.api.saveEditGym(this.frmGuardar)
       .subscribe((data: any) => {
-        this.frmGimnasioEdit.reset();
         this.api.mensajeUser = 'Editado correctamente';
         this.api.mostrarMsj = true;
         this.editer.emit(true);
         this.gim.emit(data.data);
+        
       });
   }
 

@@ -1,11 +1,13 @@
 <app-menu *ngIf="this.user.usu_perfil !== '7'"></app-menu>
-
+<app-salir *ngIf="this.user.usu_perfil == '7'"></app-salir>
 <div class="container-fluid">
     <div class="row justify-content-center" id="content">
         <div class="col-12 mt-3">
-
+            <h1 class="text-danger text-center">Gimnasios</h1>
             <ng-container *ngIf="!editer">
-                <button *ngIf="this.user.usu_perfil !== '7'" type="button" data-toggle="modal" data-target="#frmGimnasio" class="btn btn-danger mb-2">Agregar Gimnasio</button>
+                <button  type="button" data-toggle="modal" data-target="#frmGimnasio" class="btn btn-danger mb-2" *ngIf="list.length == 0 && this.user.usu_perfil=='7'">Agregar Gimnasio</button>
+                <button  type="button" data-toggle="modal" data-target="#frmGimnasio" class="btn btn-danger mb-2" *ngIf="this.user.usu_perfil!='7'">Agregar Gimnasio</button>
+              
                 <table class="table table-sm table-hover table-bordered text-light">
                     <thead>
                         <tr class="table-primary text-center">
@@ -25,9 +27,14 @@
                                 <button type="button" class="btn btn-danger btn-sm" (click)="editarGym(gim)" title="Editar" data-toggle="tooltip">
                            <i class="fas fa-pencil-alt"></i>
                         </button>
-                        <button type="button" class="btn btn-info btn-sm" (click)="loadLikes(gim.likes)" data-toggle="modal" data-target="#likesModal">                         
+                        <button type="button" class="btn btn-info btn-sm" (click)="loadLikes(gim.likes)" title="Likes" data-toggle="modal" data-target="#likesModal">                         
                              <i class="fas fa-thumbs-up"></i>
                       </button>
+
+                      <button type="button" class="btn btn-danger btn-sm" (click)="DeleteGim(gim.gim_id)" title="Eliminar Gimnasio">                         
+                        <i class="fas fa-close"></i>
+                     </button>
+
 
                       <button type="button" class="btn btn-info btn-sm" [routerLink]="['/sedesGim/', gim.gim_id]" title="Sedes" data-toggle="tooltip">
                         <i class="fa fa-list"></i>
@@ -56,7 +63,7 @@
 
 <div class="modal fade" id="frmGimnasio" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl">
-        <div class="modal-content">
+        <div class="modal-content bg-dark">
             <div class="modal-header bg-danger text-white">
                 <h5 class="modal-title">Nuevo Gimnasio</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -131,18 +138,7 @@
                             <textarea formControlName="descripcion" class="form-control" rows="3"></textarea>
                         </div>
                     </div>
-                    <div class="form-group row">
-                        <label for="" class="form-label col-4 text-white">Mapa</label>
-                        <div class="col-8">
-                            <input type="text" class="form-control" formControlName="mapa">
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="" class="form-label col-4 text-white">Ruta</label>
-                        <div class="col-8">
-                            <input type="text" class="form-control" formControlName="ruta">
-                        </div>
-                    </div>
+                   
 
                     <div class="form-group row">
                         <label for="" class="form-label col-4 text-white">Tipo Gimnasio</label>

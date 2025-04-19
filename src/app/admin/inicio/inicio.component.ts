@@ -62,7 +62,7 @@ export class InicioComponent implements OnInit {
           }else if(this.user.usu_perfil == 6){
             this.router.navigate(['adminAlid']);
           }else if(this.user.usu_perfil == 7){
-            this.router.navigate(['admin/gimnasiosUser/'+this.user.usu_fk_gimnasio]);
+            this.router.navigate(['admin/gimnasiosUser/'+this.user.usu_id]);
           }
 
         } else {

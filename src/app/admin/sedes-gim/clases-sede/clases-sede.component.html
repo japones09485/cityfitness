@@ -1,11 +1,13 @@
-<app-menu></app-menu>
+<app-menu *ngIf="this.user.usu_perfil !== '7'"></app-menu>
+<app-salir *ngIf="this.user.usu_perfil == '7'"></app-salir>
+
 <div class="container-fluid">
     <div class="row justify-content-center" id="content">
         <div class="col-12">
-            <h1 class="text-center text-danger">Listado de clases</h1>
+            <button type="button" data-toggle="modal" data-target="#frmSede" class="btn btn-danger m-2" data-toggle="modal" data-target="#newClase">Nueva clase</button>
+            <h1 class="text-center text-danger"> <button *ngIf="this.user.usu_perfil == '7'" [routerLink]="['/sedesGim/' + fkGim]" type="button" class="btn btn-danger" title="Atras" data-toggle="tooltip"><i class="fa fa-arrow-circle-left"></i></button>  Listado de clases </h1> 
             <ng-container>
-                <button type="button" data-toggle="modal" data-target="#frmSede" class="btn btn-danger m-2" data-toggle="modal" data-target="#newClase">Nueva clase</button>
-
+              
                 <div class="modal fade" id="newClase" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                       <div class="modal-content">
@@ -31,17 +33,33 @@
                                             <input type="text" class="form-control " formControlName="descripcion">
                                         </div>
                                     </div>
+
                                     <div class="form-group row">
-                                        <label for="" class="form-label col-4 text-white">Fecha inicial</label>
+                                        <label for="" class="form-label col-4 text-white">Dia de la semana</label>
                                         <div class="col-8">
-                                            <input type="date" class="form-control" formControlName="fInicial">
+                                            <select class="form-control" formControlName="dia">
+                                                <option value="1">Lunes</option>
+                                                <option value="2">Martes</option>
+                                                <option value="3">Miercoles</option>
+                                                <option value="4">Jueves</option>
+                                                <option value="5">Viernes</option>
+                                                <option value="6">Sabado</option>
+                                                <option value="7">Domingo</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label for="" class="form-label col-4 text-white">Hora inicial</label>
+                                        <div class="col-8">
+                                            <input type="time" class="form-control" formControlName="HoraInicio">
                                         </div>
                                     </div>
                 
                                     <div class="form-group row">
-                                        <label for="" class="form-label col-4 text-white">Fecha Final</label>
+                                        <label for="" class="form-label col-4 text-white">Hora Final</label>
                                         <div class="col-8">
-                                            <input type="date" class="form-control" formControlName="fFinal">
+                                            <input type="time" class="form-control" formControlName="HoraFin">
                                         </div>
                                     </div>
                 
@@ -49,16 +67,31 @@
                                         <label for="" class="form-label col-4 text-white">Instructor</label>
                                         <div class="col-8">
 
-                                            <ng-select [items]="Instructores" 
-                                            bindLabel="nombre" 
-                                            bindValue="id" 
+                                            <ng-select 
+                                            [items]="Instructores"
+                                            bindLabel="nombre_completo"
+                                            bindValue="ins_id"
+                                            class="text-dark"
                                             formControlName="instructor"
                                             placeholder="Selecciona un instructor"
                                             [searchable]="true">
-                                 </ng-select>
+                                          </ng-select>
+                                          
                                            
                                         </div>
                                     </div>
+
+                                    <div class="form-group row">
+                                        <label for="" class="form-label col-4 text-white">Estado</label>
+                                        <div class="col-8">
+                                            <select class="form-control" formControlName="estado">
+                                                <option value="1">Activo</option>
+                                                <option value="0">Inactivo</option>
+                                               
+                                            </select>
+                                        </div>
+                                    </div>
+
                 
                                 <div class="modal-footer">
                                     <button type="submit" *ngIf="frmClase.valid" class="btn btn-danger btn-block">Guardar</button>
@@ -78,14 +111,17 @@
                         <tr class="table-primary text-center">
                             <th class="text-white"></th>
                             <th class="text-white">Nombre de clases</th>
+                            <th class="text-white">Descripcion</th>
+                            <th class="text-white">Dia</th>
                             <th class="text-white">Instructor</th>
-                            <th class="text-white">Fecha Inicio</th>
-                            <th class="text-white">Fecha Fin</th>
+                            <th class="text-white">Hora Inicio</th>
+                            <th class="text-white">Hora Fin</th>
+                            <th class="text-white">Estado</th>
 
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let cla of list">
+                        <tr *ngFor="let cla of list" class="text-center {{getDayInfo(cla.clas_dia).class}}">
                             <td>
                                 <button (click)="InfoEdit(cla)" data-toggle="modal" [attr.data-target]="'#edit' + cla.clas_id"  type="button" class="btn btn-success btn-sm"  title="Editar" >
                            <i class="fas fa-pencil-alt"></i>
@@ -95,7 +131,7 @@
                             <div class="modal-dialog" role="document">
                               <div class="modal-content">
                                 <div class="modal-header">
-                                  <h5 class="modal-title" id="exampleModalLabel">{{ cla.clas_nombre }}</h5>
+                                  <h5 class="modal-title text-danger text-center" id="exampleModalLabel">Editar {{ cla.clas_nombre }}</h5>
                                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                   </button>
@@ -115,17 +151,34 @@
                                                     <input type="text" class="form-control " formControlName="descripcion">
                                                 </div>
                                             </div>
+
                                             <div class="form-group row">
-                                                <label for="" class="form-label col-4 text-white">Fecha inicial</label>
+                                                <label for="" class="form-label col-4 text-white">Dia de la semana</label>
                                                 <div class="col-8">
-                                                    <input type="date" class="form-control" formControlName="fInicial">
+                                                    <select class="form-control" formControlName="dia">
+                                                        <option value="1">Lunes</option>
+                                                        <option value="2">Martes</option>
+                                                        <option value="3">Miercoles</option>
+                                                        <option value="4">Jueves</option>
+                                                        <option value="5">Viernes</option>
+                                                        <option value="6">Sabado</option>
+                                                        <option value="7">Domingo</option>
+                                                    </select>
                                                 </div>
                                             </div>
+
+                                            <div class="form-group row">
+                                                <label for="" class="form-label col-4 text-white">Hora inicial</label>
+                                                <div class="col-8">
+                                                    <input type="time" class="form-control" formControlName="HoraInicio">
+                                                </div>
+                                            </div>
+                                            
                         
                                             <div class="form-group row">
-                                                <label for="" class="form-label col-4 text-white">Fecha Final</label>
+                                                <label for="" class="form-label col-4 text-white">Hora Finasssl</label>
                                                 <div class="col-8">
-                                                    <input type="date" class="form-control" formControlName="fFinal">
+                                                    <input type="time" class="form-control" formControlName="HoraFin">
                                                 </div>
                                             </div>
                         
@@ -133,14 +186,29 @@
                                                 <label for="" class="form-label col-4 text-white">Instructor</label>
                                                 <div class="col-8">
         
-                                                    <ng-select [items]="Instructores" 
-                                                    bindLabel="nombre" 
-                                                    bindValue="id" 
+                                                 
+                                                    <ng-select 
+                                                    [items]="Instructores"
+                                                    bindLabel="nombre_completo"
+                                                    bindValue="ins_id"
+                                                    class="text-dark"
                                                     formControlName="instructor"
                                                     placeholder="Selecciona un instructor"
                                                     [searchable]="true">
-                                         </ng-select>
+                                                </ng-select>
+                                           
                                                    
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group row">
+                                                <label for="" class="form-label col-4 text-white">Estado</label>
+                                                <div class="col-8">
+                                                    <select class="form-control" formControlName="estado">
+                                                        <option value="1">Activo</option>
+                                                        <option value="0">Inactivo</option>
+                                                       
+                                                    </select>
                                                 </div>
                                             </div>
                         
@@ -163,10 +231,15 @@
                    
                             </td>
                             
-                            <td class="text-white">{{cla.clas_nombre}}</td>
-                            <td class="text-white">{{ nameInstructor(cla.clas_fk_instructor) }}</td>
-                            <td class="text-white">{{cla.fecha_inicio}}</td>
-                            <td class="text-white">{{cla.fecha_fin}}</td>
+                            <td >{{cla.clas_nombre}}</td>
+                            <td >{{cla.clas_descripcion}}</td>
+                            <td >{{getDayInfo(cla.clas_dia).dia}}</td>
+                            <td >{{ nameInstructor(cla.clas_fk_instructor) }}</td>
+                            <td >{{cla.hora_inicio}}</td>
+                            <td >{{cla.hora_fin}}</td>
+                            <td *ngIf="cla.estado == 0">Inactivo</td>
+                            <td  *ngIf="cla.estado == 1">Activo</td>
+                          
                         </tr>
                     </tbody>
                 </table>

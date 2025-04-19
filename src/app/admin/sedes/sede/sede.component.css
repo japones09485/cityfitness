@@ -15,6 +15,10 @@ table thead th {
   max-height: 450px;
 }
 
+label{
+    color: white;
+}
+
 @media only screen and (min-width: 700px) {
     #content {
         background: url("../../../../assets/img/fondo-transp.png") !important;

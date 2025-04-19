@@ -1,0 +1,79 @@
+#descp {
+    display: flex;
+    align-items: center;
+}
+
+.namePage {
+    font-family: 'Bodoni Moda', serif;
+    font-size: 45px !important;
+}
+
+body {
+    background-color: #f5f5f5;
+    color: #1b1b1b;
+}
+
+
+  #presentacion {
+    position: relative;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+  
+  #presentacion::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7); /* Capa oscura */
+    pointer-events: none; /* Permite interactuar con el contenido debajo */
+    z-index: 1;
+  }
+  
+  #presentacion > * {
+    position: relative;
+    z-index: 2; /* Contenido encima de la cortina */
+  }
+  
+
+  #calendary {
+    background: url("../../../../assets/img/caledary.png") no-repeat center center !important;
+    background-size: contain; /* La imagen se ajusta para caber completamente sin recortes */
+    background-color: rgba(0, 0, 0, 0.5); /* Oscurece la imagen de fondo con un color negro semi-transparente */
+    background-blend-mode: darken; /* Mezcla el color negro con la imagen para oscurecerla */
+    width: 100%;
+    height: 100%;
+    position: absolute;
+  }
+
+
+  .background-container {
+    position: relative;
+    width: 100%;
+    height: 300px; /* Ajusta el tamaño */
+    background-size: cover;
+    background-position: center;
+  }
+  
+  .background-container::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Ajusta la opacidad según necesites */
+  }
+  
+
+  
+
+
+  
+
+  
+  
+  

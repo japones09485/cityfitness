@@ -25,6 +25,8 @@ import { GimnasiosComponent } from './admin/gimnasios/gimnasios.component';
 import { SedesGimComponent } from './admin/sedes-gim/sedes-gim.component';
 import { RegistrarseComponent } from './components/registrarse/registrarse.component';
 import { GimfrontComponent } from './components/gimfront/gimfront.component';
+import { SedesGFComponent } from './components/gimfront/sedes-gf/sedes-gf.component';
+import { InfoSedeComponent } from './components/gimfront/info-sede/info-sede.component';
 import { PagosComponent } from './admin/pagos/pagos.component';
 import { UsersComponent } from './admin/users/users.component';
 import { UserComponent } from './admin/users/user/user.component';
@@ -137,6 +139,8 @@ const routes: Routes = [
   { path: 'aliados/videos/:id/:empresasocio', component: VideosAliadosComponent },
   { path: 'registrarse', component: RegistrarseComponent },
   { path: 'gimnasios', component: GimfrontComponent },
+  { path: 'sedesGF/:fk_gim/:gimName', component: SedesGFComponent },
+  { path: 'sedesInfo/:fk_gim/:IdSede', component: InfoSedeComponent },
   { path: 'sedesGim/:fk_gim', component: SedesGimComponent },
   { path: 'clasesSede/:fk_gim/:idSede', component: ClasesSedeComponent },
   { path: 'recordar-password', component: RecuperarPassComponent },

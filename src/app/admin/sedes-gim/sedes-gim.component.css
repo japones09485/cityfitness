@@ -36,6 +36,20 @@ table thead th {
     outline: 0;
 }
 
+.table-scroll {
+    max-height: 300px; /* Ajusta la altura según sea necesario */
+    overflow-y: auto; /* Habilita el scroll vertical */
+    overflow-x: hidden; /* Opcional: oculta el scroll horizontal si no es necesario */
+    border: 1px solid #ddd; /* Opcional: bordes para resaltar el área del scroll */
+  }
+  
+  .table {
+    width: 100%; /* Asegura que la tabla ocupe todo el ancho del contenedor */
+    margin-bottom: 0; /* Opcional: elimina el margen inferior */
+  }
+  
+
+
 @media only screen and (min-width: 700px) {
     #content {
         background: url("../../.././assets/img/fondo-transp.png") !important;

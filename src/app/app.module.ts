@@ -3,11 +3,13 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { TimeFormatPipe } from 'src/app/pipes/time-format.pipe';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
 import { HeaderComponent } from './shared/header/header.component';
+import { SalirComponent } from './shared/header/salir/salir.component';
 import { FooterComponent } from './shared/footer/footer.component';
 import { CronogramaComponent } from './components/cronograma/cronograma.component';
 import { PlanesComponent } from './components/planes/planes.component';
@@ -115,10 +117,8 @@ import { CarrerasComponent } from './admin/carreras/carreras.component';
 import { SedesGimComponent } from './admin/sedes-gim/sedes-gim.component';
 import { EditSedeGComponent } from './admin/sedes-gim/edit-sede-g.component';
 import { ClasesSedeComponent } from './admin/sedes-gim/clases-sede/clases-sede.component';
-
-
-
-
+import { SedesGFComponent } from './components/gimfront/sedes-gf/sedes-gf.component';
+import { InfoSedeComponent } from './components/gimfront/info-sede/info-sede.component';
 
 
 @NgModule({
@@ -230,7 +230,11 @@ import { ClasesSedeComponent } from './admin/sedes-gim/clases-sede/clases-sede.c
     CarrerasComponent,
     SedesGimComponent,
     EditSedeGComponent,
-    ClasesSedeComponent
+    ClasesSedeComponent,
+    SalirComponent,
+    SedesGFComponent,
+    InfoSedeComponent,
+    TimeFormatPipe
   ],
   imports: [
     BrowserModule,

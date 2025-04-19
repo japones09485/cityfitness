@@ -66,7 +66,11 @@ export class EntrenadoresComponent implements OnInit {
       this.ngOnInit();
     }else{
       this.api.searchInstructor(this.filts)
-      .subscribe((res: any) => { this.instructores = res.lista; });
+      .subscribe((res: any) => { 
+        this.instructores = res.lista; 
+        console.log(this.instructores);
+        
+      });
     }
    
   }

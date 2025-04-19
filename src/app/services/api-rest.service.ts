@@ -237,6 +237,11 @@ getPerfiles(){
     return this.http.post(this.urlAPI + `rest_gimnasios/crear`, payload);
   }
 
+  DeleteGim(idGim: number,UserGim: number) {
+    return this.http.post(this.urlAPI + `rest_gimnasios/DeleteGim`, { idGim,UserGim });
+  }
+
+
   saveEditGym(payload: any){
     return this.http.post(this.urlAPI + `rest_gimnasios/editar`, payload);
   }
@@ -405,6 +410,16 @@ getPerfiles(){
     return this.http.post(this.urlAPI + `Rest_sedes_gim/editar`, payload);
   }
 
+  SedeIdGim(id_sede:number){
+    return this.http.post(this.urlAPI + `Rest_sedes_gim/SedeId`, {id_sede});
+  }
+
+
+  DeleteSede(idSede: number,sed_fk_gimnasio:number) {
+    return this.http.post(this.urlAPI + `Rest_sedes_gim/DeleteSede`, { idSede,sed_fk_gimnasio });
+  }
+
+
   getSedesClase(fk_gim:number,idSede:number){
     return this.http.post(this.urlAPI + `Rest_clases_sedes/listar`, { fk_gim,idSede });
   }
@@ -422,8 +437,26 @@ getPerfiles(){
 
   }
 
+  activarUsu(idUsu:number,perfil:number){
+    return this.http.post(this.urlAPI + `Rest_usuarios/activarUsu`, { idUsu,perfil });
 
-  
+  }
 
+  InactivarUsu(idUsu:number,perfil:number){
+    return this.http.post(this.urlAPI + `Rest_usuarios/InactivarUsu`, { idUsu,perfil });
+
+  }
+
+  createIns(payload: any){
+    return this.http.post(this.urlAPI + `Rest_ins_sedes/createIns`, payload);
+  }
+
+  listarInsS(idSede:number){
+    return this.http.post(this.urlAPI + `Rest_ins_sedes/listarInsS`, { idSede });
+  }
+
+  DeleteInsSede(id:number,sede:number){
+    return this.http.post(this.urlAPI + `Rest_ins_sedes/DeleteInsSede`, { id,sede });
+  }
 
 }

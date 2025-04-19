@@ -10,6 +10,10 @@ table thead th {
     border-width: 1px;
 }
 
+label{
+    color: white;
+}
+
 @media only screen and (min-width: 700px) {
     #content {
         background: url("../../.././assets/img/fondo-transp.png") !important;

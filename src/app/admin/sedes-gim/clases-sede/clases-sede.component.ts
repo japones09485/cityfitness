@@ -22,6 +22,8 @@ export class ClasesSedeComponent implements OnInit{
   frmClase: UntypedFormGroup;
   UserLog: User;
   searchIns = '';
+  user:User;
+  perfilUser : string;
 
   constructor(
     public api: ApiRestService,
@@ -32,6 +34,10 @@ export class ClasesSedeComponent implements OnInit{
 
   ngOnInit(): void {
 
+    
+    this.user = JSON.parse(sessionStorage.getItem('user'));
+    this.perfilUser = this.user.usu_perfil;
+
     this.UserLog = this.service.getUser();
     this.acRouter.params.subscribe(param => {
       this.fkGim = param.fk_gim;
@@ -40,15 +46,18 @@ export class ClasesSedeComponent implements OnInit{
       this.api.getSedesClase(this.fkGim,this.idSede)
         .subscribe((res:any)=>{
           this.list = res.lista;
+        
         })
       });
 
-      this.api.getInstructoresAll()
-      .subscribe((res:any)=>{
-      
-        this.Instructores = res.instructores;
-        
+      this.api.listarInsS(this.idSede)
+      .subscribe((data: any) => {
+       
+        this.Instructores = data.instructoresSede;
+       
       });
+
+
 
       this.initForm();
 
@@ -60,15 +69,20 @@ export class ClasesSedeComponent implements OnInit{
     this.frmClase = this.fb.group({
       nombre: ['', Validators.required],
       descripcion: ['', Validators.required],
-      fInicial: ['', Validators.required],
-      fFinal: ['', Validators.required],
-      instructor: ['', Validators.required]
+      dia: ['', Validators.required],
+      HoraInicio: ['', Validators.required],
+      HoraFin: ['', Validators.required],
+      instructor: ['', Validators.required],
+      estado: ['', Validators.required]
+
     });
   }
 
   nameInstructor(idIns:number) {
-    const instructor = this.Instructores.find(ins => ins.id === idIns);
-    return instructor.nombre;
+   
+    const instructor = this.Instructores.find(ins => ins.ins_id === idIns);
+   
+    return instructor.nombre_completo;
 }
 
 
@@ -109,13 +123,17 @@ export class ClasesSedeComponent implements OnInit{
   }
 
   InfoEdit(idClase:any){
-
+    
     this.frmClase = this.fb.group({
       nombre: [idClase.clas_nombre, Validators.required],
       descripcion: [idClase.clas_descripcion, Validators.required],
-      fInicial: [idClase.fecha_inicio, Validators.required],
-      fFinal: [idClase.fecha_fin, Validators.required],
-      instructor: [idClase.clas_fk_instructor, Validators.required]
+      dia: [idClase.clas_dia, Validators.required],
+      HoraInicio: [idClase.hora_inicio, Validators.required],
+      HoraFin: [idClase.hora_fin, Validators.required],
+      instructor: [idClase.clas_fk_instructor, Validators.required],
+      estado: [idClase.estado, Validators.required]
+
+
     });
 
    
@@ -127,7 +145,7 @@ export class ClasesSedeComponent implements OnInit{
       title: "Desea eliminar esta clase?",
       showDenyButton: true,
       confirmButtonText: "SI",
-      denyButtonText: `Cancelar`
+     
     }).then((result) => {
       /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
@@ -139,8 +157,21 @@ export class ClasesSedeComponent implements OnInit{
       });
       } 
     });
-
     
+  }
+
+  getDayInfo(dayNumber: number): { dia: string; class: string } {
+    const dayMap: { [key: number]: { dia: string; class: string } } = {
+      1: { dia: 'Lunes', class: 'bg-lunes' },
+      2: { dia: 'Martes', class: 'bg-martes' },
+      3: { dia: 'Miércoles', class: 'bg-miercoles' },
+      4: { dia: 'Jueves', class: 'bg-jueves' },
+      5: { dia: 'Viernes', class: 'bg-viernes' },
+      6: { dia: 'Sábado', class: 'bg-sabado' },
+      7: { dia: 'Domingo', class: 'bg-domingo' }
+    };
+  
+    return dayMap[dayNumber] || { dia: 'Número inválido', class: 'bg-dark' };
   }
 
 }
