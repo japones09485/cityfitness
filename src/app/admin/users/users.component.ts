@@ -175,8 +175,7 @@ export class UsersComponent implements OnInit {
     this.apiAlid.listadoalumnos(this.frmClasCreator.value, id)
       .subscribe((res: any) => {
         this.listAlumnos = res.sucess;
-        console.log(res.alumnos);
-
+      
         if (this.listAlumnos == true) {
           this.alumnosInscritos = res.alumnos;
           this.cantAlumnos = res.cantidad;
